@@ -63,7 +63,7 @@ export const content: Record<Locale, Content> = {
       resume: "Resume"
     },
     hero: {
-      name: "Xiaoyu (Justin) Feng",
+      name: "Xiaoyu Feng",
       title: "Turning technology opportunities into market outcomes and scalable organizations.",
       statement:
         "I connect market insight, technical roadmaps, customer co-innovation, and operating systems to create measurable business impact.",

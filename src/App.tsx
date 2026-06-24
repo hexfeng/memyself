@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUpRight, Download, Linkedin, Mail } from "lucide-react";
+import { ArrowUpRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { content } from "./content";
 import "./styles.css";
 
@@ -77,45 +77,72 @@ function Navigation({ scrolled }: { scrolled: boolean }) {
         <a href="#lab">{copy.nav.lab}</a>
         <a href="#contact">{copy.nav.contact}</a>
       </nav>
-      <a className="resume-link" href="#contact">
-        {copy.nav.resume}
-        <Download size={15} aria-hidden="true" />
+      <a className="resume-link resume-link--pending" href="#contact">
+        Resume — soon
       </a>
     </header>
   );
 }
 
 function Hero() {
+  const pillars = ["Product & GTM Strategy", "AI Transformation", "Strategic Operations"];
+
   return (
     <section id="top" className="hero" aria-labelledby="hero-title">
       <div className="hero-content page-shell">
-        <div className="hero-copy" data-reveal>
-          <p className="hero-name">{copy.hero.name}</p>
-          <h1 id="hero-title">{copy.hero.title}</h1>
-          <p className="hero-statement">{copy.hero.statement}</p>
-          <div className="hero-actions">
-            <a className="button button--primary" href="#gtm">
-              Explore projects
-              <ArrowDown size={18} aria-hidden="true" />
-            </a>
-            <a className="button button--secondary" href="#contact">
-              {copy.hero.secondaryAction}
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </a>
+        <div className="hero-identity" data-reveal>
+          <h1 id="hero-title">Xiaoyu Feng</h1>
+          <p className="hero-statement">
+            I turn market insight and technical capabilities into product strategies, customer
+            solutions, and commercial growth across global technology markets.
+          </p>
+          <p className="hero-evidence">
+            Product strategy, GTM launches, and AI research operations across global telecom
+            markets.
+          </p>
+          <div className="hero-pillars" aria-label="Areas of expertise">
+            {pillars.map((pillar) => (
+              <span key={pillar}>{pillar}</span>
+            ))}
           </div>
-        </div>
-        <div className="hero-metrics" aria-label="Selected outcomes" data-reveal>
-          {copy.hero.metrics.map((metric) => (
-            <div className="hero-metric" key={metric.label}>
-              <strong>{metric.value}</strong>
-              <span>{metric.label}</span>
+          <nav className="hero-actions" aria-label="Hero navigation">
+            <div className="hero-actions__primary">
+              <a className="hero-action hero-action--primary" href="#gtm">
+                <span>Explore Projects</span>
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </a>
+              <a className="hero-action hero-action--secondary" href="#experience">
+                <span>Experience</span>
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </a>
             </div>
-          ))}
+            <div className="hero-utilities">
+              <a
+                href="https://www.linkedin.com/in/xiaoyufeng/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn (opens in a new tab)"
+              >
+                <span>LinkedIn</span>
+                <Linkedin size={16} aria-hidden="true" />
+              </a>
+              <a
+                href="https://github.com/hexfeng"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub (opens in a new tab)"
+              >
+                <span>GitHub</span>
+                <Github size={16} aria-hidden="true" />
+              </a>
+              <a href="#contact">
+                <span>Contact</span>
+                <Mail size={16} aria-hidden="true" />
+              </a>
+            </div>
+          </nav>
         </div>
       </div>
-      <a className="scroll-cue" href="#experience" aria-label="Experience">
-        <span />
-      </a>
     </section>
   );
 }

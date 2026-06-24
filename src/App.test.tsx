@@ -9,7 +9,7 @@ describe("desktop portfolio redesign", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /turning technology opportunities into market outcomes/i
+        name: "Xiaoyu Feng"
       })
     ).toBeInTheDocument();
 
@@ -51,5 +51,51 @@ describe("desktop portfolio redesign", () => {
     expect(screen.queryByText(/view case study/i)).not.toBeInTheDocument();
     expect(screen.getByText("NOVA 5G FWA Commercial Launch")).toBeInTheDocument();
     expect(screen.getByText("Waterloo Research Center Operations")).toBeInTheDocument();
+  });
+
+  it("guides visitors through an editorial hero with prioritized actions", () => {
+    render(<App />);
+
+    const hero = screen.getByRole("region", { name: "Xiaoyu Feng" });
+    expect(
+      within(hero).getByRole("heading", { level: 1, name: "Xiaoyu Feng" })
+    ).toBeInTheDocument();
+    expect(within(hero).queryByText(/justin/i)).not.toBeInTheDocument();
+    expect(
+      within(hero).getByText(
+        "I turn market insight and technical capabilities into product strategies, customer solutions, and commercial growth across global technology markets."
+      )
+    ).toBeInTheDocument();
+
+    expect(
+      within(hero).getByText(
+        "Product strategy, GTM launches, and AI research operations across global telecom markets."
+      )
+    ).toBeInTheDocument();
+
+    for (const pillar of [
+      "Product & GTM Strategy",
+      "AI Transformation",
+      "Strategic Operations"
+    ]) {
+      expect(within(hero).getByText(pillar)).toBeInTheDocument();
+    }
+
+    expect(within(hero).getByRole("link", { name: "Explore Projects" })).toHaveClass(
+      "hero-action--primary"
+    );
+    expect(within(hero).getByRole("link", { name: "Experience" })).toHaveClass(
+      "hero-action--secondary"
+    );
+    expect(
+      within(hero).getByRole("link", { name: "LinkedIn (opens in a new tab)" })
+    ).toBeInTheDocument();
+    expect(
+      within(hero).getByRole("link", { name: "GitHub (opens in a new tab)" })
+    ).toBeInTheDocument();
+    expect(within(hero).getByRole("link", { name: "Contact" })).toBeInTheDocument();
+
+    expect(within(hero).queryByLabelText("Selected outcomes")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Resume — soon" })).toBeInTheDocument();
   });
 });

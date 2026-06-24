@@ -68,13 +68,15 @@ a {
   padding: 0 3.5vw;
   color: var(--ink);
   border-bottom: 1px solid rgba(16, 44, 61, 0.16);
+  background: rgba(231, 239, 242, 0.42);
+  backdrop-filter: blur(12px);
   transition:
     background-color 320ms ease,
     backdrop-filter 320ms ease;
 }
 
 .site-header--solid {
-  background: rgba(236, 243, 244, 0.72);
+  background: rgba(236, 243, 244, 0.82);
   backdrop-filter: blur(18px);
 }
 
@@ -83,6 +85,11 @@ a {
 .resume-link {
   display: flex;
   align-items: center;
+}
+
+.resume-link--pending {
+  color: rgba(16, 44, 61, 0.72);
+  border-color: rgba(16, 44, 61, 0.36);
 }
 
 .brand {
@@ -144,20 +151,26 @@ a {
 }
 
 .hero-content {
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(300px, 0.55fr);
-  gap: 8vw;
-  align-items: start;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   min-height: 100vh;
-  padding-top: 155px;
+  padding: 96px 0 24px;
 }
 
-.hero-copy {
-  max-width: 530px;
-  text-shadow: 0 1px 18px rgba(238, 247, 249, 0.72);
+.hero-identity {
+  width: min(590px, 46vw);
+  margin-right: -1px;
+  padding: 38px 40px 34px;
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  background: rgba(241, 247, 247, 0.82);
+  box-shadow:
+    0 20px 48px rgba(13, 43, 58, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px) saturate(0.9);
 }
 
-.hero-name,
 .section-label {
   margin: 0 0 22px;
   color: #24566b;
@@ -168,112 +181,138 @@ a {
 }
 
 .hero h1 {
-  max-width: 530px;
   margin: 0;
-  font-size: clamp(3.15rem, 4.05vw, 4.65rem);
+  font-size: clamp(3.75rem, 4.8vw, 5.6rem);
   font-weight: 500;
-  letter-spacing: -0.064em;
-  line-height: 0.94;
-  text-wrap: balance;
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+  white-space: nowrap;
 }
 
 .hero-statement {
-  max-width: 500px;
-  margin: 28px 0 0;
-  padding: 13px 16px;
-  color: #233f50;
-  background: rgba(237, 245, 247, 0.54);
-  font-size: clamp(1rem, 1.2vw, 1.18rem);
+  max-width: 510px;
+  margin: 25px 0 0;
+  padding: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: clamp(1rem, 1.1vw, 1.12rem);
   font-weight: 500;
-  line-height: 1.65;
-  backdrop-filter: blur(8px);
+  line-height: 1.58;
+}
+
+.hero-evidence {
+  margin: 16px 0 0;
+  color: rgba(16, 44, 61, 0.72);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.hero-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(16, 44, 61, 0.24);
+}
+
+.hero-pillars span {
+  min-height: 38px;
+  padding: 0 14px;
+  border-left: 1px solid rgba(16, 44, 61, 0.16);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.hero-pillars span:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
 
 .hero-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 34px;
+  margin-top: 25px;
 }
 
-.button {
+.hero-actions__primary {
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 10px;
+}
+
+.hero-action {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
-  min-height: 48px;
-  padding: 0 20px;
+  justify-content: space-between;
+  min-height: 54px;
+  padding: 0 18px;
   border: 1px solid var(--ink);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   transition:
     transform 180ms ease,
     color 180ms ease,
-    background-color 180ms ease;
+    background-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.button:hover,
-.button:focus-visible {
-  transform: translateY(-2px);
+.hero-action--primary {
+  color: #f7fbfb;
+  background: var(--ink);
+  box-shadow: 0 10px 24px rgba(13, 40, 55, 0.17);
 }
 
-.button--primary {
-  color: #f8fbfb;
+.hero-action--secondary {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.hero-action:hover,
+.hero-action:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(13, 40, 55, 0.2);
+  outline: 2px solid #f7fbfb;
+  outline-offset: 2px;
+}
+
+.hero-action--primary:hover,
+.hero-action--primary:focus-visible {
+  background: #1b455a;
+}
+
+.hero-action--secondary:hover,
+.hero-action--secondary:focus-visible {
+  color: #f7fbfb;
   background: var(--ink);
 }
 
-.button--secondary {
-  background: rgba(247, 250, 249, 0.5);
-  backdrop-filter: blur(8px);
+.hero-utilities {
+  display: flex;
+  gap: 24px;
+  margin-top: 18px;
 }
 
-.hero-metrics {
-  display: grid;
-  align-self: center;
-  background: rgba(244, 249, 249, 0.32);
-  border-top: 1px solid rgba(16, 44, 61, 0.28);
-  backdrop-filter: blur(4px);
-}
-
-.hero-metric {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 18px;
+.hero-utilities a {
+  display: inline-flex;
   align-items: center;
-  padding: 21px 10px;
-  border-bottom: 1px solid rgba(16, 44, 61, 0.28);
+  gap: 8px;
+  min-height: 30px;
+  color: rgba(16, 44, 61, 0.72);
+  font-size: 0.74rem;
+  font-weight: 600;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
 }
 
-.hero-metric strong {
-  font-size: clamp(2rem, 2.6vw, 3rem);
-  font-weight: 500;
-  letter-spacing: -0.06em;
-}
-
-.hero-metric span {
-  font-size: 0.78rem;
-  line-height: 1.45;
-}
-
-.scroll-cue {
-  position: absolute;
-  right: 3.5vw;
-  bottom: 28px;
-  width: 20px;
-  height: 48px;
-  border: 1px solid rgba(16, 44, 61, 0.45);
-  border-radius: 20px;
-}
-
-.scroll-cue span {
-  position: absolute;
-  top: 8px;
-  left: 50%;
-  width: 3px;
-  height: 8px;
-  border-radius: 3px;
-  background: var(--ink);
-  transform: translateX(-50%);
-  animation: scroll-cue 1.8s ease-in-out infinite;
+.hero-utilities a:hover,
+.hero-utilities a:focus-visible {
+  color: var(--ink);
+  transform: translateY(-2px);
+  outline: 2px solid rgba(16, 44, 61, 0.64);
+  outline-offset: 4px;
 }
 
 .screen {
@@ -694,18 +733,6 @@ a {
   transform: none;
 }
 
-@keyframes scroll-cue {
-  0%,
-  100% {
-    opacity: 0.4;
-    transform: translate(-50%, 0);
-  }
-  50% {
-    opacity: 1;
-    transform: translate(-50%, 18px);
-  }
-}
-
 @media (max-height: 850px) {
   .timeline-entry {
     min-height: 88px;
@@ -728,7 +755,11 @@ a {
 
 @media (max-height: 780px) {
   .hero h1 {
-    font-size: clamp(3rem, 4.35vw, 4.8rem);
+    font-size: clamp(3.6rem, 4.7vw, 5rem);
+  }
+
+  .hero-identity {
+    padding: 30px 34px 28px;
   }
 
   .screen-content {
