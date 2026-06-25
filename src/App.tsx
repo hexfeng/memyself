@@ -159,11 +159,21 @@ function Experience() {
         </div>
         <div className="compact-timeline" data-reveal>
           {copy.experience.items.map((item, index) => (
-            <article className="timeline-entry" key={`${item.organization}-${item.role}`}>
+            <article
+              className="timeline-entry"
+              key={`${item.organization}-${item.role}`}
+              data-timeline-index={index}
+            >
               <span className="timeline-number">0{index + 1}</span>
               <span className="timeline-node" aria-hidden="true" />
-              <div>
-                <p className="timeline-period">{item.period}</p>
+              <div className="timeline-entry__content">
+                <p className="timeline-period">
+                  <span>
+                    {item.startDate}–{item.endDate}
+                  </span>
+                  <span aria-hidden="true"> · </span>
+                  <span>{item.stage}</span>
+                </p>
                 <h3>{item.organization}</h3>
                 <p className="timeline-role">{item.role}</p>
                 <p className="timeline-summary">{item.summary}</p>
