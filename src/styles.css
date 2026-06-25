@@ -51,6 +51,7 @@ a {
   z-index: -2;
   inset: 0;
   background-image: url("/images/mountain-background-web.jpg");
+  background-repeat: no-repeat;
   background-position: left center;
   background-size: 112% auto;
 }
@@ -825,6 +826,231 @@ a {
 
   .project-card {
     min-height: 500px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --shell: calc(100vw - 32px);
+  }
+
+  html {
+    scroll-padding-top: 64px;
+    scroll-snap-type: none;
+  }
+
+  body {
+    min-width: 0;
+  }
+
+  .fixed-background {
+    background-position: 38% center;
+    background-size: cover;
+  }
+
+  .site-header {
+    grid-template-columns: 1fr;
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .desktop-nav,
+  .resume-link {
+    display: none;
+  }
+
+  .brand {
+    font-size: 0.76rem;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero,
+  .screen {
+    min-height: auto;
+    scroll-snap-align: none;
+  }
+
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-content {
+    justify-content: center;
+    min-height: 100svh;
+    padding: 88px 0 32px;
+  }
+
+  .hero-identity {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 28px 22px 24px;
+    background: rgba(241, 247, 247, 0.88);
+    backdrop-filter: blur(10px) saturate(0.9);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.65rem, 12vw, 3.4rem);
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .hero-statement {
+    margin-top: 20px;
+    font-size: 0.98rem;
+    line-height: 1.52;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-evidence {
+    font-size: 0.76rem;
+  }
+
+  .hero-pillars {
+    grid-template-columns: 1fr;
+    padding-top: 8px;
+  }
+
+  .hero-pillars span,
+  .hero-pillars span:first-child {
+    min-height: 0;
+    padding: 10px 0;
+    border-top: 1px solid rgba(16, 44, 61, 0.13);
+    border-left: 0;
+  }
+
+  .hero-pillars span:first-child {
+    border-top: 0;
+  }
+
+  .hero-actions__primary {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-action {
+    min-height: 52px;
+  }
+
+  .hero-utilities {
+    flex-wrap: wrap;
+    gap: 8px 22px;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .screen {
+    overflow: visible;
+  }
+
+  .screen-content {
+    display: block;
+    min-height: 0;
+    padding: 88px 0 64px;
+  }
+
+  .section-copy h2,
+  .project-copy h2 {
+    font-size: clamp(2.55rem, 12vw, 3.5rem);
+  }
+
+  .section-copy > p:last-child {
+    margin-top: 20px;
+    font-size: 0.94rem;
+  }
+
+  .experience-layout,
+  .project-layout,
+  .project-screen--reverse .project-layout,
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .compact-timeline {
+    margin-top: 42px;
+    padding-left: 28px;
+  }
+
+  .compact-timeline::before {
+    left: 3px;
+  }
+
+  .timeline-entry {
+    grid-template-columns: 28px 1fr;
+    min-height: 0;
+    padding: 12px 0 18px;
+  }
+
+  .timeline-node {
+    left: -28px;
+  }
+
+  .timeline-entry h3 {
+    font-size: 1.15rem;
+  }
+
+  .timeline-summary {
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .project-screen--reverse .project-copy,
+  .project-screen--reverse .project-cards {
+    order: initial;
+  }
+
+  .project-cards {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 40px;
+  }
+
+  .project-card,
+  .project-card:hover {
+    grid-template-rows: 180px auto;
+    min-height: 0;
+    transform: none;
+  }
+
+  .project-card__body {
+    min-height: 280px;
+  }
+
+  .contact-details {
+    margin-top: 36px;
+  }
+
+  .contact-details > p {
+    margin-bottom: 28px;
+    font-size: 0.98rem;
+  }
+
+  .contact-placeholder span {
+    display: block;
+  }
+
+  .contact-placeholder small {
+    display: block;
+    margin-top: 4px;
+  }
+
+  .site-footer {
+    position: static;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    padding-bottom: 24px;
+  }
+
+  .site-footer > span:last-child {
+    grid-column: 1 / -1;
   }
 }
 

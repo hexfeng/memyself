@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:standalone": "npm run build && node scripts/standalone-html.mjs",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:standalone": "node --test scripts/standalone-html.node-test.mjs",
     "test:watch": "vitest",
     "lint": "tsc -b --pretty false"
   },

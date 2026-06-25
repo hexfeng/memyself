@@ -9,3 +9,16 @@ describe("experience timeline interaction styles", () => {
     expect(styles).not.toContain(".compact-timeline:hover .timeline-entry");
   });
 });
+
+describe("mobile portfolio layout", () => {
+  it("removes the desktop minimum width and stacks project cards", () => {
+    expect(styles).toContain("@media (max-width: 767px)");
+    expect(styles).toContain("min-width: 0;");
+    expect(styles).toContain("grid-template-columns: 1fr;");
+    expect(styles).toContain(".desktop-nav,\n  .resume-link");
+    expect(styles).toContain("  [data-reveal] {\n    opacity: 1;");
+    expect(styles).toContain(
+      "  .hero-identity {\n    width: 100%;\n    max-width: 100%;"
+    );
+  });
+});
