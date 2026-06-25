@@ -510,7 +510,7 @@ a {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .compact-timeline:hover .timeline-entry {
+  .compact-timeline:has(.timeline-entry:hover) .timeline-entry {
     opacity: 0.74;
   }
 
