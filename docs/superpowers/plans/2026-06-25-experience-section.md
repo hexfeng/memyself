@@ -19,18 +19,18 @@
 - Modify `src/styles.css` — refine the two-column timeline and implement contextual hover/reduced-motion behavior.
 - Create `docs/design-audits/experience-2026-06-25/experience-design-qa.md` — record visual verification evidence and findings.
 
-## Required Content Gate
+## Verified Date Source
 
-Implementation must not begin until the site owner supplies these six verified date ranges:
+The site owner supplied `C:/Users/PC/Downloads/Resume_Xiaoyu Feng_PMP.pdf`. Text extraction and visual inspection confirm these ranges:
 
-1. Huawei Canada · Waterloo Research Center
-2. Huawei Greece
-3. Huawei software engineering
-4. Rexel Canada
-5. University of New South Wales
-6. University of Toronto
+1. Huawei Canada · Waterloo Research Center: Jun 2025–Present
+2. Huawei Greece: Aug 2022–Nov 2024
+3. Huawei software engineering: Aug 2021–Jul 2022
+4. Rexel Canada: Sep 2020–Mar 2021
+5. University of New South Wales: Feb 2018–Jul 2020
+6. University of Toronto: Sep 2013–Jun 2017
 
-Use four-digit years. Use `Present` only for the current role. Do not infer dates from role order, public profiles, or search snippets. Once supplied, use the same numeric ranges in English and Chinese content.
+Use month-and-year precision throughout. Use `Present` only for the current role. Do not replace these values with dates from the superseded resume at `D:/resume/Xiaoyu Feng-PMP-PM.pdf`.
 
 ### Task 1: Introduce a Verified Timeline Content Model
 
@@ -48,7 +48,7 @@ Create `src/content.test.ts`:
 import { describe, expect, it } from "vitest";
 import { content } from "./content";
 
-const YEAR = /^\d{4}$/;
+const DATE = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}$/;
 
 describe("experience content", () => {
   it("keeps English and Chinese timelines aligned", () => {
@@ -57,8 +57,8 @@ describe("experience content", () => {
 
     expect(english).toHaveLength(6);
     expect(chinese).toHaveLength(6);
-    expect(chinese.map((item) => [item.startYear, item.endYear])).toEqual(
-      english.map((item) => [item.startYear, item.endYear])
+    expect(chinese.map((item) => [item.startDate, item.endDate])).toEqual(
+      english.map((item) => [item.startDate, item.endDate])
     );
   });
 
@@ -66,14 +66,15 @@ describe("experience content", () => {
     const items = content.en.experience.items;
 
     for (const item of items) {
-      expect(item.startYear).toMatch(YEAR);
-      expect(item.endYear === "Present" || YEAR.test(item.endYear)).toBe(true);
+      expect(item.startDate).toMatch(DATE);
+      expect(item.endDate === "Present" || DATE.test(item.endDate)).toBe(true);
       expect(item.stage.length).toBeGreaterThan(0);
     }
 
     expect(items[0]).toMatchObject({
       organization: "Huawei Canada · Waterloo Research Center",
-      endYear: "Present",
+      startDate: "Jun 2025",
+      endDate: "Present",
       stage: "Organizational scale"
     });
     expect(items.at(-1)?.organization).toBe("University of Toronto");
@@ -89,7 +90,7 @@ Run:
 npm test -- src/content.test.ts
 ```
 
-Expected: FAIL because timeline items still expose `period` and do not expose `startYear`, `endYear`, or `stage`.
+Expected: FAIL because timeline items still expose `period` and do not expose `startDate`, `endDate`, or `stage`.
 
 - [ ] **Step 3: Replace `TimelineItem.period` with explicit fields**
 
@@ -97,8 +98,8 @@ Change the type in `src/content.ts` to:
 
 ```ts
 type TimelineItem = {
-  startYear: string;
-  endYear: string;
+  startDate: string;
+  endDate: string;
   stage: string;
   organization: string;
   role: string;
@@ -108,7 +109,7 @@ type TimelineItem = {
 
 - [ ] **Step 4: Rewrite both locale arrays in reverse chronological order**
 
-For every entry, copy the exact range supplied at the Required Content Gate into `startYear` and `endYear`. Use these English stage values:
+For every entry, copy the exact range from the Verified Date Source into `startDate` and `endDate`. Use these English stage values:
 
 ```ts
 [
@@ -134,7 +135,20 @@ Use these Chinese stage values in the same order:
 ]
 ```
 
-Preserve each existing organization, role, and one-sentence summary. Write each owner-supplied four-digit year directly as a string literal in `content.ts`; do not introduce a runtime date map, derive dates, or leave temporary values in source.
+Preserve each existing organization, role, and one-sentence summary. Write these exact date strings directly into both locale arrays:
+
+```ts
+[
+  ["Jun 2025", "Present"],
+  ["Aug 2022", "Nov 2024"],
+  ["Aug 2021", "Jul 2022"],
+  ["Sep 2020", "Mar 2021"],
+  ["Feb 2018", "Jul 2020"],
+  ["Sep 2013", "Jun 2017"]
+]
+```
+
+Do not introduce a runtime date map, derive dates, or localize month names differently between the two currently inactive content arrays.
 
 - [ ] **Step 5: Run the focused test and verify it passes**
 
@@ -178,7 +192,7 @@ it("renders a reverse-chronological experience timeline with explicit dates and 
 
   for (const entry of entries) {
     expect(entry.querySelector(".timeline-period")?.textContent).toMatch(
-      /^\d{4}–(?:\d{4}|Present) · .+/
+      /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}–(?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}|Present) · .+/
     );
     expect(entry).not.toHaveAttribute("tabindex");
   }
@@ -211,7 +225,7 @@ Replace the timeline mapping inside `Experience` with:
       <span className="timeline-node" aria-hidden="true" />
       <div className="timeline-entry__content">
         <p className="timeline-period">
-          <span>{item.startYear}–{item.endYear}</span>
+          <span>{item.startDate}–{item.endDate}</span>
           <span aria-hidden="true"> · </span>
           <span>{item.stage}</span>
         </p>
@@ -481,7 +495,7 @@ git commit -m "Verify experience section design"
 
 ## Completion Checklist
 
-- [ ] The owner supplied all six date ranges and no date was inferred.
+- [ ] All six date ranges match the visually verified latest resume and no date was inferred.
 - [ ] English and Chinese timelines share the same date ranges and order.
 - [ ] The current role is first and undergraduate education is last.
 - [ ] Each entry contains date range, stage, organization, role or degree, and one sentence.

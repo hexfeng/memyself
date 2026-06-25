@@ -15,20 +15,27 @@ Education and professional experience remain on one continuous timeline. Entries
 
 Each entry contains exactly:
 
-1. Verified year range and a short stage label
+1. Verified month-and-year range and a short stage label
 2. Organization
 3. Role or degree
 4. One-sentence summary
 
 The period line uses this format:
 
-`YYYY–YYYY · Stage label`
+`Mon YYYY–Mon YYYY · Stage label`
 
 The current position may use:
 
-`YYYY–Present · Organizational scale`
+`Jun 2025–Present · Organizational scale`
 
-Real dates must be confirmed by the site owner before implementation. The design must not infer or publish unverified dates.
+Dates are verified against `Resume_Xiaoyu Feng_PMP.pdf`, supplied on June 25, 2026. The approved ranges are:
+
+1. Huawei Canada · Waterloo Research Center: Jun 2025–Present
+2. Huawei Greece: Aug 2022–Nov 2024
+3. Huawei software engineering: Aug 2021–Jul 2022
+4. Rexel Canada: Sep 2020–Mar 2021
+5. University of New South Wales: Feb 2018–Jul 2020
+6. University of Toronto: Sep 2013–Jun 2017
 
 The approved entry order is:
 
@@ -119,8 +126,8 @@ Update the timeline item data shape so dates and stage labels are separate field
 
 The timeline item model uses these conceptual fields:
 
-- `startYear`
-- `endYear` or `isCurrent`
+- `startDate`
+- `endDate` or `isCurrent`
 - `stage`
 - `organization`
 - `role`
