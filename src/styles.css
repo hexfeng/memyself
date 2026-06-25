@@ -411,39 +411,45 @@ a {
 }
 
 .experience-layout {
-  grid-template-columns: minmax(320px, 0.74fr) minmax(650px, 1.26fr);
-  gap: 8vw;
+  grid-template-columns: minmax(320px, 0.78fr) minmax(650px, 1.22fr);
+  gap: clamp(64px, 7vw, 110px);
 }
 
 .compact-timeline {
   position: relative;
   display: grid;
-  gap: 0;
   padding-left: 35px;
 }
 
 .compact-timeline::before {
   position: absolute;
-  top: 12px;
-  bottom: 12px;
+  top: 14px;
+  bottom: 14px;
   left: 4px;
   width: 1px;
   content: "";
-  background: rgba(16, 44, 61, 0.26);
+  background: rgba(16, 44, 61, 0.24);
 }
 
 .timeline-entry {
   position: relative;
   display: grid;
   grid-template-columns: 38px 1fr;
-  gap: 12px;
+  gap: 14px;
   min-height: 112px;
-  padding: 8px 0 14px;
-  border-bottom: 1px solid rgba(16, 44, 61, 0.15);
+  padding: 10px 0 16px;
+  border-bottom: 1px solid rgba(16, 44, 61, 0.14);
+  transition:
+    opacity 210ms ease,
+    transform 210ms ease;
 }
 
 .timeline-entry:last-child {
   border-bottom: 0;
+}
+
+.timeline-entry__content {
+  min-width: 0;
 }
 
 .timeline-number {
@@ -464,6 +470,9 @@ a {
   border-radius: 50%;
   background: var(--teal);
   box-shadow: 0 0 0 1px rgba(16, 44, 61, 0.25);
+  transition:
+    transform 210ms ease,
+    box-shadow 210ms ease;
 }
 
 .timeline-period,
@@ -477,6 +486,7 @@ a {
   font-size: 0.66rem;
   font-weight: 600;
   letter-spacing: 0.09em;
+  line-height: 1.35;
   text-transform: uppercase;
 }
 
@@ -497,6 +507,24 @@ a {
   color: var(--ink-soft);
   font-size: 0.72rem;
   line-height: 1.42;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .compact-timeline:hover .timeline-entry {
+    opacity: 0.74;
+  }
+
+  .compact-timeline .timeline-entry:hover {
+    opacity: 1;
+    transform: translateX(5px);
+  }
+
+  .timeline-entry:hover .timeline-node {
+    transform: scale(1.28);
+    box-shadow:
+      0 0 0 1px rgba(16, 44, 61, 0.25),
+      0 0 0 5px rgba(63, 125, 130, 0.13);
+  }
 }
 
 .project-layout {
@@ -735,7 +763,7 @@ a {
 
 @media (max-height: 850px) {
   .timeline-entry {
-    min-height: 88px;
+    min-height: 96px;
     padding-top: 5px;
     padding-bottom: 9px;
   }
@@ -812,5 +840,10 @@ a {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .timeline-entry,
+  .timeline-node {
+    transform: none !important;
   }
 }
