@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { content } from "./content";
+import huaweiLogo from "./assets/logos/huawei.png?inline";
+import rexelLogo from "./assets/logos/rexel.svg?inline";
+import unswLogo from "./assets/logos/unsw.png?inline";
+import utorontoLogo from "./assets/logos/utoronto.svg?inline";
 import "./styles.css";
 
 const copy = content.en;
 const mountainImage = "/images/mountain-background-web.jpg";
+const experienceLogos = {
+  huawei: { src: huaweiLogo, alt: "Huawei logo" },
+  rexel: { src: rexelLogo, alt: "Rexel logo" },
+  unsw: { src: unswLogo, alt: "UNSW logo" },
+  utoronto: { src: utorontoLogo, alt: "University of Toronto logo" }
+};
 
 type CaseItem = {
   title: string;
@@ -159,11 +169,29 @@ function Experience() {
         </div>
         <div className="compact-timeline" data-reveal>
           {copy.experience.items.map((item, index) => (
-            <article className="timeline-entry" key={`${item.organization}-${item.role}`}>
-              <span className="timeline-number">0{index + 1}</span>
+            <article
+              className="timeline-entry"
+              key={`${item.organization}-${item.role}`}
+              data-timeline-index={index}
+            >
+              <div className="timeline-marker">
+                <span className="timeline-number">0{index + 1}</span>
+                <span className={`timeline-logo timeline-logo--${item.logo}`}>
+                  <img
+                    src={experienceLogos[item.logo].src}
+                    alt={experienceLogos[item.logo].alt}
+                  />
+                </span>
+              </div>
               <span className="timeline-node" aria-hidden="true" />
-              <div>
-                <p className="timeline-period">{item.period}</p>
+              <div className="timeline-entry__content">
+                <p className="timeline-period">
+                  <span>
+                    {item.startDate}–{item.endDate}
+                  </span>
+                  <span aria-hidden="true"> · </span>
+                  <span>{item.stage}</span>
+                </p>
                 <h3>{item.organization}</h3>
                 <p className="timeline-role">{item.role}</p>
                 <p className="timeline-summary">{item.summary}</p>

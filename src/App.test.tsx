@@ -19,15 +19,28 @@ describe("desktop portfolio redesign", () => {
     expect(screen.queryByRole("link", { name: "中文" })).not.toBeInTheDocument();
   });
 
-  it("renders six vertical experience entries in one experience section", () => {
+  it("renders a reverse-chronological experience timeline with explicit dates and stages", () => {
     render(<App />);
 
     const experience = screen.getByRole("region", {
       name: /a career built across data, technology, markets, and organizations/i
     });
-    expect(within(experience).getAllByRole("article")).toHaveLength(6);
-    expect(within(experience).getByText("University of Toronto")).toBeInTheDocument();
-    expect(within(experience).getByText("Huawei Canada · Waterloo Research Center")).toBeInTheDocument();
+    const entries = within(experience).getAllByRole("article");
+
+    expect(entries).toHaveLength(6);
+    expect(within(experience).getAllByRole("img")).toHaveLength(6);
+    expect(within(experience).getAllByAltText("Huawei logo")).toHaveLength(3);
+    expect(
+      within(entries[0]).getByText("Huawei Canada · Waterloo Research Center")
+    ).toBeInTheDocument();
+    expect(within(entries[5]).getByText("University of Toronto")).toBeInTheDocument();
+
+    for (const entry of entries) {
+      expect(entry.querySelector(".timeline-period")?.textContent).toMatch(
+        /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}–(?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}|Present) · .+/
+      );
+      expect(entry).not.toHaveAttribute("tabindex");
+    }
   });
 
   it("uses three image-led cards in every project screen", () => {

@@ -1,10 +1,13 @@
 export type Locale = "en" | "zh";
 
 type TimelineItem = {
-  period: string;
+  startDate: string;
+  endDate: string;
+  stage: string;
   organization: string;
   role: string;
   summary: string;
+  logo: "huawei" | "rexel" | "unsw" | "utoronto";
 };
 
 type CaseItem = {
@@ -83,40 +86,58 @@ export const content: Record<Locale, Content> = {
         "Each chapter added a new layer: analytical judgment, technical depth, commercial ownership, and the operating systems needed to scale research.",
       items: [
         {
-          period: "Undergraduate",
-          organization: "University of Toronto",
-          role: "B.Sc. in Computer Science & Statistics",
-          summary: "Built a dual foundation in computational thinking and quantitative analysis."
-        },
-        {
-          period: "Graduate",
-          organization: "University of New South Wales",
-          role: "Master of Statistics",
-          summary: "Deepened the analytical discipline used to frame complex business decisions."
-        },
-        {
-          period: "Career foundation",
-          organization: "Rexel Canada",
-          role: "Data Analyst",
-          summary: "Used supplier and performance data to identify material commercial opportunities."
-        },
-        {
-          period: "Technical depth",
-          organization: "Huawei",
-          role: "Software Engineer",
-          summary: "Turned telecom requirements into reliable 5G software and more efficient engineering workflows."
-        },
-        {
-          period: "Market ownership",
-          organization: "Huawei Greece",
-          role: "Product Manager, Wireless Network",
-          summary: "Connected customer priorities, product roadmaps, and GTM execution across national operators."
-        },
-        {
-          period: "Organizational scale",
+          startDate: "Jun 2025",
+          endDate: "Present",
+          stage: "Organizational scale",
           organization: "Huawei Canada · Waterloo Research Center",
           role: "COO / Operations Manager",
-          summary: "Builds the operating environment for AI research, collaboration, governance, and growth."
+          summary: "Builds the operating environment for AI research, collaboration, governance, and growth.",
+          logo: "huawei"
+        },
+        {
+          startDate: "Aug 2022",
+          endDate: "Nov 2024",
+          stage: "Market ownership",
+          organization: "Huawei Greece",
+          role: "Product Manager, Wireless Network",
+          summary: "Connected customer priorities, product roadmaps, and GTM execution across national operators.",
+          logo: "huawei"
+        },
+        {
+          startDate: "Aug 2021",
+          endDate: "Jul 2022",
+          stage: "Technical depth",
+          organization: "Huawei",
+          role: "Software Engineer",
+          summary: "Turned telecom requirements into reliable 5G software and more efficient engineering workflows.",
+          logo: "huawei"
+        },
+        {
+          startDate: "Sep 2020",
+          endDate: "Mar 2021",
+          stage: "Career foundation",
+          organization: "Rexel Canada",
+          role: "Data Analyst",
+          summary: "Used supplier and performance data to identify material commercial opportunities.",
+          logo: "rexel"
+        },
+        {
+          startDate: "Feb 2018",
+          endDate: "Jul 2020",
+          stage: "Graduate study",
+          organization: "University of New South Wales",
+          role: "Master of Statistics",
+          summary: "Deepened the analytical discipline used to frame complex business decisions.",
+          logo: "unsw"
+        },
+        {
+          startDate: "Sep 2013",
+          endDate: "Jun 2017",
+          stage: "Undergraduate foundation",
+          organization: "University of Toronto",
+          role: "B.Sc. in Computer Science & Statistics",
+          summary: "Built a dual foundation in computational thinking and quantitative analysis.",
+          logo: "utoronto"
         }
       ]
     },
@@ -306,40 +327,58 @@ export const content: Record<Locale, Content> = {
       intro: "每个阶段都增加了一层能力：分析判断、技术深度、商业责任，以及支持研究规模化的运营体系。",
       items: [
         {
-          period: "本科",
-          organization: "多伦多大学",
-          role: "计算机科学与统计学理学学士",
-          summary: "建立计算思维与定量分析的双重基础。"
-        },
-        {
-          period: "硕士",
-          organization: "新南威尔士大学",
-          role: "统计学硕士",
-          summary: "强化用于复杂商业决策的分析方法与严谨性。"
-        },
-        {
-          period: "职业起点",
-          organization: "Rexel Canada",
-          role: "数据分析师",
-          summary: "通过供应商与绩效数据识别具有实际价值的商业机会。"
-        },
-        {
-          period: "技术深度",
-          organization: "华为",
-          role: "软件工程师",
-          summary: "将通信需求转化为可靠的 5G 软件能力与更高效的工程流程。"
-        },
-        {
-          period: "市场责任",
-          organization: "华为希腊",
-          role: "无线产品经理",
-          summary: "在全国级运营商市场连接客户需求、产品路线图与 GTM 执行。"
-        },
-        {
-          period: "组织规模化",
+          startDate: "Jun 2025",
+          endDate: "Present",
+          stage: "组织规模化",
           organization: "华为加拿大 · 滑铁卢研究中心",
           role: "COO / 运营经理",
-          summary: "建设支持 AI 研究、协作、治理与组织成长的运营环境。"
+          summary: "建设支持 AI 研究、协作、治理与组织成长的运营环境。",
+          logo: "huawei"
+        },
+        {
+          startDate: "Aug 2022",
+          endDate: "Nov 2024",
+          stage: "市场责任",
+          organization: "华为希腊",
+          role: "无线产品经理",
+          summary: "在全国级运营商市场连接客户需求、产品路线图与 GTM 执行。",
+          logo: "huawei"
+        },
+        {
+          startDate: "Aug 2021",
+          endDate: "Jul 2022",
+          stage: "技术深度",
+          organization: "华为",
+          role: "软件工程师",
+          summary: "将通信需求转化为可靠的 5G 软件能力与更高效的工程流程。",
+          logo: "huawei"
+        },
+        {
+          startDate: "Sep 2020",
+          endDate: "Mar 2021",
+          stage: "职业基础",
+          organization: "Rexel Canada",
+          role: "数据分析师",
+          summary: "通过供应商与绩效数据识别具有实际价值的商业机会。",
+          logo: "rexel"
+        },
+        {
+          startDate: "Feb 2018",
+          endDate: "Jul 2020",
+          stage: "研究生阶段",
+          organization: "新南威尔士大学",
+          role: "统计学硕士",
+          summary: "强化用于复杂商业决策的分析方法与严谨性。",
+          logo: "unsw"
+        },
+        {
+          startDate: "Sep 2013",
+          endDate: "Jun 2017",
+          stage: "本科基础",
+          organization: "多伦多大学",
+          role: "计算机科学与统计学理学学士",
+          summary: "建立计算思维与定量分析的双重基础。",
+          logo: "utoronto"
         }
       ]
     },
