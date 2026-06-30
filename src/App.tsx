@@ -1,10 +1,20 @@
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { content } from "./content";
+import huaweiLogo from "./assets/logos/huawei.png?inline";
+import rexelLogo from "./assets/logos/rexel.svg?inline";
+import unswLogo from "./assets/logos/unsw.png?inline";
+import utorontoLogo from "./assets/logos/utoronto.svg?inline";
 import "./styles.css";
 
 const copy = content.en;
 const mountainImage = "/images/mountain-background-web.jpg";
+const experienceLogos = {
+  huawei: { src: huaweiLogo, alt: "Huawei logo" },
+  rexel: { src: rexelLogo, alt: "Rexel logo" },
+  unsw: { src: unswLogo, alt: "UNSW logo" },
+  utoronto: { src: utorontoLogo, alt: "University of Toronto logo" }
+};
 
 type CaseItem = {
   title: string;
@@ -164,7 +174,15 @@ function Experience() {
               key={`${item.organization}-${item.role}`}
               data-timeline-index={index}
             >
-              <span className="timeline-number">0{index + 1}</span>
+              <div className="timeline-marker">
+                <span className="timeline-number">0{index + 1}</span>
+                <span className={`timeline-logo timeline-logo--${item.logo}`}>
+                  <img
+                    src={experienceLogos[item.logo].src}
+                    alt={experienceLogos[item.logo].alt}
+                  />
+                </span>
+              </div>
               <span className="timeline-node" aria-hidden="true" />
               <div className="timeline-entry__content">
                 <p className="timeline-period">

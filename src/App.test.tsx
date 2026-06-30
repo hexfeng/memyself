@@ -28,6 +28,8 @@ describe("desktop portfolio redesign", () => {
     const entries = within(experience).getAllByRole("article");
 
     expect(entries).toHaveLength(6);
+    expect(within(experience).getAllByRole("img")).toHaveLength(6);
+    expect(within(experience).getAllByAltText("Huawei logo")).toHaveLength(3);
     expect(
       within(entries[0]).getByText("Huawei Canada · Waterloo Research Center")
     ).toBeInTheDocument();
