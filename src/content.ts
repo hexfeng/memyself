@@ -148,6 +148,12 @@ export const content = {
         result: 'Cross-functional alignment',
         secondary: 'Additional public outcomes to be added',
       },
+      {
+        title: 'Additional Strategic GTM Program',
+        summary: 'Reserved for a fourth strategic business project once public details are ready.',
+        result: 'Outcome to be added',
+        secondary: 'Final public metrics can replace this placeholder',
+      },
     ] satisfies CaseStudy[],
   },
   transformation: {

@@ -1,5 +1,6 @@
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { gsap } from 'gsap';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { content, sections, type CaseStudy, type ExperienceItem, type SectionId } from './content';
 import './styles.css';
 
@@ -25,7 +26,10 @@ export function App() {
     document.title = 'Xiaoyu Feng - Strategy & Transformation';
 
     if (window.location.hash) {
-      const scrollToHash = () => document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
+      const scrollToHash = () => {
+        const target = document.getElementById(window.location.hash.slice(1));
+        if (target) window.scrollTo({ top: target.offsetTop, behavior: 'auto' });
+      };
       window.requestAnimationFrame(() => window.requestAnimationFrame(scrollToHash));
       window.setTimeout(scrollToHash, 140);
     }
@@ -55,9 +59,19 @@ export function App() {
 
   useEffect(() => {
     let locked = false;
+    let wheelDelta = 0;
 
     const jumpToSection = (event: WheelEvent) => {
-      if (Math.abs(event.deltaY) < 24 || locked) return;
+      if (event.ctrlKey) return;
+
+      event.preventDefault();
+      if (locked) return;
+
+      wheelDelta += event.deltaY;
+      if (Math.abs(wheelDelta) < 80) return;
+
+      const direction = Math.sign(wheelDelta);
+      wheelDelta = 0;
 
       const nodes = sections
         .map((section) => document.getElementById(section.id))
@@ -68,13 +82,12 @@ export function App() {
 
       if (currentIndex === undefined) return;
 
-      const nextIndex = Math.min(nodes.length - 1, Math.max(0, currentIndex + Math.sign(event.deltaY)));
+      const nextIndex = Math.min(nodes.length - 1, Math.max(0, currentIndex + direction));
       if (nextIndex === currentIndex) return;
 
-      event.preventDefault();
       locked = true;
       const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-      nodes[nextIndex].scrollIntoView({ behavior });
+      window.scrollTo({ top: nodes[nextIndex].offsetTop, behavior });
       window.setTimeout(() => {
         locked = false;
       }, 900);
@@ -328,6 +341,10 @@ function ProjectSection({
   cases: CaseStudy[];
   reverse?: boolean;
 }) {
+  if (id === 'gtm') {
+    return <GtmProjectSection id={id} label={label} title={title} intro={intro} cases={cases} />;
+  }
+
   return (
     <section
       id={id}
@@ -355,6 +372,170 @@ function ProjectSection({
         </div>
       </div>
     </section>
+  );
+}
+
+function GtmProjectSection({
+  id,
+  label,
+  title,
+  intro,
+  cases,
+}: {
+  id: SectionId;
+  label: string;
+  title: string;
+  intro: string;
+  cases: CaseStudy[];
+}) {
+  const projects = cases.slice(0, 4);
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [focusedProject, setFocusedProject] = useState<number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const activeProjectIndex = hoveredProject ?? focusedProject ?? selectedProject;
+  const activeProject = activeProjectIndex === null ? null : projects[activeProjectIndex];
+
+  return (
+    <section id={id} className="screen project-screen gtm-screen" aria-labelledby={`${id}-title`}>
+      <div className="page-shell screen-content gtm-layout">
+        <GtmMotionGrid
+          projects={projects}
+          activeProjectIndex={activeProjectIndex}
+          onHover={setHoveredProject}
+          onFocus={setFocusedProject}
+          onSelect={setSelectedProject}
+        />
+        <aside className="gtm-detail" aria-label="GTM project detail" aria-live="polite">
+          {activeProject ? (
+            <>
+              <p className="section-label">{String(activeProjectIndex! + 1).padStart(2, '0')} - GTM Project</p>
+              <h2 id={`${id}-title`}>{activeProject.title}</h2>
+              <p>{activeProject.summary}</p>
+              <div className="gtm-detail__result">
+                <strong>{activeProject.result}</strong>
+                <span>{activeProject.secondary}</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="section-label">{label}</p>
+              <h2 id={`${id}-title`}>{title}</h2>
+              <p>{intro}</p>
+            </>
+          )}
+        </aside>
+      </div>
+    </section>
+  );
+}
+
+function GtmMotionGrid({
+  projects,
+  activeProjectIndex,
+  onHover,
+  onFocus,
+  onSelect,
+}: {
+  projects: CaseStudy[];
+  activeProjectIndex: number | null;
+  onHover: (index: number | null) => void;
+  onFocus: (index: number | null) => void;
+  onSelect: (index: number) => void;
+}) {
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mouseXRef = useRef(window.innerWidth / 2);
+  const motionItems = useMemo(
+    () =>
+      Array.from({ length: 28 }, (_, index) => ({
+        item: projects[index % projects.length],
+        projectIndex: index % projects.length,
+      })),
+    [projects],
+  );
+
+  useEffect(() => {
+    gsap.ticker.lagSmoothing(0);
+
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseXRef.current = event.clientX;
+    };
+
+    const updateMotion = () => {
+      const maxMoveAmount = 260;
+      const baseDuration = 0.8;
+      const inertiaFactors = [0.6, 0.4, 0.3, 0.2];
+
+      rowRefs.current.forEach((row, index) => {
+        if (!row) return;
+
+        const direction = index % 2 === 0 ? 1 : -1;
+        const moveAmount = ((mouseXRef.current / window.innerWidth) * maxMoveAmount - maxMoveAmount / 2) * direction;
+
+        gsap.to(row, {
+          x: moveAmount,
+          duration: baseDuration + inertiaFactors[index % inertiaFactors.length],
+          ease: 'power3.out',
+          overwrite: 'auto',
+        });
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    gsap.ticker.add(updateMotion);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      gsap.ticker.remove(updateMotion);
+    };
+  }, []);
+
+  return (
+    <div className="gtm-motion">
+      <div className="gtm-motion__container">
+        {Array.from({ length: 4 }, (_, rowIndex) => (
+          <div
+            className="gtm-motion__row"
+            key={rowIndex}
+            ref={(node) => {
+              rowRefs.current[rowIndex] = node;
+            }}
+          >
+            {motionItems.slice(rowIndex * 7, rowIndex * 7 + 7).map(({ item, projectIndex }, itemIndex) => (
+              <button
+                className="gtm-motion-card"
+                type="button"
+                key={`${rowIndex}-${itemIndex}`}
+                data-active={activeProjectIndex === projectIndex}
+                data-project-index={projectIndex}
+                aria-label={`Show GTM project ${projectIndex + 1}: ${item.title}`}
+                onMouseEnter={() => onHover(projectIndex)}
+                onMouseLeave={() => onHover(null)}
+                onMouseDown={(event) => event.preventDefault()}
+                onPointerUp={() => {
+                  onHover(null);
+                  onFocus(null);
+                  onSelect(projectIndex);
+                }}
+                onFocus={() => {
+                  onHover(null);
+                  onFocus(projectIndex);
+                }}
+                onBlur={() => onFocus(null)}
+                onClick={() => {
+                  onHover(null);
+                  onFocus(null);
+                  onSelect(projectIndex);
+                }}
+              >
+                <span className="gtm-motion-card__number">{String(projectIndex + 1).padStart(2, '0')}</span>
+                <strong>{item.title}</strong>
+                <span>{item.result}</span>
+              </button>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
