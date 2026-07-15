@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { content, sections, type CaseStudy, type ExperienceItem, type SectionId } from './content';
 import './styles.css';
@@ -161,7 +161,7 @@ function HeaderLink({
 
 function SectionProgress({ currentSection }: { currentSection: SectionId }) {
   return (
-    <nav className="section-progress" aria-label="Section progress">
+    <nav className="section-progress" aria-label="Section progress" data-hidden={currentSection === 'gtm'}>
       <span className="section-progress__line" aria-hidden="true" />
       {sections.map((section) => (
         <a
@@ -328,6 +328,14 @@ function ProjectSection({
   cases: CaseStudy[];
   reverse?: boolean;
 }) {
+  if (id === 'gtm') {
+    return (
+      <section id={id} className="screen project-screen project-screen--showcase" aria-labelledby={`${id}-title`}>
+        <StrategicProjectShowcase label={label} title={title} intro={intro} cases={cases} />
+      </section>
+    );
+  }
+
   return (
     <section
       id={id}
@@ -355,6 +363,129 @@ function ProjectSection({
         </div>
       </div>
     </section>
+  );
+}
+
+function StrategicProjectShowcase({
+  label,
+  title,
+  intro,
+  cases,
+}: {
+  label: string;
+  title: string;
+  intro: string;
+  cases: CaseStudy[];
+}) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const active = cases[activeIndex];
+  const previous = previousIndex === null ? null : cases[previousIndex];
+
+  function selectProject(nextIndex: number, nextDirection: 1 | -1) {
+    if (nextIndex === activeIndex) return;
+    setPreviousIndex(activeIndex);
+    setDirection(nextDirection);
+    setActiveIndex(nextIndex);
+  }
+
+  function moveProject(step: 1 | -1) {
+    selectProject((activeIndex + step + cases.length) % cases.length, step);
+  }
+
+  return (
+    <div
+      className="page-shell screen-content strategic-projects"
+      role="group"
+      aria-label="Strategic project showcase"
+    >
+      <div className="strategic-projects__header">
+        <SectionCopy label={label} title={title} intro={intro} titleId="gtm-title" />
+        <div className="strategic-projects__controls" aria-label="Project controls">
+          <button type="button" aria-label="Previous project" onClick={() => moveProject(-1)}>
+            <ArrowLeft aria-hidden="true" />
+          </button>
+          <button type="button" aria-label="Next project" onClick={() => moveProject(1)}>
+            <ArrowRight aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      <div
+        className="strategic-showcase"
+        data-direction={direction === 1 ? 'next' : 'previous'}
+        data-switching={previous ? 'true' : 'false'}
+      >
+        <div key={`copy-${active.title}`} className="strategic-showcase__copy-shell">
+          <div className="strategic-showcase__copy-stage" aria-live="polite">
+            {previous ? (
+              <ProjectShowcaseCopy project={previous} index={previousIndex!} state="exit" />
+            ) : null}
+            <ProjectShowcaseCopy key={active.title} project={active} index={activeIndex} state="enter" />
+          </div>
+        </div>
+
+        <div key={`media-${active.title}`} className="strategic-showcase__media" aria-hidden="true">
+          {previous ? (
+            <img
+              className="strategic-showcase__image strategic-showcase__image--exit"
+              src={previous.image}
+              alt=""
+            />
+          ) : null}
+          <img
+            key={active.title}
+            className="strategic-showcase__image strategic-showcase__image--enter"
+            src={active.image}
+            alt=""
+          />
+        </div>
+      </div>
+
+      <div className="strategic-showcase__progress" aria-label="Select a strategic project">
+        {cases.map((project, index) => (
+          <button
+            key={project.title}
+            type="button"
+            aria-label={`Show project ${index + 1}: ${project.title}`}
+            aria-current={index === activeIndex ? 'true' : undefined}
+            onClick={() => selectProject(index, index > activeIndex ? 1 : -1)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProjectShowcaseCopy({
+  project,
+  index,
+  state,
+}: {
+  project: CaseStudy;
+  index: number;
+  state: 'enter' | 'exit';
+}) {
+  return (
+    <article className={`strategic-showcase__copy strategic-showcase__copy--${state}`} aria-hidden={state === 'exit'}>
+      <p className="strategic-showcase__eyebrow">
+        {String(index + 1).padStart(2, '0')} / Selected project
+      </p>
+      <div className="strategic-showcase__statement">
+        <h3>{project.title}</h3>
+        <p>{project.summary}</p>
+      </div>
+      <div className="strategic-showcase__footer">
+        <div>
+          <strong>{project.result}</strong>
+          <span>{project.secondary}</span>
+        </div>
+        <a href="#contact" tabIndex={state === 'exit' ? -1 : undefined}>
+          Discuss project <ArrowUpRight size={17} aria-hidden="true" />
+        </a>
+      </div>
+    </article>
   );
 }
 

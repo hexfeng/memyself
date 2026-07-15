@@ -66,6 +66,24 @@ describe('App', () => {
     expect(entries[2]).toHaveAttribute('data-active', 'true');
   });
 
+  test('switches strategic projects while leaving other project sections static', () => {
+    render(<App />);
+
+    const showcase = screen.getByRole('group', { name: 'Strategic project showcase' });
+    expect(within(showcase).getByRole('heading', { name: 'NOVA 5G FWA Commercial Launch' })).toBeInTheDocument();
+
+    fireEvent.click(within(showcase).getByRole('button', { name: 'Next project' }));
+    expect(within(showcase).getByRole('heading', { name: 'Antenna Modernization Strategy' })).toBeInTheDocument();
+
+    fireEvent.click(within(showcase).getByRole('button', { name: 'Show project 3: Vodafone Spring 6' }));
+    expect(within(showcase).getByRole('heading', { name: 'Vodafone Spring 6' })).toBeInTheDocument();
+
+    const transformation = screen.getByRole('region', {
+      name: 'Building the operating system for AI research execution.',
+    });
+    expect(transformation.querySelectorAll('.project-card')).toHaveLength(3);
+  });
+
   test('scrolls to an initial hash after React mounts the sections', async () => {
     history.replaceState(null, '', '/#experience');
     const scrollIntoView = vi.fn();

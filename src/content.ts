@@ -22,6 +22,7 @@ export type CaseStudy = {
   summary: string;
   result: string;
   secondary: string;
+  image?: string;
 };
 
 export const sections: Array<{ id: SectionId; label: string }> = [
@@ -133,6 +134,7 @@ export const content = {
           'Supported the strategy and commercial launch of a 5G fixed wireless access proposition for the Greek market.',
         result: '15K subscribers',
         secondary: 'EUR 9M+ expected revenue within the launch trajectory',
+        image: '/images/mountain-background-web.jpg',
       },
       {
         title: 'Antenna Modernization Strategy',
@@ -140,6 +142,7 @@ export const content = {
           'Consolidated customer requirements into a scalable product roadmap spanning more than 30 antenna products.',
         result: '20%+ order growth',
         secondary: '70%+ SDIF adoption',
+        image: '/hero-mountain.png',
       },
       {
         title: 'Vodafone Spring 6',
@@ -147,6 +150,7 @@ export const content = {
           'A strategic customer program bringing product, solution, and executive stakeholders into a shared direction.',
         result: 'Cross-functional alignment',
         secondary: 'Additional public outcomes to be added',
+        image: '/images/mountain-background-web.jpg',
       },
     ] satisfies CaseStudy[],
   },
