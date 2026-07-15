@@ -1,6 +1,5 @@
-import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
-import { gsap } from 'gsap';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { content, sections, type CaseStudy, type ExperienceItem, type SectionId } from './content';
 import './styles.css';
 
@@ -26,10 +25,7 @@ export function App() {
     document.title = 'Xiaoyu Feng - Strategy & Transformation';
 
     if (window.location.hash) {
-      const scrollToHash = () => {
-        const target = document.getElementById(window.location.hash.slice(1));
-        if (target) window.scrollTo({ top: target.offsetTop, behavior: 'auto' });
-      };
+      const scrollToHash = () => document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
       window.requestAnimationFrame(() => window.requestAnimationFrame(scrollToHash));
       window.setTimeout(scrollToHash, 140);
     }
@@ -59,19 +55,9 @@ export function App() {
 
   useEffect(() => {
     let locked = false;
-    let wheelDelta = 0;
 
     const jumpToSection = (event: WheelEvent) => {
-      if (event.ctrlKey) return;
-
-      event.preventDefault();
-      if (locked) return;
-
-      wheelDelta += event.deltaY;
-      if (Math.abs(wheelDelta) < 80) return;
-
-      const direction = Math.sign(wheelDelta);
-      wheelDelta = 0;
+      if (Math.abs(event.deltaY) < 24 || locked) return;
 
       const nodes = sections
         .map((section) => document.getElementById(section.id))
@@ -82,12 +68,13 @@ export function App() {
 
       if (currentIndex === undefined) return;
 
-      const nextIndex = Math.min(nodes.length - 1, Math.max(0, currentIndex + direction));
+      const nextIndex = Math.min(nodes.length - 1, Math.max(0, currentIndex + Math.sign(event.deltaY)));
       if (nextIndex === currentIndex) return;
 
+      event.preventDefault();
       locked = true;
       const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-      window.scrollTo({ top: nodes[nextIndex].offsetTop, behavior });
+      nodes[nextIndex].scrollIntoView({ behavior });
       window.setTimeout(() => {
         locked = false;
       }, 900);
@@ -174,7 +161,7 @@ function HeaderLink({
 
 function SectionProgress({ currentSection }: { currentSection: SectionId }) {
   return (
-    <nav className="section-progress" aria-label="Section progress">
+    <nav className="section-progress" aria-label="Section progress" data-hidden={currentSection === 'gtm'}>
       <span className="section-progress__line" aria-hidden="true" />
       {sections.map((section) => (
         <a
@@ -342,7 +329,11 @@ function ProjectSection({
   reverse?: boolean;
 }) {
   if (id === 'gtm') {
-    return <GtmProjectSection id={id} label={label} title={title} intro={intro} cases={cases} />;
+    return (
+      <section id={id} className="screen project-screen project-screen--showcase" aria-labelledby={`${id}-title`}>
+        <StrategicProjectShowcase label={label} title={title} intro={intro} cases={cases} />
+      </section>
+    );
   }
 
   return (
@@ -375,167 +366,126 @@ function ProjectSection({
   );
 }
 
-function GtmProjectSection({
-  id,
+function StrategicProjectShowcase({
   label,
   title,
   intro,
   cases,
 }: {
-  id: SectionId;
   label: string;
   title: string;
   intro: string;
   cases: CaseStudy[];
 }) {
-  const projects = cases.slice(0, 4);
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-  const [focusedProject, setFocusedProject] = useState<number | null>(null);
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const activeProjectIndex = hoveredProject ?? focusedProject ?? selectedProject;
-  const activeProject = activeProjectIndex === null ? null : projects[activeProjectIndex];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const active = cases[activeIndex];
+  const previous = previousIndex === null ? null : cases[previousIndex];
+
+  function selectProject(nextIndex: number, nextDirection: 1 | -1) {
+    if (nextIndex === activeIndex) return;
+    setPreviousIndex(activeIndex);
+    setDirection(nextDirection);
+    setActiveIndex(nextIndex);
+  }
+
+  function moveProject(step: 1 | -1) {
+    selectProject((activeIndex + step + cases.length) % cases.length, step);
+  }
 
   return (
-    <section id={id} className="screen project-screen gtm-screen" aria-labelledby={`${id}-title`}>
-      <div className="page-shell screen-content gtm-layout">
-        <GtmMotionGrid
-          projects={projects}
-          activeProjectIndex={activeProjectIndex}
-          onHover={setHoveredProject}
-          onFocus={setFocusedProject}
-          onSelect={setSelectedProject}
-        />
-        <aside className="gtm-detail" aria-label="GTM project detail" aria-live="polite">
-          {activeProject ? (
-            <>
-              <p className="section-label">{String(activeProjectIndex! + 1).padStart(2, '0')} - GTM Project</p>
-              <h2 id={`${id}-title`}>{activeProject.title}</h2>
-              <p>{activeProject.summary}</p>
-              <div className="gtm-detail__result">
-                <strong>{activeProject.result}</strong>
-                <span>{activeProject.secondary}</span>
-              </div>
-            </>
-          ) : (
-            <>
-              <p className="section-label">{label}</p>
-              <h2 id={`${id}-title`}>{title}</h2>
-              <p>{intro}</p>
-            </>
-          )}
-        </aside>
+    <div
+      className="page-shell screen-content strategic-projects"
+      role="group"
+      aria-label="Strategic project showcase"
+    >
+      <div className="strategic-projects__header">
+        <SectionCopy label={label} title={title} intro={intro} titleId="gtm-title" />
+        <div className="strategic-projects__controls" aria-label="Project controls">
+          <button type="button" aria-label="Previous project" onClick={() => moveProject(-1)}>
+            <ArrowLeft aria-hidden="true" />
+          </button>
+          <button type="button" aria-label="Next project" onClick={() => moveProject(1)}>
+            <ArrowRight aria-hidden="true" />
+          </button>
+        </div>
       </div>
-    </section>
-  );
-}
 
-function GtmMotionGrid({
-  projects,
-  activeProjectIndex,
-  onHover,
-  onFocus,
-  onSelect,
-}: {
-  projects: CaseStudy[];
-  activeProjectIndex: number | null;
-  onHover: (index: number | null) => void;
-  onFocus: (index: number | null) => void;
-  onSelect: (index: number) => void;
-}) {
-  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const mouseXRef = useRef(window.innerWidth / 2);
-  const motionItems = useMemo(
-    () =>
-      Array.from({ length: 28 }, (_, index) => ({
-        item: projects[index % projects.length],
-        projectIndex: index % projects.length,
-      })),
-    [projects],
-  );
-
-  useEffect(() => {
-    gsap.ticker.lagSmoothing(0);
-
-    const handleMouseMove = (event: MouseEvent) => {
-      mouseXRef.current = event.clientX;
-    };
-
-    const updateMotion = () => {
-      const maxMoveAmount = 260;
-      const baseDuration = 0.8;
-      const inertiaFactors = [0.6, 0.4, 0.3, 0.2];
-
-      rowRefs.current.forEach((row, index) => {
-        if (!row) return;
-
-        const direction = index % 2 === 0 ? 1 : -1;
-        const moveAmount = ((mouseXRef.current / window.innerWidth) * maxMoveAmount - maxMoveAmount / 2) * direction;
-
-        gsap.to(row, {
-          x: moveAmount,
-          duration: baseDuration + inertiaFactors[index % inertiaFactors.length],
-          ease: 'power3.out',
-          overwrite: 'auto',
-        });
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    gsap.ticker.add(updateMotion);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      gsap.ticker.remove(updateMotion);
-    };
-  }, []);
-
-  return (
-    <div className="gtm-motion">
-      <div className="gtm-motion__container">
-        {Array.from({ length: 4 }, (_, rowIndex) => (
-          <div
-            className="gtm-motion__row"
-            key={rowIndex}
-            ref={(node) => {
-              rowRefs.current[rowIndex] = node;
-            }}
-          >
-            {motionItems.slice(rowIndex * 7, rowIndex * 7 + 7).map(({ item, projectIndex }, itemIndex) => (
-              <button
-                className="gtm-motion-card"
-                type="button"
-                key={`${rowIndex}-${itemIndex}`}
-                data-active={activeProjectIndex === projectIndex}
-                data-project-index={projectIndex}
-                aria-label={`Show GTM project ${projectIndex + 1}: ${item.title}`}
-                onMouseEnter={() => onHover(projectIndex)}
-                onMouseLeave={() => onHover(null)}
-                onMouseDown={(event) => event.preventDefault()}
-                onPointerUp={() => {
-                  onHover(null);
-                  onFocus(null);
-                  onSelect(projectIndex);
-                }}
-                onFocus={() => {
-                  onHover(null);
-                  onFocus(projectIndex);
-                }}
-                onBlur={() => onFocus(null)}
-                onClick={() => {
-                  onHover(null);
-                  onFocus(null);
-                  onSelect(projectIndex);
-                }}
-              >
-                <span className="gtm-motion-card__number">{String(projectIndex + 1).padStart(2, '0')}</span>
-                <strong>{item.title}</strong>
-                <span>{item.result}</span>
-              </button>
-            ))}
+      <div
+        className="strategic-showcase"
+        data-direction={direction === 1 ? 'next' : 'previous'}
+        data-switching={previous ? 'true' : 'false'}
+      >
+        <div key={`copy-${active.title}`} className="strategic-showcase__copy-shell">
+          <div className="strategic-showcase__copy-stage" aria-live="polite">
+            {previous ? (
+              <ProjectShowcaseCopy project={previous} index={previousIndex!} state="exit" />
+            ) : null}
+            <ProjectShowcaseCopy key={active.title} project={active} index={activeIndex} state="enter" />
           </div>
+        </div>
+
+        <div key={`media-${active.title}`} className="strategic-showcase__media" aria-hidden="true">
+          {previous ? (
+            <img
+              className="strategic-showcase__image strategic-showcase__image--exit"
+              src={previous.image}
+              alt=""
+            />
+          ) : null}
+          <img
+            key={active.title}
+            className="strategic-showcase__image strategic-showcase__image--enter"
+            src={active.image}
+            alt=""
+          />
+        </div>
+      </div>
+
+      <div className="strategic-showcase__progress" aria-label="Select a strategic project">
+        {cases.map((project, index) => (
+          <button
+            key={project.title}
+            type="button"
+            aria-label={`Show project ${index + 1}: ${project.title}`}
+            aria-current={index === activeIndex ? 'true' : undefined}
+            onClick={() => selectProject(index, index > activeIndex ? 1 : -1)}
+          />
         ))}
       </div>
     </div>
+  );
+}
+
+function ProjectShowcaseCopy({
+  project,
+  index,
+  state,
+}: {
+  project: CaseStudy;
+  index: number;
+  state: 'enter' | 'exit';
+}) {
+  return (
+    <article className={`strategic-showcase__copy strategic-showcase__copy--${state}`} aria-hidden={state === 'exit'}>
+      <p className="strategic-showcase__eyebrow">
+        {String(index + 1).padStart(2, '0')} / Selected project
+      </p>
+      <div className="strategic-showcase__statement">
+        <h3>{project.title}</h3>
+        <p>{project.summary}</p>
+      </div>
+      <div className="strategic-showcase__footer">
+        <div>
+          <strong>{project.result}</strong>
+          <span>{project.secondary}</span>
+        </div>
+        <a href="#contact" tabIndex={state === 'exit' ? -1 : undefined}>
+          Discuss project <ArrowUpRight size={17} aria-hidden="true" />
+        </a>
+      </div>
+    </article>
   );
 }
 

@@ -3,14 +3,11 @@ import { afterEach, describe, expect, test, vi } from 'vitest';
 import { App } from './app';
 
 const originalScrollIntoView = Element.prototype.scrollIntoView;
-const originalScrollTo = window.scrollTo;
 
 describe('App', () => {
   afterEach(() => {
     history.replaceState(null, '', '/');
     Element.prototype.scrollIntoView = originalScrollIntoView;
-    window.scrollTo = originalScrollTo;
-    vi.restoreAllMocks();
     vi.unstubAllGlobals();
     vi.useRealTimers();
   });
@@ -69,79 +66,40 @@ describe('App', () => {
     expect(entries[2]).toHaveAttribute('data-active', 'true');
   });
 
-  test('shows the GTM section overview before a project card is active', () => {
+  test('switches strategic projects while leaving other project sections static', () => {
     render(<App />);
 
-    const gtm = screen.getByRole('region', { name: 'Strategic Business & GTM Projects' });
-    const detail = within(gtm).getByRole('complementary', { name: 'GTM project detail' });
+    const showcase = screen.getByRole('group', { name: 'Strategic project showcase' });
+    expect(within(showcase).getByRole('heading', { name: 'NOVA 5G FWA Commercial Launch' })).toBeInTheDocument();
 
-    expect(within(detail).getByText('02 - Strategic Business & GTM')).toBeInTheDocument();
-    expect(within(detail).getByRole('heading', { name: 'Strategic Business & GTM Projects' })).toBeInTheDocument();
-    expect(
-      within(detail).getByText(
-        'Translating market signals into product direction and commercial momentum by connecting customer needs, network capabilities, portfolio decisions, and cross-functional execution.',
-      ),
-    ).toBeInTheDocument();
-  });
+    fireEvent.click(within(showcase).getByRole('button', { name: 'Next project' }));
+    expect(within(showcase).getByRole('heading', { name: 'Antenna Modernization Strategy' })).toBeInTheDocument();
 
-  test('updates the GTM detail panel from hover, focus, and click', () => {
-    render(<App />);
+    fireEvent.click(within(showcase).getByRole('button', { name: 'Show project 3: Vodafone Spring 6' }));
+    expect(within(showcase).getByRole('heading', { name: 'Vodafone Spring 6' })).toBeInTheDocument();
 
-    const gtm = screen.getByRole('region', { name: 'Strategic Business & GTM Projects' });
-    const detail = within(gtm).getByRole('complementary', { name: 'GTM project detail' });
-    const cards = within(gtm).getAllByRole('button', { name: /Show GTM project/ });
-
-    fireEvent.mouseEnter(cards[0]);
-    expect(within(detail).getByRole('heading', { name: 'NOVA 5G FWA Commercial Launch' })).toBeInTheDocument();
-    expect(within(detail).getByText('15K subscribers')).toBeInTheDocument();
-
-    fireEvent.focus(cards[1]);
-    expect(within(detail).getByRole('heading', { name: 'Antenna Modernization Strategy' })).toBeInTheDocument();
-
-    fireEvent.click(cards[2]);
-    expect(within(detail).getByRole('heading', { name: 'Vodafone Spring 6' })).toBeInTheDocument();
-  });
-
-  test('renders 28 GTM motion items from four looping project cards', () => {
-    render(<App />);
-
-    const gtm = screen.getByRole('region', { name: 'Strategic Business & GTM Projects' });
-    const cards = within(gtm).getAllByRole('button', { name: /Show GTM project/ });
-
-    expect(cards).toHaveLength(28);
-    expect(cards.map((card) => card.dataset.projectIndex).slice(0, 8)).toEqual([
-      '0',
-      '1',
-      '2',
-      '3',
-      '0',
-      '1',
-      '2',
-      '3',
-    ]);
-    expect(within(gtm).getAllByText('Additional Strategic GTM Program')).toHaveLength(7);
+    const transformation = screen.getByRole('region', {
+      name: 'Building the operating system for AI research execution.',
+    });
+    expect(transformation.querySelectorAll('.project-card')).toHaveLength(3);
   });
 
   test('scrolls to an initial hash after React mounts the sections', async () => {
     history.replaceState(null, '', '/#experience');
-    const scrollTo = vi.fn();
-    window.scrollTo = scrollTo;
+    const scrollIntoView = vi.fn();
+    Element.prototype.scrollIntoView = scrollIntoView;
 
     render(<App />);
-    Object.defineProperty(document.getElementById('experience'), 'offsetTop', {
-      configurable: true,
-      value: 768,
-    });
     await new Promise((resolve) => requestAnimationFrame(resolve));
     await new Promise((resolve) => requestAnimationFrame(resolve));
 
-    expect(scrollTo).toHaveBeenCalledWith({ top: 768, behavior: 'auto' });
+    expect(scrollIntoView).toHaveBeenCalled();
   });
 
   test('smoothly jumps one section per wheel step', () => {
     vi.useFakeTimers();
-    const scrollTo = vi.fn();
-    window.scrollTo = scrollTo;
+    const scrollIntoView = vi.fn();
+    Element.prototype.scrollIntoView = scrollIntoView;
     vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: false })));
 
     render(<App />);
@@ -150,41 +108,12 @@ describe('App', () => {
     });
     Object.defineProperty(document.getElementById('experience'), 'getBoundingClientRect', {
       value: () => ({ top: 1000 }),
-    });
-    Object.defineProperty(document.getElementById('experience'), 'offsetTop', {
-      configurable: true,
-      value: 768,
     });
 
     fireEvent.wheel(window, { deltaY: 120 });
 
-    expect(scrollTo).toHaveBeenCalledWith({ top: 768, behavior: 'smooth' });
-  });
+    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth' });
+    expect(scrollIntoView.mock.instances[0]).toBe(document.getElementById('experience'));
 
-  test('blocks native wheel scrolling while a section jump is locked', () => {
-    vi.useFakeTimers();
-    const scrollTo = vi.fn();
-    window.scrollTo = scrollTo;
-    vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: false })));
-
-    render(<App />);
-    Object.defineProperty(document.getElementById('top'), 'getBoundingClientRect', {
-      value: () => ({ top: 0 }),
-    });
-    Object.defineProperty(document.getElementById('experience'), 'getBoundingClientRect', {
-      value: () => ({ top: 1000 }),
-    });
-    Object.defineProperty(document.getElementById('experience'), 'offsetTop', {
-      configurable: true,
-      value: 768,
-    });
-
-    window.dispatchEvent(new WheelEvent('wheel', { deltaY: 120, cancelable: true }));
-    const lockedWheel = new WheelEvent('wheel', { deltaY: 120, cancelable: true });
-
-    window.dispatchEvent(lockedWheel);
-
-    expect(lockedWheel.defaultPrevented).toBe(true);
-    expect(scrollTo).toHaveBeenCalledTimes(1);
   });
 });
