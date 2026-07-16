@@ -849,16 +849,25 @@ a {
 
 @keyframes showcase-copy-panel-settle {
   from { width: 79%; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  25% { width: 73%; clip-path: polygon(0 0, 96.6096% 0, 99.6233% 100%, 0 100%); }
+  50% { width: 67%; clip-path: polygon(0 0, 92.6119% 0, 99.1791% 100%, 0 100%); }
+  75% { width: 61%; clip-path: polygon(0 0, 87.8279% 0, 98.6475% 100%, 0 100%); }
   to { width: 55%; clip-path: polygon(0 0, 82% 0, 98% 100%, 0 100%); }
 }
 
 @keyframes showcase-copy-mask-settle {
   from { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  25% { clip-path: polygon(0 0, 96.6096% 0, 99.6233% 100%, 0 100%); }
+  50% { clip-path: polygon(0 0, 92.6119% 0, 99.1791% 100%, 0 100%); }
+  75% { clip-path: polygon(0 0, 87.8279% 0, 98.6475% 100%, 0 100%); }
   to { clip-path: polygon(0 0, 82% 0, 98% 100%, 0 100%); }
 }
 
 @keyframes showcase-media-panel-expand {
   from { width: 20%; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  25% { width: 28.75%; clip-path: polygon(0.9565% 0, 100% 0, 100% 100%, 8.6087% 100%); }
+  50% { width: 37.5%; clip-path: polygon(1.4667% 0, 100% 0, 100% 100%, 13.2% 100%); }
+  75% { width: 46.25%; clip-path: polygon(1.7838% 0, 100% 0, 100% 100%, 16.0541% 100%); }
   to { width: 55%; clip-path: polygon(2% 0, 100% 0, 100% 100%, 18% 100%); }
 }
 
