@@ -27,7 +27,7 @@ describe('dark foundation styles', () => {
     expect(styles).not.toContain('.hero-fade-cover');
   });
 
-  test('keeps the strategic project background visible and animates the Cohere panel geometry', () => {
+  test('keeps the strategic project background visible and animates fixed panel geometry', () => {
     expect(styles).toMatch(
       /\.project-screen--showcase\s*\{[^}]*background:\s*transparent;/s,
     );
@@ -36,20 +36,23 @@ describe('dark foundation styles', () => {
     );
     expect(styles).toContain('@keyframes showcase-copy-panel-settle');
     expect(styles).toContain('@keyframes showcase-media-panel-expand');
-    expect(styles).toMatch(
-      /@keyframes showcase-copy-panel-settle[\s\S]*?width:\s*79%;[\s\S]*?width:\s*55%;/,
-    );
-    expect(styles).toMatch(
-      /@keyframes showcase-media-panel-expand[\s\S]*?width:\s*20%;[\s\S]*?width:\s*55%;/,
-    );
+    expect(styles).toMatch(/\.strategic-showcase__copy-shell\s*\{[^}]*width:\s*79%;/s);
+    expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*width:\s*55%;/s);
+
+    for (const name of ['showcase-copy-panel-settle', 'showcase-media-panel-expand']) {
+      const start = styles.indexOf(`@keyframes ${name} {`);
+      const block = styles.slice(start, styles.indexOf('\n}', start));
+      expect(block).not.toMatch(/\bwidth:/);
+      expect(block).not.toMatch(/\b(?:25|50|75)%/);
+    }
   });
 
   test('keeps panel masks and the image on one expansion timeline', () => {
     expect(styles).toMatch(
-      /@keyframes showcase-copy-panel-settle[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(0 0, 100% 0, 100% 100%, 0 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(0 0, 82% 0, 98% 100%, 0 100%\);/,
+      /@keyframes showcase-copy-panel-settle[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(0 0, 100% 0, 100% 100%, 0 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(0 0, 57\.0886% 0, 68\.2278% 100%, 0 100%\);/,
     );
     expect(styles).toMatch(
-      /@keyframes showcase-media-panel-expand[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(0 0, 100% 0, 100% 100%, 0 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(2% 0, 100% 0, 100% 100%, 18% 100%\);/,
+      /@keyframes showcase-media-panel-expand[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(63\.6364% 0, 100% 0, 100% 100%, 63\.6364% 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(2% 0, 100% 0, 100% 100%, 18% 100%\);/,
     );
     expect(styles).toContain(
       ".strategic-showcase[data-switching='true'] .strategic-showcase__copy-stage",
@@ -63,13 +66,12 @@ describe('dark foundation styles', () => {
       const start = styles.indexOf(`@keyframes ${name} {`);
       const block = styles.slice(start, styles.indexOf('\n}', start));
 
-      return [...block.matchAll(/(from|to|\d+%)\s*\{\s*width:\s*([\d.]+)%;\s*clip-path:\s*polygon\(([^)]+)\);\s*\}/g)].map(
-        ([, label, width, polygon]) => {
+      return [...block.matchAll(/(from|to|\d+%)\s*\{\s*clip-path:\s*polygon\(([^)]+)\);\s*\}/g)].map(
+        ([, label, polygon]) => {
           const points = polygon.split(',').map((point) => Number.parseFloat(point.trim()));
           return {
             label,
             offset: label === 'from' ? 0 : label === 'to' ? 1 : Number.parseFloat(label) / 100,
-            width: Number.parseFloat(width),
             top: side === 'copy' ? points[1] : points[0],
             bottom: side === 'copy' ? points[2] : points[3],
           };
@@ -88,8 +90,8 @@ describe('dark foundation styles', () => {
       const span = copy[index].offset - copy[previous].offset || 1;
       const localProgress = (progress - copy[previous].offset) / span;
       const interpolate = (from: number, to: number) => from + (to - from) * localProgress;
-      const copyWidth = interpolate(copy[previous].width, copy[index].width);
-      const mediaWidth = interpolate(media[previous].width, media[index].width);
+      const copyWidth = 79;
+      const mediaWidth = 55;
 
       for (const edge of ['top', 'bottom'] as const) {
         const copyEdge = copyWidth * interpolate(copy[previous][edge], copy[index][edge]) / 100;
