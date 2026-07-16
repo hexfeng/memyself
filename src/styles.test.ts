@@ -57,4 +57,45 @@ describe('dark foundation styles', () => {
     expect(styles).not.toContain('showcase-image-enter-next');
     expect(styles).not.toContain('showcase-image-enter-previous');
   });
+
+  test('keeps the animated panel edges from crossing between keyframes', () => {
+    function readFrames(name: string, side: 'copy' | 'media') {
+      const start = styles.indexOf(`@keyframes ${name} {`);
+      const block = styles.slice(start, styles.indexOf('\n}', start));
+
+      return [...block.matchAll(/(from|to|\d+%)\s*\{\s*width:\s*([\d.]+)%;\s*clip-path:\s*polygon\(([^)]+)\);\s*\}/g)].map(
+        ([, label, width, polygon]) => {
+          const points = polygon.split(',').map((point) => Number.parseFloat(point.trim()));
+          return {
+            label,
+            offset: label === 'from' ? 0 : label === 'to' ? 1 : Number.parseFloat(label) / 100,
+            width: Number.parseFloat(width),
+            top: side === 'copy' ? points[1] : points[0],
+            bottom: side === 'copy' ? points[2] : points[3],
+          };
+        },
+      );
+    }
+
+    const copy = readFrames('showcase-copy-panel-settle', 'copy');
+    const media = readFrames('showcase-media-panel-expand', 'media');
+    expect(copy.map(({ offset }) => offset)).toEqual(media.map(({ offset }) => offset));
+
+    for (let frame = 0; frame <= 100; frame += 1) {
+      const progress = frame / 100;
+      const index = Math.min(copy.findIndex(({ offset }) => offset >= progress), copy.length - 1);
+      const previous = Math.max(0, index - 1);
+      const span = copy[index].offset - copy[previous].offset || 1;
+      const localProgress = (progress - copy[previous].offset) / span;
+      const interpolate = (from: number, to: number) => from + (to - from) * localProgress;
+      const copyWidth = interpolate(copy[previous].width, copy[index].width);
+      const mediaWidth = interpolate(media[previous].width, media[index].width);
+
+      for (const edge of ['top', 'bottom'] as const) {
+        const copyEdge = copyWidth * interpolate(copy[previous][edge], copy[index][edge]) / 100;
+        const mediaEdge = 100 - mediaWidth + mediaWidth * interpolate(media[previous][edge], media[index][edge]) / 100;
+        expect(mediaEdge - copyEdge).toBeGreaterThanOrEqual(0.75);
+      }
+    }
+  });
 });
