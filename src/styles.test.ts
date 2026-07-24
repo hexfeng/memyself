@@ -102,7 +102,7 @@ describe('dark foundation styles', () => {
       /@keyframes showcase-copy-panel-settle[\s\S]*?100%\s*\{[^}]*polygon\(0 0, calc\(36\.7089% \+ 8px\) 0, calc\(36\.7089% \+ 58px\) 100%, 0 100%\)/,
     );
     expect(styles).toContain(
-      ".strategic-showcase[data-switching='true'] .strategic-showcase__copy-stage",
+      ".strategic-showcase[data-entered='true'] .strategic-showcase__copy-stage",
     );
     expect(styles).not.toContain('showcase-image-enter-next');
     expect(styles).not.toContain('showcase-image-enter-previous');

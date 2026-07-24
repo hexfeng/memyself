@@ -813,23 +813,40 @@ a {
   z-index: 2;
 }
 
-.strategic-showcase[data-switching='true'] .strategic-showcase__copy-shell {
+.strategic-showcase[data-entered='false'] .strategic-showcase__copy-shell,
+.strategic-showcase[data-entered='false'] .strategic-showcase__copy-stage {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.strategic-showcase[data-entered='false'] .strategic-showcase__media {
+  clip-path: polygon(71.4286% 0, 100% 0, 100% 100%, 71.4286% 100%);
+}
+
+.strategic-showcase[data-entered='false'] .strategic-showcase__media-frame {
+  clip-path: polygon(76.6% 0, 100% 0, 100% 100%, 76.6% 100%);
+}
+
+.strategic-showcase[data-entered='false'] .strategic-showcase__copy--enter {
+  opacity: 0;
+}
+
+.strategic-showcase[data-entered='true'] .strategic-showcase__copy-shell {
   animation: showcase-copy-panel-settle 350ms linear 500ms both;
 }
 
-.strategic-showcase[data-switching='true'] .strategic-showcase__copy-stage {
+.strategic-showcase[data-entered='true'] .strategic-showcase__copy-stage {
   animation: showcase-copy-mask-settle 350ms linear 500ms both;
 }
 
-.strategic-showcase[data-switching='true'] .strategic-showcase__media {
+.strategic-showcase[data-entered='true'] .strategic-showcase__media {
   animation: showcase-media-panel-expand 350ms linear 500ms both;
 }
 
-.strategic-showcase[data-switching='true'] .strategic-showcase__media-frame {
+.strategic-showcase[data-entered='true'] .strategic-showcase__media-frame {
   animation: showcase-media-frame-expand 350ms linear 500ms both;
 }
 
-.strategic-showcase[data-direction='next'] .strategic-showcase__copy--enter {
+.strategic-showcase[data-entered='true'][data-direction='next'] .strategic-showcase__copy--enter {
   animation: showcase-copy-enter-next 700ms cubic-bezier(0.22, 1, 0.36, 1) 700ms both;
 }
 
@@ -837,7 +854,7 @@ a {
   animation: showcase-copy-exit-next 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.strategic-showcase[data-direction='previous'] .strategic-showcase__copy--enter {
+.strategic-showcase[data-entered='true'][data-direction='previous'] .strategic-showcase__copy--enter {
   animation: showcase-copy-enter-previous 700ms cubic-bezier(0.22, 1, 0.36, 1) 700ms both;
 }
 
