@@ -22,4 +22,13 @@ describe('portfolio content', () => {
     });
     expect(content.experience.items.every((item) => item.summary.length > 20)).toBe(true);
   });
+
+  test('keeps the four strategic projects in the approved order', () => {
+    expect(content.gtm.cases.map((project) => project.title)).toEqual([
+      'Greece Nova 5G FWA Commercial Launch',
+      'Greece Vodafone Spring 6 Strategic Partnership',
+      'Green Antenna Modernization',
+      'Strategic Business & Product Leadership',
+    ]);
+  });
 });

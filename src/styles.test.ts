@@ -37,7 +37,7 @@ describe('dark foundation styles', () => {
     expect(styles).toContain('@keyframes showcase-copy-panel-settle');
     expect(styles).toContain('@keyframes showcase-media-panel-expand');
     expect(styles).toMatch(/\.strategic-showcase__copy-shell\s*\{[^}]*width:\s*79%;/s);
-    expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*width:\s*55%;/s);
+    expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*width:\s*70%;/s);
 
     for (const name of ['showcase-copy-panel-settle', 'showcase-media-panel-expand']) {
       const start = styles.indexOf(`@keyframes ${name} {`);
@@ -49,10 +49,10 @@ describe('dark foundation styles', () => {
 
   test('keeps panel masks and the image on one expansion timeline', () => {
     expect(styles).toMatch(
-      /@keyframes showcase-copy-panel-settle[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(0 0, 100% 0, 100% 100%, 0 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(0 0, 57\.0886% 0, 68\.2278% 100%, 0 100%\);/,
+      /@keyframes showcase-copy-panel-settle[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(0 0, 100% 0, 100% 100%, 0 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(0 0, 37\.5949% 0, 42\.9114% 100%, 0 100%\);/,
     );
     expect(styles).toMatch(
-      /@keyframes showcase-media-panel-expand[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(63\.6364% 0, 100% 0, 100% 100%, 63\.6364% 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(2% 0, 100% 0, 100% 100%, 18% 100%\);/,
+      /@keyframes showcase-media-panel-expand[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(71\.4286% 0, 100% 0, 100% 100%, 71\.4286% 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(1% 0, 100% 0, 100% 100%, 7% 100%\);/,
     );
     expect(styles).toContain(
       ".strategic-showcase[data-switching='true'] .strategic-showcase__copy-stage",
@@ -91,7 +91,7 @@ describe('dark foundation styles', () => {
       const localProgress = (progress - copy[previous].offset) / span;
       const interpolate = (from: number, to: number) => from + (to - from) * localProgress;
       const copyWidth = 79;
-      const mediaWidth = 55;
+      const mediaWidth = 70;
 
       for (const edge of ['top', 'bottom'] as const) {
         const copyEdge = copyWidth * interpolate(copy[previous][edge], copy[index][edge]) / 100;
@@ -99,5 +99,38 @@ describe('dark foundation styles', () => {
         expect(mediaEdge - copyEdge).toBeGreaterThanOrEqual(0.75);
       }
     }
+  });
+
+  test('lays out four strategic project progress controls in one row', () => {
+    expect(styles).toMatch(
+      /\.strategic-showcase__progress\s*\{[^}]*grid-template-columns:\s*repeat\(4,/s,
+    );
+  });
+
+  test('uses a taller 30/70 showcase with complete images and dark glass copy', () => {
+    expect(styles).toMatch(/\.strategic-showcase\s*\{[^}]*height:\s*clamp\(440px, 37vw, 560px\);/s);
+    expect(styles).toMatch(/\.strategic-showcase__image\s*\{[^}]*object-fit:\s*contain;/s);
+    expect(styles).toMatch(
+      /\.strategic-showcase__copy-stage\s*\{[^}]*background:\s*linear-gradient\(/s,
+    );
+    expect(styles).toMatch(/\.strategic-showcase__statement h3\s*\{[^}]*color:\s*#ffffff;/s);
+  });
+
+  test('uses an even glass frame around every media edge', () => {
+    expect(styles).toMatch(
+      /\.strategic-showcase__media\s*\{[^}]*background:\s*linear-gradient\(145deg, rgba\(5, 17, 25, 0\.94\), rgba\(11, 28, 36, 0\.86\)\);/s,
+    );
+    expect(styles).toMatch(
+      /\.strategic-showcase__media-frame\s*\{[^}]*inset:\s*28px;[^}]*clip-path:\s*polygon\(1\.07% 0, 100% 0, 100% 100%, 7\.5% 100%\);/s,
+    );
+    expect(styles).toMatch(
+      /\.strategic-showcase__media-frame\s*\{[^}]*background:\s*linear-gradient\(145deg, rgba\(5, 17, 25, 0\.94\), rgba\(11, 28, 36, 0\.86\)\);/s,
+    );
+    expect(styles).not.toContain('.strategic-showcase__media-frame::before');
+    expect(styles).toMatch(
+      /\.strategic-showcase__media-frame::after\s*\{[^}]*background:\s*linear-gradient\(90deg, rgb\(5, 17, 25\) 0, rgba\(5, 17, 25, 0\.72\) 28px, transparent 72px\);[^}]*box-shadow:\s*inset 0 0 24px 3px rgba\(5, 17, 25, 0\.28\);/s,
+    );
+    expect(styles).not.toMatch(/\.strategic-showcase__image\s*\{[^}]*mask-image:/s);
+    expect(styles).toContain('@keyframes showcase-media-frame-expand');
   });
 });

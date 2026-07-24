@@ -70,13 +70,16 @@ describe('App', () => {
     render(<App />);
 
     const showcase = screen.getByRole('group', { name: 'Strategic project showcase' });
-    expect(within(showcase).getByRole('heading', { name: 'NOVA 5G FWA Commercial Launch' })).toBeInTheDocument();
+    expect(within(showcase).getByRole('heading', { name: 'Greece Nova 5G FWA Commercial Launch' })).toBeInTheDocument();
+    const mediaFrame = showcase.querySelector<HTMLElement>('.strategic-showcase__media-frame');
+    expect(mediaFrame).toBeInTheDocument();
+    expect(mediaFrame).not.toHaveAttribute('style');
 
     fireEvent.click(within(showcase).getByRole('button', { name: 'Next project' }));
-    expect(within(showcase).getByRole('heading', { name: 'Antenna Modernization Strategy' })).toBeInTheDocument();
+    expect(within(showcase).getByRole('heading', { name: 'Greece Vodafone Spring 6 Strategic Partnership' })).toBeInTheDocument();
 
-    fireEvent.click(within(showcase).getByRole('button', { name: 'Show project 3: Vodafone Spring 6' }));
-    expect(within(showcase).getByRole('heading', { name: 'Vodafone Spring 6' })).toBeInTheDocument();
+    fireEvent.click(within(showcase).getByRole('button', { name: 'Show project 4: Strategic Business & Product Leadership' }));
+    expect(within(showcase).getByRole('heading', { name: 'Strategic Business & Product Leadership' })).toBeInTheDocument();
 
     const transformation = screen.getByRole('region', {
       name: 'Building the operating system for AI research execution.',

@@ -129,27 +129,35 @@ export const content = {
       'Translating market signals into product direction and commercial momentum by connecting customer needs, network capabilities, portfolio decisions, and cross-functional execution.',
     cases: [
       {
-        title: 'NOVA 5G FWA Commercial Launch',
+        title: 'Greece Nova 5G FWA Commercial Launch',
         summary:
-          'Supported the strategy and commercial launch of a 5G fixed wireless access proposition for the Greek market.',
-        result: '15K subscribers',
-        secondary: 'EUR 9M+ expected revenue within the launch trajectory',
-        image: '/images/mountain-background-web.jpg',
+          "Co-developed and validated the technical and commercial business plan with Nova for Greece's first 5G FWA tariff.",
+        result: '15K subscribers in 4 months',
+        secondary: 'EUR 9M+ expected incremental revenue',
+        image: '/images/greece-nova-5g-fwa.png',
       },
       {
-        title: 'Antenna Modernization Strategy',
+        title: 'Greece Vodafone Spring 6 Strategic Partnership',
         summary:
-          'Consolidated customer requirements into a scalable product roadmap spanning more than 30 antenna products.',
+          'A mock strategic partnership program aligning executive priorities, technology roadmaps, and joint commercial initiatives with Vodafone Greece.',
+        result: 'Strategic partnership',
+        secondary: 'Mock copy - public outcomes to be added',
+        image: '/images/greece-vodafone-spring-6.png',
+      },
+      {
+        title: 'Green Antenna Modernization',
+        summary:
+          'Translated requirements from 12+ operator customers into a 30+ product antenna roadmap across R&D, account, and delivery teams.',
         result: '20%+ order growth',
-        secondary: '70%+ SDIF adoption',
-        image: '/hero-mountain.png',
+        secondary: '70%+ SDIF share of Greece antenna orders',
+        image: '/images/green-antenna-modernization.png',
       },
       {
-        title: 'Vodafone Spring 6',
+        title: 'Strategic Business & Product Leadership',
         summary:
-          'A strategic customer program bringing product, solution, and executive stakeholders into a shared direction.',
-        result: 'Cross-functional alignment',
-        secondary: 'Additional public outcomes to be added',
+          'A mock portfolio case connecting market strategy, product roadmaps, commercial planning, and cross-functional execution.',
+        result: 'Business & product leadership',
+        secondary: 'Mock copy - detailed outcomes to be added',
         image: '/images/mountain-background-web.jpg',
       },
     ] satisfies CaseStudy[],
