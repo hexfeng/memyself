@@ -427,19 +427,21 @@ function StrategicProjectShowcase({
         </div>
 
         <div key={`media-${active.title}`} className="strategic-showcase__media" aria-hidden="true">
-          {previous ? (
+          <div className="strategic-showcase__media-frame">
+            {previous ? (
+              <img
+                className="strategic-showcase__image strategic-showcase__image--exit"
+                src={previous.image}
+                alt=""
+              />
+            ) : null}
             <img
-              className="strategic-showcase__image strategic-showcase__image--exit"
-              src={previous.image}
+              key={active.title}
+              className="strategic-showcase__image strategic-showcase__image--enter"
+              src={active.image}
               alt=""
             />
-          ) : null}
-          <img
-            key={active.title}
-            className="strategic-showcase__image strategic-showcase__image--enter"
-            src={active.image}
-            alt=""
-          />
+          </div>
         </div>
       </div>
 
