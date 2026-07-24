@@ -43,16 +43,63 @@ describe('dark foundation styles', () => {
       const start = styles.indexOf(`@keyframes ${name} {`);
       const block = styles.slice(start, styles.indexOf('\n}', start));
       expect(block).not.toMatch(/\bwidth:/);
-      expect(block).not.toMatch(/\b(?:25|50|75)%/);
+      expect(block).not.toMatch(/^\s*(?:25|50)%\s*\{/m);
     }
   });
 
-  test('keeps panel masks and the image on one expansion timeline', () => {
+  test('builds the final panels with parallel edges and a constant gap', () => {
     expect(styles).toMatch(
-      /@keyframes showcase-copy-panel-settle[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(0 0, 100% 0, 100% 100%, 0 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(0 0, 37\.5949% 0, 42\.9114% 100%, 0 100%\);/,
+      /\.strategic-showcase__copy-shell\s*\{[^}]*clip-path:\s*polygon\(0 0, calc\(36\.7089% \+ 8px\) 0, calc\(36\.7089% \+ 58px\) 100%, 0 100%\);/s,
     );
     expect(styles).toMatch(
-      /@keyframes showcase-media-panel-expand[\s\S]*?from\s*\{[^}]*clip-path:\s*polygon\(71\.4286% 0, 100% 0, 100% 100%, 71\.4286% 100%\);[^}]*\}[\s\S]*?to\s*\{[^}]*clip-path:\s*polygon\(1% 0, 100% 0, 100% 100%, 7% 100%\);/,
+      /\.strategic-showcase__media\s*\{[^}]*clip-path:\s*polygon\(8px 0, 100% 0, 100% 100%, 58px 100%\);/s,
+    );
+
+    for (const width of [900, 1190, 1360]) {
+      const copyTop = width * 0.29 + 8;
+      const copyBottom = width * 0.29 + 58;
+      const mediaTop = width * 0.3 + 8;
+      const mediaBottom = width * 0.3 + 58;
+      expect(mediaTop - copyTop).toBeCloseTo(mediaBottom - copyBottom, 5);
+    }
+  });
+
+  test('accelerates the lower edge smoothly until both edges share one speed', () => {
+    expect(styles).toMatch(
+      /@keyframes showcase-media-panel-expand[\s\S]*?8%\s*\{[^}]*polygon\(calc\(65\.7143% \+ 0\.64px\) 0, 100% 0, 100% 100%, calc\(65\.7143% \+ 22\.64px\) 100%\)[^}]*\}[\s\S]*?35%\s*\{[^}]*polygon\(calc\(46\.4286% \+ 2\.8px\) 0, 100% 0, 100% 100%, calc\(46\.4286% \+ 52\.8px\) 100%\)[^}]*\}[\s\S]*?100%\s*\{[^}]*polygon\(8px 0, 100% 0, 100% 100%, 58px 100%\)/,
+    );
+
+    const checkpoints = [
+      { progress: 0, difference: 0 },
+      { progress: 0.08, difference: 22 },
+      { progress: 0.16, difference: 36 },
+      { progress: 0.24, difference: 45 },
+      { progress: 0.3, difference: 48.5 },
+      { progress: 0.35, difference: 50 },
+    ];
+    const topTravel = 600;
+    const lowerSpeeds = checkpoints.slice(1).map((point, index) => {
+      const previous = checkpoints[index];
+      const distance =
+        (point.progress - previous.progress) * topTravel -
+        (point.difference - previous.difference);
+      return distance / (point.progress - previous.progress);
+    });
+    expect(lowerSpeeds).toEqual([...lowerSpeeds].sort((a, b) => a - b));
+    expect(lowerSpeeds.at(-1)).toBeLessThan(topTravel);
+  });
+
+  test('keeps all panel masks on one non-overshooting timeline', () => {
+    for (const name of [
+      'showcase-copy-panel-settle',
+      'showcase-copy-mask-settle',
+      'showcase-media-panel-expand',
+      'showcase-media-frame-expand',
+    ]) {
+      expect(styles).toContain(`animation: ${name} 350ms linear 500ms both;`);
+    }
+    expect(styles).toMatch(
+      /@keyframes showcase-copy-panel-settle[\s\S]*?100%\s*\{[^}]*polygon\(0 0, calc\(36\.7089% \+ 8px\) 0, calc\(36\.7089% \+ 58px\) 100%, 0 100%\)/,
     );
     expect(styles).toContain(
       ".strategic-showcase[data-switching='true'] .strategic-showcase__copy-stage",
@@ -61,44 +108,10 @@ describe('dark foundation styles', () => {
     expect(styles).not.toContain('showcase-image-enter-previous');
   });
 
-  test('keeps the animated panel edges from crossing between keyframes', () => {
-    function readFrames(name: string, side: 'copy' | 'media') {
-      const start = styles.indexOf(`@keyframes ${name} {`);
-      const block = styles.slice(start, styles.indexOf('\n}', start));
-
-      return [...block.matchAll(/(from|to|\d+%)\s*\{\s*clip-path:\s*polygon\(([^)]+)\);\s*\}/g)].map(
-        ([, label, polygon]) => {
-          const points = polygon.split(',').map((point) => Number.parseFloat(point.trim()));
-          return {
-            label,
-            offset: label === 'from' ? 0 : label === 'to' ? 1 : Number.parseFloat(label) / 100,
-            top: side === 'copy' ? points[1] : points[0],
-            bottom: side === 'copy' ? points[2] : points[3],
-          };
-        },
-      );
-    }
-
-    const copy = readFrames('showcase-copy-panel-settle', 'copy');
-    const media = readFrames('showcase-media-panel-expand', 'media');
-    expect(copy.map(({ offset }) => offset)).toEqual(media.map(({ offset }) => offset));
-
-    for (let frame = 0; frame <= 100; frame += 1) {
-      const progress = frame / 100;
-      const index = Math.min(copy.findIndex(({ offset }) => offset >= progress), copy.length - 1);
-      const previous = Math.max(0, index - 1);
-      const span = copy[index].offset - copy[previous].offset || 1;
-      const localProgress = (progress - copy[previous].offset) / span;
-      const interpolate = (from: number, to: number) => from + (to - from) * localProgress;
-      const copyWidth = 79;
-      const mediaWidth = 70;
-
-      for (const edge of ['top', 'bottom'] as const) {
-        const copyEdge = copyWidth * interpolate(copy[previous][edge], copy[index][edge]) / 100;
-        const mediaEdge = 100 - mediaWidth + mediaWidth * interpolate(media[previous][edge], media[index][edge]) / 100;
-        expect(mediaEdge - copyEdge).toBeGreaterThanOrEqual(0.75);
-      }
-    }
+  test('slightly enlarges and recenters only the Nova project image', () => {
+    expect(styles).toMatch(
+      /\.strategic-showcase__image\[src\$='greece-nova-5g-fwa\.png'\]\s*\{[^}]*transform:\s*translateX\(-2%\) scale\(1\.04\);/s,
+    );
   });
 
   test('lays out four strategic project progress controls in one row', () => {
@@ -107,30 +120,28 @@ describe('dark foundation styles', () => {
     );
   });
 
-  test('uses a taller 30/70 showcase with complete images and dark glass copy', () => {
+  test('uses a taller 30/70 showcase with homepage glass and full-bleed images', () => {
     expect(styles).toMatch(/\.strategic-showcase\s*\{[^}]*height:\s*clamp\(440px, 37vw, 560px\);/s);
-    expect(styles).toMatch(/\.strategic-showcase__image\s*\{[^}]*object-fit:\s*contain;/s);
     expect(styles).toMatch(
-      /\.strategic-showcase__copy-stage\s*\{[^}]*background:\s*linear-gradient\(/s,
+      /\.strategic-showcase__copy-shell\s*\{[^}]*background:\s*rgba\(0, 0, 0, 0\.36\);[^}]*box-shadow:\s*0 18px 42px rgba\(0, 0, 0, 0\.24\),\s*inset 0 1px 0 rgba\(164, 210, 225, 0\.2\),\s*inset 0 -1px 0 rgba\(0, 0, 0, 0\.32\);/s,
     );
+    expect(styles).toMatch(/\.strategic-showcase__copy-stage\s*\{[^}]*background:\s*transparent;/s);
+    expect(styles).toMatch(/\.strategic-showcase__image\s*\{[^}]*object-fit:\s*cover;/s);
     expect(styles).toMatch(/\.strategic-showcase__statement h3\s*\{[^}]*color:\s*#ffffff;/s);
   });
 
-  test('uses an even glass frame around every media edge', () => {
+  test('keeps a sharp trapezoid corner and fills the media frame', () => {
     expect(styles).toMatch(
-      /\.strategic-showcase__media\s*\{[^}]*background:\s*linear-gradient\(145deg, rgba\(5, 17, 25, 0\.94\), rgba\(11, 28, 36, 0\.86\)\);/s,
+      /\.strategic-showcase__media\s*\{[^}]*border-radius:\s*0 22px 22px 22px;[^}]*background:\s*rgba\(0, 0, 0, 0\.36\);/s,
     );
+    expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*clip-path:\s*polygon\(8px 0, 100% 0, 100% 100%, 58px 100%\);/s);
     expect(styles).toMatch(
-      /\.strategic-showcase__media-frame\s*\{[^}]*inset:\s*28px;[^}]*clip-path:\s*polygon\(1\.07% 0, 100% 0, 100% 100%, 7\.5% 100%\);/s,
-    );
-    expect(styles).toMatch(
-      /\.strategic-showcase__media-frame\s*\{[^}]*background:\s*linear-gradient\(145deg, rgba\(5, 17, 25, 0\.94\), rgba\(11, 28, 36, 0\.86\)\);/s,
+      /\.strategic-showcase__media-frame\s*\{[^}]*inset:\s*28px;[^}]*border-radius:\s*0 10px 10px 10px;[^}]*background:\s*rgba\(0, 0, 0, 0\.36\);[^}]*clip-path:\s*polygon\(11px 0, 100% 0, 100% 100%, 55px 100%\);/s,
     );
     expect(styles).not.toContain('.strategic-showcase__media-frame::before');
-    expect(styles).toMatch(
-      /\.strategic-showcase__media-frame::after\s*\{[^}]*background:\s*linear-gradient\(90deg, rgb\(5, 17, 25\) 0, rgba\(5, 17, 25, 0\.72\) 28px, transparent 72px\);[^}]*box-shadow:\s*inset 0 0 24px 3px rgba\(5, 17, 25, 0\.28\);/s,
-    );
+    expect(styles).not.toContain('.strategic-showcase__media-frame::after');
     expect(styles).not.toMatch(/\.strategic-showcase__image\s*\{[^}]*mask-image:/s);
-    expect(styles).toContain('@keyframes showcase-media-frame-expand');
+    expect(styles).toContain('100% { clip-path: polygon(8px 0, 100% 0, 100% 100%, 58px 100%); }');
+    expect(styles).toContain('100% { clip-path: polygon(11px 0, 100% 0, 100% 100%, 55px 100%); }');
   });
 });
