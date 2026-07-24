@@ -1,75 +1,81 @@
 # Strategic Project Showcase Design QA
 
-- Source visual truth: `C:/Users/PC/AppData/Local/Temp/codex-clipboard-747682c5-68b3-4a03-9bcc-d610839b1e6e.png`
+- Source visual truth:
+  - `C:/Users/PC/AppData/Local/Temp/codex-clipboard-eece9119-10d6-4319-8259-c36f8b482707.png`
+  - `C:/Users/PC/AppData/Local/Temp/codex-clipboard-cd0dddd8-d72e-44b2-a3ed-2356eb1e1389.png`
+  - `C:/Users/PC/AppData/Local/Temp/codex-clipboard-0dd3cec6-db6d-44f8-b799-e35d9d7fe26a.png`
 - Implementation: `http://127.0.0.1:4173/#gtm`
-- Implementation screenshot: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-desktop.png`
-- Browser: Codex in-app Browser
-- Viewport: desktop browser viewport, 1280 x 720 CSS pixels; the captured section region is 1265 x 765 pixels
-- State: first project selected and transition settled
+- Final desktop screenshot: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-final-20260724-v3.png` (1265 x 1186)
+- Mid-transition screenshot: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-phase-20260724-v3.png` (1265 x 1186)
+- Mobile screenshot: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-mobile-final-20260724-v3.png` (375 x 811)
+- Combined comparison: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-comparison-20260724-v2.png` (1459 x 1242)
+- Desktop CSS viewport: 1280 x 1200; mobile CSS viewport: 390 x 844; device density: 1
+- States: Nova final, Vodafone during continuous expansion, Nova mobile
 
 ## Full-View Comparison Evidence
 
-The source and implementation captures were opened together in one comparison input. The implementation retains the reference's defining structure: headline and minimal arrows above the content, a light glass text panel with a diagonal trailing edge, parallel diagonal image mask, large photographic panel, restrained radii, and centered segmented progress line. The site's original moving background remains visible through a dark liquid-glass veil.
-
-The portfolio keeps its existing fixed global header outside the component. This is an intentional page constraint rather than a component mismatch.
+The three supplied issue captures and the matching rendered states were combined into one comparison image. The Nova visual is slightly larger and shifted left, both media endpoints now start moving together with the lower endpoint accelerating into the final diagonal, and the settled center channel reads as parallel.
 
 ## Focused Region Evidence
 
-No separate crop was required. The 1265-pixel implementation capture and 2048-pixel source resolve the diagonal borders, arrow controls, typography, image crop, and progress segments clearly enough for direct comparison.
+- The settled outer channel measured 11.91px at both top and bottom (less than 0.001px delta).
+- The inner media frame measured 28.04px at the top and 27.96px at the bottom (0.08px delta).
+- A 110-frame capture across the complete transition measured no meaningful top/bottom channel divergence; the largest delta was below 0.001px.
+- The developing slope measured about 19.43px in the early sample and reached the target 50px before the shared translation phase.
+- The final geometry remained pixel-identical for more than 40 consecutive frames after completion.
+- The Nova image computes to `translateX(-2%) scale(1.04)` on desktop and resets to `none` on mobile.
 
 ## Required Fidelity Surfaces
 
-- Fonts and typography: DM Sans is close to the source's neutral grotesk character. Weight, negative display tracking, compact line height, and small uppercase eyebrow are consistent. The project title is intentionally larger than the testimonial quote because it carries project identity.
-- Spacing and layout rhythm: the resting panels overlap at 55%/55%, with the reference's shallow diagonal channel, generous internal whitespace, and centered progress treatment. The page header introduces extra context above the component by design.
-- Colors and visual tokens: the existing blue-black scene, translucent blur veil, light glass copy panel, near-black card type, muted metadata, grey progress track, and warm-to-blue active segment preserve both the site identity and the source hierarchy.
-- Image quality and asset fidelity: local mountain photography is sharp and correctly cropped behind a real image element. It is intentionally mock content, as requested; no CSS or drawn placeholder replaces it.
-- Copy and content: the three existing strategic projects are preserved and mapped into the source hierarchy: project index, title, summary, outcome, supporting evidence, and CTA.
+- Fonts and typography: unchanged; no new clipping or wrapping regression was found.
+- Spacing and layout rhythm: the final 30/70 composition is preserved and both diagonal gaps are visually parallel.
+- Colors and visual tokens: the existing matched dark-glass materials remain unchanged.
+- Image quality and asset fidelity: the supplied 1672 x 941 Nova image remains the source; only its in-frame scale and focal position changed.
+- Copy and content: unchanged.
 
 ## Interaction Evidence
 
-- `Next project` was clicked in the in-app Browser.
-- The accessible active heading changed from `NOVA 5G FWA Commercial Launch` to `Antenna Modernization Strategy`.
-- The outgoing and incoming text/image layers used the directional wipe classes.
-- The browser console contained no errors or warnings.
-- The section had no horizontal overflow at the desktop viewport.
+- Flow tested: `#gtm` -> Next project -> narrow vertical media state -> simultaneous leftward expansion -> matched-speed translation -> settled project.
+- Both endpoints move from the first animated frame. The upper endpoint keeps a constant speed while the lower endpoint accelerates smoothly until the target 50px diagonal is reached; both then continue left at the same speed.
+- All four panel and mask animations share one 350ms linear timeline after the same 500ms delay. Their final keyframes exactly match the static panel geometry, eliminating the extra-frame move and snap-back.
+- Desktop and 390 x 844 mobile layouts have no horizontal overflow.
+- The page renders meaningful content with no framework overlay and no console warnings or errors.
 
 ## Comparison History
 
 ### Iteration 1
 
-- Earlier finding: inherited flex alignment collapsed the showcase to an 8-pixel-wide strip (P0).
-- Fix: set `.strategic-projects` to `align-items: stretch`.
-- Post-fix evidence: the showcase measured 1339 x 486 pixels at the desktop reference viewport.
+- Finding: the left and right cards used different stacked materials (P1).
+- Fix: reused the right-card surface and shadow on the left shell and made its nested stage transparent.
 
 ### Iteration 2
 
-- Earlier finding: applying parallel clips to both panels left an approximately 80-pixel visual channel, and the global progress rail remained visible over the white stage (P2).
-- Fix: overlap the media grid item by 64 pixels and hide the global progress rail while `gtm` is active.
-- Post-fix evidence: the parallel edges are separated by approximately 16 pixels and the rail computes to opacity `0`.
+- Finding: independent percentage trapezoids made the settled diagonal frame look uneven (P1).
+- Fix: aligned the media and inner-frame slopes with fixed pixel endpoints.
 
 ### Iteration 3
 
-- Earlier finding: the section replaced the original background with opaque off-white, and project changes animated only text/image layers while panel boundaries stayed fixed (P1).
-- Fix: restore a transparent section over the original scene with an 18px translucent blur veil; animate the keyed text/media containers from 79%/20% to 55%/55% after the reference's 500ms hold.
-- Post-fix evidence: at a 1190.4px stage width the local media measured 238.1px immediately after click, 591.4px mid-transition, and 654.7px at rest. The live Cohere reference measured 236.9px, 581.7px, and 651.6px at the corresponding frames.
+- Finding: the first three projects still used older image exports (P1).
+- Fix: replaced the files with the supplied July 24 assets and verified their hashes and browser dimensions.
 
 ### Iteration 4
 
-- Earlier finding: the panel widths changed, but their final diagonal masks stayed fixed and the image ran a separate wipe, creating an approximately 186px top gap in the narrow state (P1).
-- Fix: animate each mask on the same 500ms-delay/700ms timeline as its container and remove the independent image wipe.
-- Post-fix evidence: the narrow-state gap is 11.9px and the incoming image matches the media panel's x-position and width at every sampled frame.
+- Finding: the Nova subjects sat too far right; interpolating four unrelated trapezoid endpoints produced a squeezed transition; the final center channel still varied by viewport (P1).
+- Fix: enlarged and shifted only the Nova image, changed the animation to slope-first then parallel translation, and derived the copy edge from the media edge with a fixed 1% channel.
+- Post-fix evidence: the channel remains equal at every sampled frame and in the settled state; the inner frame delta is below one tenth of a CSS pixel.
+
+### Iteration 5
+
+- Finding: the segmented easing restarted at the intermediate keyframe, producing a visible velocity discontinuity; panel geometry also finished 200ms before the text transition, which exposed a one-frame endpoint correction (P1).
+- Fix: replaced the segmented easing with one authored linear trajectory. The lower edge uses progressively increasing travel increments until its speed matches the upper edge, then both translate together; all final keyframes now equal the static geometry.
+- Post-fix evidence: the upper edge moves continuously, the lower edge accelerates monotonically to the same speed, and the final geometry stays unchanged for more than 40 captured frames.
 
 ## Findings
 
-No actionable P0, P1, or P2 mismatch remains.
-
-## Residual Test Gap
-
-The in-app Browser advertised a viewport override but continued rendering at its desktop width after requesting 390 x 844, so the mobile CSS path could not be screenshot-verified in this run. The implementation still includes the explicit stacked layout, unclipped rounded panels, full-width progress controls, and no mobile minimum width below 767px.
+No actionable P0, P1, or P2 mismatch remains for this scope.
 
 ## Follow-up Polish
 
-- P3: replace the reused mountain mock images when project-specific art direction is ready.
-- P3: shorten the section introduction if an even closer one-line Cohere header rhythm is desired.
+None required.
 
 final result: passed

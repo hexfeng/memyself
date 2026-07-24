@@ -663,9 +663,12 @@ a {
   width: 79%;
   overflow: hidden;
   border-radius: 22px;
-  background: rgba(164, 210, 225, 0.22);
-  backdrop-filter: blur(26px) saturate(1.18);
-  clip-path: polygon(0 0, 37.5949% 0, 42.9114% 100%, 0 100%);
+  background: rgba(0, 0, 0, 0.36);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(164, 210, 225, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32);
+  clip-path: polygon(0 0, calc(36.7089% + 8px) 0, calc(36.7089% + 58px) 100%, 0 100%);
 }
 
 .strategic-showcase__copy-stage {
@@ -673,9 +676,8 @@ a {
   inset: 1px;
   overflow: hidden;
   border-radius: 21px;
-  background: linear-gradient(145deg, rgba(5, 17, 25, 0.94), rgba(11, 28, 36, 0.86));
-  backdrop-filter: blur(22px) saturate(1.12);
-  clip-path: polygon(0 0, 37.5949% 0, 42.9114% 100%, 0 100%);
+  background: transparent;
+  clip-path: polygon(0 0, calc(36.7089% + 8px) 0, calc(36.7089% + 58px) 100%, 0 100%);
 }
 
 .strategic-showcase__copy {
@@ -776,31 +778,22 @@ a {
   bottom: 0;
   width: 70%;
   overflow: hidden;
-  border-radius: 22px;
-  background: linear-gradient(145deg, rgba(5, 17, 25, 0.94), rgba(11, 28, 36, 0.86));
-  backdrop-filter: blur(26px) saturate(1.18);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
-  clip-path: polygon(1% 0, 100% 0, 100% 100%, 7% 100%);
+  border-radius: 0 22px 22px 22px;
+  background: rgba(0, 0, 0, 0.36);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(164, 210, 225, 0.2),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32);
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 58px 100%);
 }
 
 .strategic-showcase__media-frame {
   position: absolute;
   inset: 28px;
   overflow: hidden;
-  border-radius: 10px;
-  background: linear-gradient(145deg, rgba(5, 17, 25, 0.94), rgba(11, 28, 36, 0.86));
-  clip-path: polygon(1.07% 0, 100% 0, 100% 100%, 7.5% 100%);
-}
-
-.strategic-showcase__media-frame::after {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  border-radius: inherit;
-  background: linear-gradient(90deg, rgb(5, 17, 25) 0, rgba(5, 17, 25, 0.72) 28px, transparent 72px);
-  box-shadow: inset 0 0 24px 3px rgba(5, 17, 25, 0.28);
-  content: '';
-  pointer-events: none;
+  border-radius: 0 10px 10px 10px;
+  background: rgba(0, 0, 0, 0.36);
+  clip-path: polygon(11px 0, 100% 0, 100% 100%, 55px 100%);
 }
 
 .strategic-showcase__image {
@@ -809,8 +802,11 @@ a {
   z-index: 1;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  transform: translateX(2.75%);
+  object-fit: cover;
+}
+
+.strategic-showcase__image[src$='greece-nova-5g-fwa.png'] {
+  transform: translateX(-2%) scale(1.04);
 }
 
 .strategic-showcase__image--enter {
@@ -818,19 +814,19 @@ a {
 }
 
 .strategic-showcase[data-switching='true'] .strategic-showcase__copy-shell {
-  animation: showcase-copy-panel-settle 700ms cubic-bezier(0.4, 0, 0.2, 1) 500ms both;
+  animation: showcase-copy-panel-settle 350ms linear 500ms both;
 }
 
 .strategic-showcase[data-switching='true'] .strategic-showcase__copy-stage {
-  animation: showcase-copy-mask-settle 700ms cubic-bezier(0.4, 0, 0.2, 1) 500ms both;
+  animation: showcase-copy-mask-settle 350ms linear 500ms both;
 }
 
 .strategic-showcase[data-switching='true'] .strategic-showcase__media {
-  animation: showcase-media-panel-expand 700ms cubic-bezier(0.4, 0, 0.2, 1) 500ms both;
+  animation: showcase-media-panel-expand 350ms linear 500ms both;
 }
 
 .strategic-showcase[data-switching='true'] .strategic-showcase__media-frame {
-  animation: showcase-media-frame-expand 700ms cubic-bezier(0.4, 0, 0.2, 1) 500ms both;
+  animation: showcase-media-frame-expand 350ms linear 500ms both;
 }
 
 .strategic-showcase[data-direction='next'] .strategic-showcase__copy--enter {
@@ -874,23 +870,51 @@ a {
 }
 
 @keyframes showcase-copy-panel-settle {
-  from { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-  to { clip-path: polygon(0 0, 37.5949% 0, 42.9114% 100%, 0 100%); }
+  0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  8% { clip-path: polygon(0 0, calc(94.9367% + 0.64px) 0, calc(94.9367% + 22.64px) 100%, 0 100%); }
+  16% { clip-path: polygon(0 0, calc(89.8734% + 1.28px) 0, calc(89.8734% + 37.28px) 100%, 0 100%); }
+  24% { clip-path: polygon(0 0, calc(84.8101% + 1.92px) 0, calc(84.8101% + 46.92px) 100%, 0 100%); }
+  30% { clip-path: polygon(0 0, calc(81.0127% + 2.4px) 0, calc(81.0127% + 50.9px) 100%, 0 100%); }
+  35% { clip-path: polygon(0 0, calc(77.8481% + 2.8px) 0, calc(77.8481% + 52.8px) 100%, 0 100%); }
+  55% { clip-path: polygon(0 0, calc(65.1899% + 4.4px) 0, calc(65.1899% + 54.4px) 100%, 0 100%); }
+  75% { clip-path: polygon(0 0, calc(52.5316% + 6px) 0, calc(52.5316% + 56px) 100%, 0 100%); }
+  100% { clip-path: polygon(0 0, calc(36.7089% + 8px) 0, calc(36.7089% + 58px) 100%, 0 100%); }
 }
 
 @keyframes showcase-copy-mask-settle {
-  from { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-  to { clip-path: polygon(0 0, 37.5949% 0, 42.9114% 100%, 0 100%); }
+  0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  8% { clip-path: polygon(0 0, calc(94.9367% + 0.64px) 0, calc(94.9367% + 22.64px) 100%, 0 100%); }
+  16% { clip-path: polygon(0 0, calc(89.8734% + 1.28px) 0, calc(89.8734% + 37.28px) 100%, 0 100%); }
+  24% { clip-path: polygon(0 0, calc(84.8101% + 1.92px) 0, calc(84.8101% + 46.92px) 100%, 0 100%); }
+  30% { clip-path: polygon(0 0, calc(81.0127% + 2.4px) 0, calc(81.0127% + 50.9px) 100%, 0 100%); }
+  35% { clip-path: polygon(0 0, calc(77.8481% + 2.8px) 0, calc(77.8481% + 52.8px) 100%, 0 100%); }
+  55% { clip-path: polygon(0 0, calc(65.1899% + 4.4px) 0, calc(65.1899% + 54.4px) 100%, 0 100%); }
+  75% { clip-path: polygon(0 0, calc(52.5316% + 6px) 0, calc(52.5316% + 56px) 100%, 0 100%); }
+  100% { clip-path: polygon(0 0, calc(36.7089% + 8px) 0, calc(36.7089% + 58px) 100%, 0 100%); }
 }
 
 @keyframes showcase-media-panel-expand {
-  from { clip-path: polygon(71.4286% 0, 100% 0, 100% 100%, 71.4286% 100%); }
-  to { clip-path: polygon(1% 0, 100% 0, 100% 100%, 7% 100%); }
+  0% { clip-path: polygon(71.4286% 0, 100% 0, 100% 100%, 71.4286% 100%); }
+  8% { clip-path: polygon(calc(65.7143% + 0.64px) 0, 100% 0, 100% 100%, calc(65.7143% + 22.64px) 100%); }
+  16% { clip-path: polygon(calc(60% + 1.28px) 0, 100% 0, 100% 100%, calc(60% + 37.28px) 100%); }
+  24% { clip-path: polygon(calc(54.2857% + 1.92px) 0, 100% 0, 100% 100%, calc(54.2857% + 46.92px) 100%); }
+  30% { clip-path: polygon(calc(50% + 2.4px) 0, 100% 0, 100% 100%, calc(50% + 50.9px) 100%); }
+  35% { clip-path: polygon(calc(46.4286% + 2.8px) 0, 100% 0, 100% 100%, calc(46.4286% + 52.8px) 100%); }
+  55% { clip-path: polygon(calc(32.1429% + 4.4px) 0, 100% 0, 100% 100%, calc(32.1429% + 54.4px) 100%); }
+  75% { clip-path: polygon(calc(17.8572% + 6px) 0, 100% 0, 100% 100%, calc(17.8572% + 56px) 100%); }
+  100% { clip-path: polygon(8px 0, 100% 0, 100% 100%, 58px 100%); }
 }
 
 @keyframes showcase-media-frame-expand {
-  from { clip-path: polygon(76.6% 0, 100% 0, 100% 100%, 76.6% 100%); }
-  to { clip-path: polygon(1.07% 0, 100% 0, 100% 100%, 7.5% 100%); }
+  0% { clip-path: polygon(76.6% 0, 100% 0, 100% 100%, 76.6% 100%); }
+  8% { clip-path: polygon(calc(70.472% + 0.88px) 0, 100% 0, 100% 100%, calc(70.472% + 19.88px) 100%); }
+  16% { clip-path: polygon(calc(64.344% + 1.76px) 0, 100% 0, 100% 100%, calc(64.344% + 33.76px) 100%); }
+  24% { clip-path: polygon(calc(58.216% + 2.64px) 0, 100% 0, 100% 100%, calc(58.216% + 42.64px) 100%); }
+  30% { clip-path: polygon(calc(53.62% + 3.3px) 0, 100% 0, 100% 100%, calc(53.62% + 46.3px) 100%); }
+  35% { clip-path: polygon(calc(49.79% + 3.85px) 0, 100% 0, 100% 100%, calc(49.79% + 47.85px) 100%); }
+  55% { clip-path: polygon(calc(34.47% + 6.05px) 0, 100% 0, 100% 100%, calc(34.47% + 50.05px) 100%); }
+  75% { clip-path: polygon(calc(19.15% + 8.25px) 0, 100% 0, 100% 100%, calc(19.15% + 52.25px) 100%); }
+  100% { clip-path: polygon(11px 0, 100% 0, 100% 100%, 55px 100%); }
 }
 
 @keyframes showcase-copy-exit-next {
@@ -1268,12 +1292,9 @@ a {
     animation: none !important;
   }
 
-  .strategic-showcase__image {
+  .strategic-showcase__image,
+  .strategic-showcase__image[src$='greece-nova-5g-fwa.png'] {
     transform: none;
-  }
-
-  .strategic-showcase__media-frame::after {
-    background: none;
   }
 
   .strategic-showcase__statement {
