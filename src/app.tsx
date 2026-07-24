@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { content, sections, type CaseStudy, type ExperienceItem, type SectionId } from './content';
 import './styles.css';
 
@@ -380,8 +380,33 @@ function StrategicProjectShowcase({
   const [activeIndex, setActiveIndex] = useState(0);
   const [previousIndex, setPreviousIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState<1 | -1>(1);
+  const [hasEntered, setHasEntered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const showcaseRef = useRef<HTMLDivElement>(null);
   const active = cases[activeIndex];
   const previous = previousIndex === null ? null : cases[previousIndex];
+
+  useEffect(() => {
+    const node = showcaseRef.current;
+    if (!node) return;
+
+    if (!('IntersectionObserver' in window)) {
+      setHasEntered(true);
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting) setHasEntered(true);
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   function selectProject(nextIndex: number, nextDirection: 1 | -1) {
     if (nextIndex === activeIndex) return;
@@ -394,8 +419,16 @@ function StrategicProjectShowcase({
     selectProject((activeIndex + step + cases.length) % cases.length, step);
   }
 
+  useEffect(() => {
+    if (!isVisible || cases.length < 2) return;
+
+    const timeout = window.setTimeout(() => moveProject(1), 30_000);
+    return () => window.clearTimeout(timeout);
+  }, [activeIndex, cases.length, isVisible]);
+
   return (
     <div
+      ref={showcaseRef}
       className="page-shell screen-content strategic-projects"
       role="group"
       aria-label="Strategic project showcase"
@@ -414,6 +447,7 @@ function StrategicProjectShowcase({
 
       <div
         className="strategic-showcase"
+        data-entered={hasEntered ? 'true' : 'false'}
         data-direction={direction === 1 ? 'next' : 'previous'}
         data-switching={previous ? 'true' : 'false'}
       >

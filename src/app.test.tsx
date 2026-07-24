@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { App } from './app';
 
@@ -85,6 +85,40 @@ describe('App', () => {
       name: 'Building the operating system for AI research execution.',
     });
     expect(transformation.querySelectorAll('.project-card')).toHaveLength(3);
+  });
+
+  test('starts the showcase on first viewport entry and advances after 30 visible seconds', () => {
+    vi.useFakeTimers();
+    const callbacks = new Map<Element, IntersectionObserverCallback>();
+
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class {
+        constructor(private callback: IntersectionObserverCallback) {}
+        observe = (target: Element) => callbacks.set(target, this.callback);
+        disconnect = vi.fn();
+        unobserve = vi.fn();
+      },
+    );
+
+    render(<App />);
+    const showcase = screen.getByRole('group', { name: 'Strategic project showcase' });
+    const stage = showcase.querySelector('.strategic-showcase');
+    expect(stage).toHaveAttribute('data-entered', 'false');
+
+    act(() => vi.advanceTimersByTime(30_000));
+    expect(within(showcase).getByRole('heading', { name: 'Greece Nova 5G FWA Commercial Launch' })).toBeInTheDocument();
+
+    act(() => {
+      callbacks.get(showcase)?.(
+        [{ isIntersecting: true, target: showcase } as unknown as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
+    expect(stage).toHaveAttribute('data-entered', 'true');
+
+    act(() => vi.advanceTimersByTime(30_000));
+    expect(within(showcase).getByRole('heading', { name: 'Greece Vodafone Spring 6 Strategic Partnership' })).toBeInTheDocument();
   });
 
   test('scrolls to an initial hash after React mounts the sections', async () => {
