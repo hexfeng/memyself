@@ -179,19 +179,55 @@ describe('App', () => {
     expect(entries[1]).toHaveAttribute('open');
   });
 
-  test('switches strategic projects manually and never auto-advances', () => {
+  test('starts the Cohere showcase on entry, supports manual switching, and auto-advances while visible', () => {
     vi.useFakeTimers();
+    const callbacks = new Map<Element, IntersectionObserverCallback>();
+    vi.stubGlobal('IntersectionObserver', class {
+      constructor(private callback: IntersectionObserverCallback) {}
+      observe = (target: Element) => callbacks.set(target, this.callback);
+      disconnect = vi.fn();
+      unobserve = vi.fn();
+    });
     render(<App />);
 
     const showcase = screen.getByRole('group', { name: 'Strategic project showcase' });
+    const stage = showcase.querySelector('.strategic-showcase');
+    expect(stage).toHaveAttribute('data-entered', 'false');
+
+    act(() => vi.advanceTimersByTime(30_000));
+    expect(
+      within(showcase).getByRole('heading', { name: 'Greece Nova 5G FWA Commercial Launch' }),
+    ).toBeInTheDocument();
+
+    act(() => {
+      callbacks.get(showcase)?.(
+        [{ isIntersecting: true, target: showcase } as unknown as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
+    expect(stage).toHaveAttribute('data-entered', 'true');
+
     fireEvent.click(within(showcase).getByRole('button', { name: 'Next project' }));
     expect(
       within(showcase).getByRole('heading', { name: 'Greece Vodafone Spring 6 Strategic Partnership' }),
     ).toBeInTheDocument();
 
-    act(() => vi.advanceTimersByTime(60_000));
+    act(() => vi.advanceTimersByTime(30_000));
     expect(
-      within(showcase).getByRole('heading', { name: 'Greece Vodafone Spring 6 Strategic Partnership' }),
+      within(showcase).getByRole('heading', { name: 'Green Antenna Modernization' }),
+    ).toBeInTheDocument();
+
+    act(() => {
+      callbacks.get(showcase)?.(
+        [{ isIntersecting: false, target: showcase } as unknown as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
+    act(() => {
+      vi.advanceTimersByTime(30_000);
+    });
+    expect(
+      within(showcase).getByRole('heading', { name: 'Green Antenna Modernization' }),
     ).toBeInTheDocument();
   });
 

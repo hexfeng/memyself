@@ -26,9 +26,10 @@ describe('light-first theme styles', () => {
     expect(styles).toContain('@media (prefers-reduced-motion: reduce)');
   });
 
-  test('keeps the strategic project geometry and theme-aware opaque panels', () => {
-    expect(styles).toContain('@keyframes showcase-copy-panel-settle');
-    expect(styles).toContain('@keyframes showcase-media-panel-expand');
+  test('keeps the minimal business theme around the authored Cohere panel motion', () => {
+    expect(styles).toMatch(/\.project-screen--showcase\s*\{[^}]*background:\s*var\(--page\)/s);
+    expect(styles).not.toContain(".site-header[data-section='gtm']");
+    expect(styles).toMatch(/\.strategic-showcase\s*\{[^}]*height:\s*clamp\(440px, 37vw, 560px\)/s);
     expect(styles).toMatch(/\.strategic-showcase__copy-shell\s*\{[^}]*width:\s*79%;/s);
     expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*width:\s*70%;/s);
     expect(styles).toMatch(
@@ -37,9 +38,11 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(
       /\.strategic-showcase__media\s*\{[^}]*clip-path:\s*polygon\(8px 0, 100% 0, 100% 100%, 58px 100%\);/s,
     );
-    expect(styles).toMatch(
-      /\.strategic-showcase__progress\s*\{[^}]*grid-template-columns:\s*repeat\(4,/s,
-    );
+    for (const name of ['showcase-copy-panel-settle', 'showcase-copy-mask-settle', 'showcase-media-panel-expand', 'showcase-media-frame-expand']) {
+      expect(styles).toContain(`animation: ${name} 350ms linear 500ms both;`);
+    }
+    expect(styles).toContain('100% { clip-path: polygon(8px 0, 100% 0, 100% 100%, 58px 100%); }');
+    expect(styles).toContain(".strategic-showcase__image[src$='greece-nova-5g-fwa.png']");
   });
 
   test('styles native Experience disclosure rows and reduced motion', () => {

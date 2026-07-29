@@ -393,6 +393,7 @@ function StrategicProjectShowcase({ label, title, intro, cases }: { label: strin
   const [previousIndex, setPreviousIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [hasEntered, setHasEntered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const showcaseRef = useRef<HTMLDivElement>(null);
   const active = cases[activeIndex];
   const previous = previousIndex === null ? null : cases[previousIndex];
@@ -402,9 +403,11 @@ function StrategicProjectShowcase({ label, title, intro, cases }: { label: strin
     if (!node) return;
     if (!('IntersectionObserver' in window)) {
       setHasEntered(true);
+      setIsVisible(true);
       return;
     }
     const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
       if (entry.isIntersecting) setHasEntered(true);
     }, { threshold: 0.35 });
     observer.observe(node);
@@ -420,6 +423,12 @@ function StrategicProjectShowcase({ label, title, intro, cases }: { label: strin
   function moveProject(step: 1 | -1) {
     selectProject((activeIndex + step + cases.length) % cases.length, step);
   }
+
+  useEffect(() => {
+    if (!isVisible || cases.length < 2) return;
+    const timeout = window.setTimeout(() => moveProject(1), 30_000);
+    return () => window.clearTimeout(timeout);
+  }, [activeIndex, cases.length, isVisible]);
 
   return (
     <div ref={showcaseRef} className="page-shell screen-content strategic-projects" role="group" aria-label="Strategic project showcase">
