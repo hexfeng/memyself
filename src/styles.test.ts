@@ -30,7 +30,7 @@ describe('light-first theme styles', () => {
     expect(styles).not.toContain(".site-header[data-section='gtm']");
     expect(styles).toMatch(/\.strategic-showcase\s*\{[^}]*height:\s*clamp\(440px, 37vw, 560px\)/s);
     expect(styles).toMatch(/\.strategic-showcase__copy-shell\s*\{[^}]*width:\s*79%;/s);
-    expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*width:\s*70%;/s);
+    expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*width:\s*71%;/s);
     expect(styles).toMatch(
       /\.strategic-showcase__copy-shell\s*\{[^}]*background:\s*var\(--project-panel\);/s,
     );
@@ -46,18 +46,18 @@ describe('light-first theme styles', () => {
   });
 
   test('floats and rounds both showcase cards while the media fills its frame', () => {
-    expect(styles).toContain('--showcase-outline: #2c3139');
+    expect(styles).not.toContain('--showcase-outline');
     expect(styles).toContain('--showcase-shadow: 0 18px 28px rgb(17 19 24 / 18%)');
-    expect(styles).toMatch(/\[data-theme='dark'\]\s*\{[^}]*--showcase-outline:\s*#4b515d/s);
-    expect(styles).toMatch(/\.strategic-showcase__copy-shell\s*\{[^}]*border:\s*1px solid var\(--showcase-outline\);[^}]*border-right:\s*0;[^}]*border-radius:\s*18px;[^}]*filter:\s*none/s);
+    expect(styles).toMatch(/\.strategic-showcase__copy-shell\s*\{[^}]*border:\s*0;[^}]*border-radius:\s*18px;[^}]*filter:\s*none/s);
     expect(styles).toMatch(/\.strategic-showcase::before\s*\{[^}]*left:\s*0;[^}]*right:\s*0;[^}]*border-radius:\s*18px;[^}]*box-shadow:\s*var\(--showcase-shadow\)/s);
     expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*border:\s*0;[^}]*border-radius:\s*18px;[^}]*background:\s*transparent;[^}]*filter:\s*none/s);
     expect(styles).toMatch(/\.strategic-showcase__media-frame\s*\{[^}]*inset:\s*0;[^}]*border:\s*0;[^}]*border-radius:\s*inherit;[^}]*clip-path:\s*none/s);
-    expect(styles).toMatch(/\.strategic-showcase__copy-shell::after,[\s\S]*?background:\s*var\(--showcase-outline\);[^}]*clip-path:\s*polygon/s);
-    expect(styles).toMatch(/\.strategic-showcase\[data-entered='true'\][\s\S]*?showcase-seam-reveal 100ms linear 850ms both/s);
-    expect(styles).toContain('@keyframes showcase-seam-reveal');
-    expect(styles).toContain('@keyframes showcase-border-reveal');
-    expect(styles).toContain("translateX(-6%) scale(1.13)");
+    expect(styles).not.toContain('.strategic-showcase__copy-shell::after');
+    expect(styles).not.toContain('showcase-seam-reveal');
+    expect(styles).not.toContain('showcase-border-reveal');
+    expect(styles).toMatch(/\.strategic-showcase__image\[src\$='greece-nova-5g-fwa\.png'\]\s*\{[^}]*object-fit:\s*contain;[^}]*background:\s*#fff;[^}]*transform:\s*none/s);
+    expect(styles).not.toContain('background: #f3f4f6');
+    expect(styles).toMatch(/\[data-theme='light'\] \.strategic-showcase:has\(\.strategic-showcase__image--enter\[src\$='greece-nova-5g-fwa\.png'\]\) \.strategic-showcase__media-frame::after\s*\{[^}]*width:\s*140px;[^}]*background:\s*linear-gradient\(96deg, rgb\(17 19 24 \/ 8%\), transparent 72%\)/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase\s*\{[^}]*gap:\s*16px/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase__copy-shell\s*\{[^}]*box-shadow:\s*var\(--showcase-shadow\)/s);
   });

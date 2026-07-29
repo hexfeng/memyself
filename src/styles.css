@@ -11,7 +11,6 @@
   --accent: #5576fc;
   --accent-text: #4563df;
   --project-panel: #ffffff;
-  --showcase-outline: #2c3139;
   --showcase-shadow: 0 18px 28px rgb(17 19 24 / 18%), 0 6px 10px rgb(17 19 24 / 10%);
   --focus-ring: #2f55f5;
   --role-0: #3157d5;
@@ -39,7 +38,6 @@
   --accent: #8da4ff;
   --accent-text: #8da4ff;
   --project-panel: #121419;
-  --showcase-outline: #4b515d;
   --showcase-shadow: 0 22px 34px rgb(0 0 0 / 55%), 0 8px 14px rgb(0 0 0 / 34%);
   --focus-ring: #a8b8ff;
   --role-0: #8da4ff;
@@ -399,10 +397,8 @@ button { color: inherit; }
   left: 0;
   width: 79%;
   overflow: hidden;
-  border: 1px solid var(--showcase-outline);
-  border-right: 0;
+  border: 0;
   border-radius: 18px;
-  border-color: transparent;
   background: var(--project-panel);
   clip-path: polygon(0 0, calc(36.7089% + 8px) 0, calc(36.7089% + 58px) 100%, 0 100%);
   filter: none;
@@ -434,7 +430,7 @@ button { color: inherit; }
   top: 0;
   right: 0;
   bottom: 0;
-  width: 70%;
+  width: 71%;
   overflow: hidden;
   border: 0;
   border-radius: 18px;
@@ -445,32 +441,23 @@ button { color: inherit; }
 }
 .strategic-showcase__media-frame { position: absolute; z-index: 1; inset: 0; overflow: hidden; border: 0; border-radius: inherit; background: var(--surface-alt); clip-path: none; }
 .strategic-showcase__image { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
-.strategic-showcase__image[src$='greece-nova-5g-fwa.png'] { transform: translateX(-6%) scale(1.13); }
+.strategic-showcase__image[src$='greece-nova-5g-fwa.png'] { object-fit: contain; background: #fff; transform: none; }
 .strategic-showcase__image--enter { z-index: 2; }
-
-.strategic-showcase__copy-shell::after,
-.strategic-showcase__media::before {
+[data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='greece-nova-5g-fwa.png']) .strategic-showcase__media-frame::after {
   content: '';
   position: absolute;
-  z-index: 4;
-  top: 0;
-  bottom: 0;
-  width: 52px;
-  background: var(--showcase-outline);
-  clip-path: polygon(0 0, 1px 0, 100% 100%, calc(100% - 1px) 100%);
-  opacity: 0;
+  z-index: 3;
+  inset: 0 auto 0 0;
+  width: 140px;
+  background: linear-gradient(96deg, rgb(17 19 24 / 8%), transparent 72%);
   pointer-events: none;
 }
-.strategic-showcase__copy-shell::after { left: calc(36.7089% + 7px); }
-.strategic-showcase__media::before { left: 7px; }
-.strategic-showcase[data-entered='true'] .strategic-showcase__copy-shell::after,
-.strategic-showcase[data-entered='true'] .strategic-showcase__media::before { animation: showcase-seam-reveal 100ms linear 850ms both; }
 
 .strategic-showcase[data-entered='false'] .strategic-showcase__copy-shell,
 .strategic-showcase[data-entered='false'] .strategic-showcase__copy-stage { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 .strategic-showcase[data-entered='false'] .strategic-showcase__media { clip-path: polygon(71.4286% 0, 100% 0, 100% 100%, 71.4286% 100%); }
 .strategic-showcase[data-entered='false'] .strategic-showcase__copy--enter { opacity: 0; }
-.strategic-showcase[data-entered='true'] .strategic-showcase__copy-shell { animation: showcase-copy-panel-settle 350ms linear 500ms both, showcase-border-reveal 100ms linear 850ms both; }
+.strategic-showcase[data-entered='true'] .strategic-showcase__copy-shell { animation: showcase-copy-panel-settle 350ms linear 500ms both; }
 .strategic-showcase[data-entered='true'] .strategic-showcase__copy-stage { animation: showcase-copy-mask-settle 350ms linear 500ms both; }
 .strategic-showcase[data-entered='true'] .strategic-showcase__media { animation: showcase-media-panel-expand 350ms linear 500ms both; }
 .strategic-showcase[data-entered='true'][data-direction='next'] .strategic-showcase__copy--enter { animation: showcase-copy-enter-next 700ms cubic-bezier(.22, 1, .36, 1) 700ms both; }
@@ -483,8 +470,6 @@ button { color: inherit; }
 .strategic-showcase__progress button[aria-current='true'] { background: var(--accent); }
 
 @keyframes showcase-copy-enter-next { from { opacity: 0; clip-path: inset(0 0 0 100%); transform: translateX(28px); } to { opacity: 1; clip-path: inset(0); transform: translateX(0); } }
-@keyframes showcase-seam-reveal { to { opacity: 1; } }
-@keyframes showcase-border-reveal { to { border-color: var(--showcase-outline); } }
 @keyframes showcase-copy-panel-settle {
   0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
   8% { clip-path: polygon(0 0, calc(94.9367% + .64px) 0, calc(94.9367% + 22.64px) 100%, 0 100%); }
@@ -576,13 +561,12 @@ button { color: inherit; }
   .strategic-showcase::before { display: none; }
   .strategic-showcase__copy-shell,
   .strategic-showcase__media { position: relative; inset: auto; width: 100%; clip-path: none; animation: none !important; }
-  .strategic-showcase__copy-shell::after,
-  .strategic-showcase__media::before { display: none; }
   .strategic-showcase__media { height: 230px; box-shadow: var(--showcase-shadow); }
-  .strategic-showcase__copy-shell { height: 380px; border-color: var(--showcase-outline); border-right: 1px solid var(--showcase-outline); box-shadow: var(--showcase-shadow); }
+  .strategic-showcase__copy-shell { height: 380px; box-shadow: var(--showcase-shadow); }
   .strategic-showcase__copy-stage { clip-path: none; animation: none !important; }
   .strategic-showcase__copy { width: 100%; padding: 28px 24px; }
   .strategic-showcase__media-frame { inset: 0; clip-path: none; animation: none !important; }
+  [data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='greece-nova-5g-fwa.png']) .strategic-showcase__media-frame::after { display: none; }
   .strategic-showcase__image,
   .strategic-showcase__image[src$='greece-nova-5g-fwa.png'] { transform: none; }
   .strategic-showcase__statement h3 { font-size: 28px; }
@@ -603,8 +587,5 @@ button { color: inherit; }
   .strategic-showcase__copy-stage,
   .strategic-showcase__media,
   .strategic-showcase__media-frame { animation: none !important; transition: none !important; }
-  .strategic-showcase__copy-shell::after,
-  .strategic-showcase__media::before { opacity: 1; animation: none !important; }
   .strategic-showcase::before { opacity: 1; transition: none !important; }
-  .strategic-showcase__copy-shell { border-color: var(--showcase-outline); }
 }

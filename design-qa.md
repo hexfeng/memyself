@@ -1,39 +1,33 @@
-# Experience Card Design QA
+# NOVA Showcase Image and Border Design QA
 
 ## Evidence
 
-- Source visual truth:
-  - `C:\Users\PC\AppData\Local\Temp\codex-clipboard-58db0229-faf0-4bc3-a072-4fd7ffa08889.png` (1103 × 935, collapsed cards)
-  - `C:\Users\PC\AppData\Local\Temp\codex-clipboard-f649de74-1e6d-488e-91b2-78b4151335fd.png` (1187 × 751, expanded card)
-- Implementation:
-  - `C:\Users\PC\AppData\Local\Temp\32-experience-cards-closed.jpg` (1425 × 891 capture from a 1440 × 900 CSS viewport)
-  - `C:\Users\PC\AppData\Local\Temp\33-experience-card-open.jpg` (1425 × 891 capture from a 1440 × 900 CSS viewport)
-  - `C:\Users\PC\AppData\Local\Temp\34-experience-cards-mobile.jpg` (375 × 811 capture from a 390 × 844 CSS viewport)
-  - `C:\Users\PC\AppData\Local\Temp\36-experience-cards-dark-fixed.jpg` (1425 × 891 capture from a 1440 × 900 CSS viewport)
-  - `C:\Users\PC\AppData\Local\Temp\38-experience-unsw-monochrome.jpg` (1425 × 891 capture from a 1440 × 900 CSS viewport)
-- Browser density: 1 CSS pixel per screenshot pixel before the browser scrollbar area is excluded.
-- States: light collapsed, light expanded, mobile expanded, and dark collapsed.
+- Source visual truth: `C:\Users\PC\Downloads\Generated image 1 (3).png` (1753 × 897, SHA-256 `878D2AE1A613AE0188C6D0B9933525A161EF2CF0A3A5255F0707D0A94EE45560`).
+- Light implementation: `C:\Users\PC\AppData\Local\Temp\personal-website-nova-gradient-light.png` (1265 × 712).
+- Dark implementation: `C:\Users\PC\AppData\Local\Temp\personal-website-nova-separated-dark.png` (1265 × 712).
+- Focused comparison: `C:\Users\PC\AppData\Local\Temp\personal-website-nova-image-comparison.png` (845 × 866); source normalized to 845 × 433 above, rendered media crop at 845 × 433 below.
+- Environment: `http://localhost:5173/#gtm`, 1280 × 720 CSS viewport, DPR 1.25, NOVA project selected.
 
 ## Comparison
 
-- Full view: the implementation keeps the portfolio's existing two-column Experience composition while adopting the reference's separated cards, visible gaps, fine outlines, light corner rounding, and full-card disclosure affordance.
-- Focused card region: card padding, logo-to-copy alignment, date placement, chevron rotation, and expanded detail separation were readable at capture scale, so a separate crop was not required.
-- Typography: the existing DM Sans/Manrope hierarchy is intentionally retained; organization names remain primary, with role and dates subordinate.
-- Spacing and rhythm: 14 px desktop and 12 px mobile card gaps create the reference's independent-card rhythm without changing the section grid.
-- Colors and tokens: cards use the existing light/dark surface, border, text, and accent tokens. Reference-only multicolor edge strips were intentionally omitted because the requested change was the framed card treatment and they conflict with the approved neutral business system.
-- Image quality: all six images use frameless `contain` slots and remain complete without clipping. Dark mode uses a dedicated high-contrast UNSW asset, with Huawei, Rexel, and UNSW rendered monochrome.
-- Copy: all existing organizations, roles, date ranges, stages, and summaries are preserved.
-- Interaction: clicking the Huawei Greece summary changed its native `<details>` state from closed to open, rotated the chevron, and revealed the existing description. Automated coverage confirms multiple cards can stay open independently.
-- Console: no relevant warnings or errors in the checked states.
+- Full view: the supplied NOVA progression graphic replaces the previous asset and remains balanced against the left project copy in both themes.
+- Focused region: all three headings, maps, arrows, legends, and supporting statements remain visible. `object-fit: contain` preserves the 1.95:1 source ratio without stretching or edge crop.
+- Typography: source-image typography remains raster-authentic; site DM Sans/Manrope hierarchy and wrapping are unchanged.
+- Spacing and layout rhythm: the image keeps its authored white breathing room; card size, internal copy padding, radii, and elevation are unchanged.
+- Colors and tokens: the copy panel keeps the same white surface as every other light-mode project; a subtle NOVA-only gray gradient fades across the image side of the diagonal boundary, while borders remain absent.
+- Image quality: the deployed asset hash exactly matches the supplied PNG. Browser downscaling is clean with no transparency halo or distortion.
+- Copy and content: site copy is unchanged; the new image's embedded labels are preserved verbatim.
+- Interaction: Next Project and project 1 selection were exercised; the new image returned correctly after the transition.
+- Console: no relevant warnings or errors.
 
 ## Comparison History
 
-1. Initial comparison found a P2 dark-theme image contrast issue: black Huawei and UNSW wordmark text blended into the dark card surface.
-2. Replaced the UNSW inversion with a dedicated dark asset, then applied grayscale so the complete mark is monochrome.
-3. Added dark-theme grayscale treatments to Rexel and UNSW; capture `38-experience-unsw-monochrome.jpg` shows both updates clearly.
+1. Initial P2: the previous NOVA image used a different composition and was enlarged/cropped; the left outline was near-black and the diagonal seam was explicitly drawn.
+2. Fix: replaced the public asset with the supplied PNG, switched the NOVA image to contained rendering, removed every copy-panel border and both diagonal seam pseudo-elements, then added a NOVA-only gradient on the image side.
+3. Post-fix: the copy panel color stays consistent across projects, the light NOVA boundary remains readable without a drawn edge, and the gradient disappears on other projects and in dark mode.
 
 ## Remaining Findings
 
-- No actionable P0, P1, or P2 findings remain.
+- P3: the 1280 × 720 desktop states were visually checked; mobile behavior remains covered by the existing responsive CSS and automated style checks rather than a new screenshot.
 
 final result: passed
