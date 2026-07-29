@@ -159,6 +159,14 @@ describe('App', () => {
     const entries = Array.from(document.querySelectorAll<HTMLDetailsElement>('.experience-entry'));
     expect(entries).toHaveLength(6);
     expect(entries.every((entry) => !entry.open)).toBe(true);
+    expect(entries.map((entry) => entry.querySelector('.experience-logo')?.getAttribute('data-logo'))).toEqual([
+      'huawei', 'huawei', 'huawei', 'rexel', 'unsw', 'utoronto',
+    ]);
+    expect(
+      entries.every((entry) => !entry.querySelector('img')?.getAttribute('src')?.startsWith('/logos/')),
+    ).toBe(true);
+    expect(entries[4].querySelectorAll('img')).toHaveLength(2);
+    expect(entries[4].querySelector('.experience-logo__dark')?.getAttribute('src')).toContain('unsw-dark');
 
     const summaries = entries.map((entry) => entry.querySelector('summary') as HTMLElement);
     fireEvent.click(summaries[0]);

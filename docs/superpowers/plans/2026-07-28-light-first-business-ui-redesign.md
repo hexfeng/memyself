@@ -44,7 +44,7 @@ Preserve the current page order, section IDs, navigation destinations, content c
 2. Delete `public/site-background.mp4`; removing only its render path would leave the roughly 90 MB asset in production output.
 3. Remove or rewrite `.scene-backdrop`, `.scene-backdrop__video`, `.scene-backdrop__shade`, and global translucent screen washes in `src/styles.css`.
 4. Give every non-Hero section an opaque theme surface.
-5. Keep the Header sticky and add an observed/scroll state for whether the Hero is active.
+5. Keep the Header fixed to the top edge across the full viewport width and add an observed/scroll state for whether the Hero is active.
 6. Render an opaque theme-colored Header with a fine border after the viewport leaves the Hero; ensure the state change does not alter Header dimensions.
 
 ## Phase 4: Build the New Hero
@@ -88,9 +88,10 @@ Preserve the current page order, section IDs, navigation destinations, content c
 3. Use the entire `<summary>` as the row trigger. Native independent state allows multiple entries to remain open without a React `Set`, generated control IDs, or shared accordion state.
 4. In a collapsed summary row, render only logo, organization/school, role/degree, month-and-year range, and chevron.
 5. Render the existing one-sentence experience description inside the details body; richer detail content is outside this scope.
-6. Replace timeline-node and contextual-hover styling with consistent-height accordion rows, fine borders, aligned logos, and theme-aware states.
-7. Stack or reposition dates on mobile without truncating long identity text.
-8. Remove artificial list-item tab stops and the obsolete IntersectionObserver behavior.
+6. Replace timeline-node and contextual-hover styling with separated, consistent-height accordion cards using fine borders, light corner rounding, restrained elevation, and theme-aware states.
+7. Use the compact source logo assets in larger frameless slots with `object-fit: contain`; adapt the white University of Toronto mark to remain visible in light and dark themes.
+8. Stack or reposition dates on mobile without truncating long identity text.
+9. Remove artificial list-item tab stops and the obsolete IntersectionObserver behavior.
 
 ## Phase 7: Re-Skin Existing Project and Contact Sections
 

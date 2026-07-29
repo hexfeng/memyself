@@ -10,12 +10,23 @@ import {
   Sun,
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import huaweiLogo from './assets/logos/huawei.png';
+import rexelLogo from './assets/logos/rexel.svg';
+import unswDarkLogo from './assets/logos/unsw-dark.png';
+import unswLogo from './assets/logos/unsw.png';
+import utorontoLogo from './assets/logos/utoronto.svg';
 import { content, sections, type CaseStudy, type ExperienceItem, type SectionId } from './content';
 import './styles.css';
 
 type Theme = 'light' | 'dark';
 
 const THEME_KEY = 'portfolio-theme';
+const experienceLogos: Record<string, string> = {
+  huawei: huaweiLogo,
+  rexel: rexelLogo,
+  unsw: unswLogo,
+  utoronto: utorontoLogo,
+};
 const projectSections: Array<{
   id: SectionId;
   label: string;
@@ -334,7 +345,10 @@ function ExperienceTimeline({ items }: { items: ExperienceItem[] }) {
         <li key={`${item.organization}-${item.role}`}>
           <details className="experience-entry">
             <summary>
-              <span className="experience-logo" aria-hidden="true"><img src={logoSrc(item.logo)} alt="" /></span>
+              <span className="experience-logo" data-logo={item.logo} aria-hidden="true">
+                <img className="experience-logo__default" src={experienceLogos[item.logo] ?? huaweiLogo} alt="" />
+                {item.logo === 'unsw' && <img className="experience-logo__dark" src={unswDarkLogo} alt="" />}
+              </span>
               <span className="experience-identity"><strong>{item.organization}</strong><span>{item.role}</span></span>
               <span className="experience-dates">{item.startDate} - {item.endDate}</span>
               <ChevronDown className="experience-chevron" aria-hidden="true" />
@@ -345,13 +359,6 @@ function ExperienceTimeline({ items }: { items: ExperienceItem[] }) {
       ))}
     </ol>
   );
-}
-
-function logoSrc(logo: string) {
-  const logos: Record<string, string> = {
-    huawei: '/logos/huawei.png', rexel: '/logos/rexel.svg', unsw: '/logos/unsw.png', utoronto: '/logos/utoronto.svg',
-  };
-  return logos[logo] ?? '/logos/huawei.png';
 }
 
 function ProjectSection({ id, label, title, intro, cases, reverse = false }: {

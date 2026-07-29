@@ -1,81 +1,39 @@
-# Strategic Project Showcase Design QA
+# Experience Card Design QA
+
+## Evidence
 
 - Source visual truth:
-  - `C:/Users/PC/AppData/Local/Temp/codex-clipboard-eece9119-10d6-4319-8259-c36f8b482707.png`
-  - `C:/Users/PC/AppData/Local/Temp/codex-clipboard-cd0dddd8-d72e-44b2-a3ed-2356eb1e1389.png`
-  - `C:/Users/PC/AppData/Local/Temp/codex-clipboard-0dd3cec6-db6d-44f8-b799-e35d9d7fe26a.png`
-- Implementation: `http://127.0.0.1:4173/#gtm`
-- Final desktop screenshot: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-final-20260724-v3.png` (1265 x 1186)
-- Mid-transition screenshot: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-phase-20260724-v3.png` (1265 x 1186)
-- Mobile screenshot: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-mobile-final-20260724-v3.png` (375 x 811)
-- Combined comparison: `C:/Users/PC/AppData/Local/Temp/strategic-showcase-comparison-20260724-v2.png` (1459 x 1242)
-- Desktop CSS viewport: 1280 x 1200; mobile CSS viewport: 390 x 844; device density: 1
-- States: Nova final, Vodafone during continuous expansion, Nova mobile
+  - `C:\Users\PC\AppData\Local\Temp\codex-clipboard-58db0229-faf0-4bc3-a072-4fd7ffa08889.png` (1103 × 935, collapsed cards)
+  - `C:\Users\PC\AppData\Local\Temp\codex-clipboard-f649de74-1e6d-488e-91b2-78b4151335fd.png` (1187 × 751, expanded card)
+- Implementation:
+  - `C:\Users\PC\AppData\Local\Temp\32-experience-cards-closed.jpg` (1425 × 891 capture from a 1440 × 900 CSS viewport)
+  - `C:\Users\PC\AppData\Local\Temp\33-experience-card-open.jpg` (1425 × 891 capture from a 1440 × 900 CSS viewport)
+  - `C:\Users\PC\AppData\Local\Temp\34-experience-cards-mobile.jpg` (375 × 811 capture from a 390 × 844 CSS viewport)
+  - `C:\Users\PC\AppData\Local\Temp\36-experience-cards-dark-fixed.jpg` (1425 × 891 capture from a 1440 × 900 CSS viewport)
+  - `C:\Users\PC\AppData\Local\Temp\38-experience-unsw-monochrome.jpg` (1425 × 891 capture from a 1440 × 900 CSS viewport)
+- Browser density: 1 CSS pixel per screenshot pixel before the browser scrollbar area is excluded.
+- States: light collapsed, light expanded, mobile expanded, and dark collapsed.
 
-## Full-View Comparison Evidence
+## Comparison
 
-The three supplied issue captures and the matching rendered states were combined into one comparison image. The Nova visual is slightly larger and shifted left, both media endpoints now start moving together with the lower endpoint accelerating into the final diagonal, and the settled center channel reads as parallel.
-
-## Focused Region Evidence
-
-- The settled outer channel measured 11.91px at both top and bottom (less than 0.001px delta).
-- The inner media frame measured 28.04px at the top and 27.96px at the bottom (0.08px delta).
-- A 110-frame capture across the complete transition measured no meaningful top/bottom channel divergence; the largest delta was below 0.001px.
-- The developing slope measured about 19.43px in the early sample and reached the target 50px before the shared translation phase.
-- The final geometry remained pixel-identical for more than 40 consecutive frames after completion.
-- The Nova image computes to `translateX(-2%) scale(1.04)` on desktop and resets to `none` on mobile.
-
-## Required Fidelity Surfaces
-
-- Fonts and typography: unchanged; no new clipping or wrapping regression was found.
-- Spacing and layout rhythm: the final 30/70 composition is preserved and both diagonal gaps are visually parallel.
-- Colors and visual tokens: the existing matched dark-glass materials remain unchanged.
-- Image quality and asset fidelity: the supplied 1672 x 941 Nova image remains the source; only its in-frame scale and focal position changed.
-- Copy and content: unchanged.
-
-## Interaction Evidence
-
-- Flow tested: `#gtm` -> Next project -> narrow vertical media state -> simultaneous leftward expansion -> matched-speed translation -> settled project.
-- Both endpoints move from the first animated frame. The upper endpoint keeps a constant speed while the lower endpoint accelerates smoothly until the target 50px diagonal is reached; both then continue left at the same speed.
-- All four panel and mask animations share one 350ms linear timeline after the same 500ms delay. Their final keyframes exactly match the static panel geometry, eliminating the extra-frame move and snap-back.
-- Desktop and 390 x 844 mobile layouts have no horizontal overflow.
-- The page renders meaningful content with no framework overlay and no console warnings or errors.
+- Full view: the implementation keeps the portfolio's existing two-column Experience composition while adopting the reference's separated cards, visible gaps, fine outlines, light corner rounding, and full-card disclosure affordance.
+- Focused card region: card padding, logo-to-copy alignment, date placement, chevron rotation, and expanded detail separation were readable at capture scale, so a separate crop was not required.
+- Typography: the existing DM Sans/Manrope hierarchy is intentionally retained; organization names remain primary, with role and dates subordinate.
+- Spacing and rhythm: 14 px desktop and 12 px mobile card gaps create the reference's independent-card rhythm without changing the section grid.
+- Colors and tokens: cards use the existing light/dark surface, border, text, and accent tokens. Reference-only multicolor edge strips were intentionally omitted because the requested change was the framed card treatment and they conflict with the approved neutral business system.
+- Image quality: all six images use frameless `contain` slots and remain complete without clipping. Dark mode uses a dedicated high-contrast UNSW asset, with Huawei, Rexel, and UNSW rendered monochrome.
+- Copy: all existing organizations, roles, date ranges, stages, and summaries are preserved.
+- Interaction: clicking the Huawei Greece summary changed its native `<details>` state from closed to open, rotated the chevron, and revealed the existing description. Automated coverage confirms multiple cards can stay open independently.
+- Console: no relevant warnings or errors in the checked states.
 
 ## Comparison History
 
-### Iteration 1
+1. Initial comparison found a P2 dark-theme image contrast issue: black Huawei and UNSW wordmark text blended into the dark card surface.
+2. Replaced the UNSW inversion with a dedicated dark asset, then applied grayscale so the complete mark is monochrome.
+3. Added dark-theme grayscale treatments to Rexel and UNSW; capture `38-experience-unsw-monochrome.jpg` shows both updates clearly.
 
-- Finding: the left and right cards used different stacked materials (P1).
-- Fix: reused the right-card surface and shadow on the left shell and made its nested stage transparent.
+## Remaining Findings
 
-### Iteration 2
-
-- Finding: independent percentage trapezoids made the settled diagonal frame look uneven (P1).
-- Fix: aligned the media and inner-frame slopes with fixed pixel endpoints.
-
-### Iteration 3
-
-- Finding: the first three projects still used older image exports (P1).
-- Fix: replaced the files with the supplied July 24 assets and verified their hashes and browser dimensions.
-
-### Iteration 4
-
-- Finding: the Nova subjects sat too far right; interpolating four unrelated trapezoid endpoints produced a squeezed transition; the final center channel still varied by viewport (P1).
-- Fix: enlarged and shifted only the Nova image, changed the animation to slope-first then parallel translation, and derived the copy edge from the media edge with a fixed 1% channel.
-- Post-fix evidence: the channel remains equal at every sampled frame and in the settled state; the inner frame delta is below one tenth of a CSS pixel.
-
-### Iteration 5
-
-- Finding: the segmented easing restarted at the intermediate keyframe, producing a visible velocity discontinuity; panel geometry also finished 200ms before the text transition, which exposed a one-frame endpoint correction (P1).
-- Fix: replaced the segmented easing with one authored linear trajectory. The lower edge uses progressively increasing travel increments until its speed matches the upper edge, then both translate together; all final keyframes now equal the static geometry.
-- Post-fix evidence: the upper edge moves continuously, the lower edge accelerates monotonically to the same speed, and the final geometry stays unchanged for more than 40 captured frames.
-
-## Findings
-
-No actionable P0, P1, or P2 mismatch remains for this scope.
-
-## Follow-up Polish
-
-None required.
+- No actionable P0, P1, or P2 findings remain.
 
 final result: passed

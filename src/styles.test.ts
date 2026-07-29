@@ -43,9 +43,18 @@ describe('light-first theme styles', () => {
   });
 
   test('styles native Experience disclosure rows and reduced motion', () => {
-    expect(styles).toContain('.experience-entry');
-    expect(styles).toContain('.experience-entry > summary');
+    expect(styles).toMatch(/\.experience-timeline\s*\{[^}]*display:\s*grid;[^}]*gap:\s*14px/s);
+    expect(styles).toMatch(/\.experience-entry\s*\{[^}]*border:\s*1px solid var\(--border\);[^}]*border-radius:\s*6px/s);
+    expect(styles).toMatch(/\.experience-entry > summary\s*\{[^}]*min-height:\s*112px/s);
     expect(styles).toContain('.experience-entry[open]');
+    expect(styles).toMatch(/\.experience-logo\s*\{[^}]*width:\s*84px;[^}]*height:\s*56px;[^}]*padding:\s*0;[^}]*background:\s*transparent;[^}]*border:\s*0/s);
+    expect(styles).toMatch(/\.experience-logo img\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%;[^}]*object-fit:\s*contain/s);
+    expect(styles).toContain(".experience-logo[data-logo='utoronto'] img");
+    expect(styles).toContain("[data-theme='dark'] .experience-logo[data-logo='huawei'] img");
+    expect(styles).toContain("filter: brightness(0) invert(1)");
+    expect(styles).toContain("[data-theme='dark'] .experience-logo[data-logo='unsw'] .experience-logo__dark");
+    expect(styles).toContain(".experience-logo[data-logo='unsw'] .experience-logo__dark { display: block; filter: grayscale(1)");
+    expect(styles).toContain("[data-theme='dark'] .experience-logo[data-logo='rexel'] img { filter: grayscale(1)");
     expect(styles).toMatch(
       /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.rotating-role__item\s*\{[^}]*transform:\s*none/s,
     );
@@ -82,6 +91,14 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/@keyframes role-enter\s*\{[^}]*translateY\(100%\)[\s\S]*?transform:\s*none/s);
     expect(styles).toMatch(/@keyframes role-exit\s*\{[^}]*transform:\s*none[\s\S]*?translateY\(-100%\)/s);
     expect(styles).toMatch(/\.rotating-role\[data-paused='true'\][^{]*\{[^}]*animation-play-state:\s*paused/s);
-    expect(styles).toMatch(/\.rotating-role:hover[^{]*\{[^}]*drop-shadow/s);
+    expect(styles).toContain('filter: brightness(1.12) drop-shadow(0 0 .16em #fff)');
+  });
+
+  test('uses a full-width translucent fixed header and high-contrast navigation', () => {
+    expect(styles).toMatch(/\.site-header\s*\{[^}]*inset:\s*0 0 auto;[^}]*height:\s*72px;[^}]*background:\s*rgb\(255 255 255 \/ 72%\);[^}]*border-bottom:\s*1px solid rgb\(17 19 24 \/ 18%\)/s);
+    expect(styles).toMatch(/\[data-theme='dark'\] \.site-header:not\(\[data-solid='true'\]\)\s*\{[^}]*background:\s*rgb\(11 12 15 \/ 72%\);[^}]*border-bottom-color:\s*rgb\(244 245 247 \/ 18%\)/s);
+    expect(styles).toMatch(/\.desktop-nav\s*\{[^}]*color:\s*var\(--text\);[^}]*font-weight:\s*600/s);
+    expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.site-header\s*\{[^}]*inset:\s*0 0 auto;[^}]*height:\s*64px/s);
+    expect(styles).not.toContain('inset: 14px 3.5vw auto');
   });
 });

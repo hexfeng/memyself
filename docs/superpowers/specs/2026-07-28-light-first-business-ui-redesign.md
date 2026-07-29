@@ -54,8 +54,8 @@ The light accent text is separate because `#5576fc` does not meet the 4.5:1 cont
 - Retain the existing brand and primary navigation structure.
 - Place the light/dark toggle at the upper right and keep it visible at every supported viewport.
 - On desktop, keep the existing Resume control immediately to the left of the theme toggle. On mobile, Resume and the desktop navigation may remain hidden, but the brand and theme toggle remain reachable.
-- The header remains sticky.
-- Over the Hero, its treatment may visually integrate with the fog while keeping controls readable.
+- The header remains fixed to the top edge and spans the full viewport width.
+- Over the Hero, it is a full-width fixed translucent bar with a fine bottom separator and no backdrop blur; central navigation uses the primary text color and semibold weight for reliable contrast over the fog.
 - Once the page leaves the Hero, the header becomes an opaque theme-colored surface with a fine lower border.
 - Header state changes must not cause a layout shift.
 - Keyboard focus remains clearly visible in both themes.
@@ -87,7 +87,7 @@ Use this exact spelling and order:
 
 In normal motion mode, a padded fixed-height clipped viewport makes the current role scroll fully upward out of frame while the next role scrolls upward from below. After the new role settles, it remains still for 2 seconds before the next transition. Each role has a stable, distinct accessible color (blue, cyan, rose, violet, and green in sequence), and the container reserves enough width for the longest label so switching does not shift surrounding content.
 
-Pointer hover over the role region and keyboard focus anywhere inside the Hero pause both an active transition and the next scheduled transition. Hover also adds a restrained color-matched highlight. The non-interactive role text does not receive an artificial tab stop. Leaving the hover or focus region resumes from the current item rather than resetting the sequence. Rotation also pauses while the page is hidden.
+Pointer hover over the role region and keyboard focus anywhere inside the Hero pause both an active transition and the next scheduled transition. Hover also adds a restrained white glow. The non-interactive role text does not receive an artificial tab stop. Leaving the hover or focus region resumes from the current item rather than resetting the sequence. Rotation also pauses while the page is hidden.
 
 With `prefers-reduced-motion: reduce`, roles may continue to change, but the transition uses no positional movement. An immediate replacement or restrained opacity-only change is acceptable. Hidden and transitional copies must not be repeatedly announced by assistive technology.
 
@@ -152,7 +152,7 @@ Use the existing `Mon YYYY` form, such as `Jun 2025 – Present`. Do not reduce 
 - Multiple entries may be expanded simultaneously without shared React expansion state.
 - Expanded details render only the existing one-sentence experience description in this scope.
 
-Rows use equal collapsed heights on desktop, aligned logos, low-contrast borders, and restrained hover/focus treatments. On small screens, long organization and role names wrap naturally and the date moves beneath the main identity rather than being truncated.
+Rows are visually independent cards with equal collapsed heights on desktop, visible gaps, low-contrast borders, light corner rounding, restrained elevation, and clear hover/focus treatments. Logos have no surrounding tile or border; use the compact source assets inside larger aligned `contain` slots so every mark remains complete and legible in both themes. On small screens, long organization and role names wrap naturally and the date moves beneath the main identity rather than being truncated.
 
 Expansion must not depend on hover. Reduced motion removes height/position choreography while preserving an immediate state change. Remove the global wheel handler and use native page scrolling so expanded content and trackpad input are never intercepted.
 
@@ -191,12 +191,12 @@ Verify the design at 1440 × 900, 1280 × 800, and 390 × 844.
 - Hero actions wrap in their existing order.
 - Experience rows remain scannable when dates move below titles.
 - Strategic-project panels preserve the approved stacked mobile behavior.
-- The sticky header and always-visible theme button remain reachable without covering anchored headings.
+- The fixed header and always-visible theme button remain reachable without covering anchored headings.
 
 ## Acceptance Criteria
 
 - Light is the first-visit default; the upper-right toggle switches and persists themes.
-- The sticky header becomes opaque after leaving the Hero.
+- The fixed header becomes opaque after leaving the Hero.
 - The global video, its public asset, and the white glowing glass treatment are absent.
 - Vanta Fog appears only in the Hero with the exact approved theme parameters and a static fallback.
 - The Hero shows the name, corrected rotating roles, and existing action boxes without descriptive text.
