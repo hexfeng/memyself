@@ -17,9 +17,8 @@ describe('light-first theme styles', () => {
     expect(styles).toContain('--page: #0b0c0f');
   });
 
-  test('uses opaque surfaces and removes the outgoing global video and glass selectors', () => {
+  test('uses opaque content surfaces and removes the outgoing global video selector', () => {
     expect(styles).not.toContain('.scene-backdrop');
-    expect(styles).not.toContain('backdrop-filter');
     expect(styles).toContain('.fog-background');
     expect(styles).toContain('.site-header[data-solid=\'true\']');
     expect(styles).toContain('@media (max-width: 767px)');
@@ -115,9 +114,11 @@ describe('light-first theme styles', () => {
     expect(styles).toContain('filter: brightness(1.12) drop-shadow(0 0 .16em #fff)');
   });
 
-  test('uses a full-width translucent fixed header and high-contrast navigation', () => {
-    expect(styles).toMatch(/\.site-header\s*\{[^}]*inset:\s*0 0 auto;[^}]*height:\s*72px;[^}]*background:\s*rgb\(255 255 255 \/ 72%\);[^}]*border-bottom:\s*1px solid rgb\(17 19 24 \/ 18%\)/s);
-    expect(styles).toMatch(/\[data-theme='dark'\] \.site-header:not\(\[data-solid='true'\]\)\s*\{[^}]*background:\s*rgb\(11 12 15 \/ 72%\);[^}]*border-bottom-color:\s*rgb\(244 245 247 \/ 18%\)/s);
+  test('progressively solidifies the frosted fixed header while scrolling', () => {
+    expect(styles).toMatch(/\.site-header\s*\{[^}]*inset:\s*0 0 auto;[^}]*height:\s*72px;[^}]*background:\s*rgb\(255 255 255 \/ 28%\);[^}]*backdrop-filter:\s*blur\(18px\) saturate\(145%\)/s);
+    expect(styles).toContain('@keyframes header-scroll-light');
+    expect(styles).toContain('@keyframes header-scroll-dark');
+    expect(styles).toMatch(/@supports \(animation-timeline: scroll\(\)\)[\s\S]*?animation-timeline:\s*scroll\(root block\);[^}]*animation-range:\s*0 72vh/s);
     expect(styles).toMatch(/\.desktop-nav\s*\{[^}]*color:\s*var\(--text\);[^}]*font-weight:\s*600/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.site-header\s*\{[^}]*inset:\s*0 0 auto;[^}]*height:\s*64px/s);
     expect(styles).not.toContain('inset: 14px 3.5vw auto');

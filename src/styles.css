@@ -90,15 +90,17 @@ button { color: inherit; }
   align-items: center;
   padding-inline: 3.5vw;
   color: var(--text);
-  background: rgb(255 255 255 / 72%);
-  border-bottom: 1px solid rgb(17 19 24 / 18%);
-  box-shadow: 0 8px 24px rgb(17 19 24 / 7%);
+  background: rgb(255 255 255 / 28%);
+  border-bottom: 1px solid rgb(17 19 24 / 10%);
+  box-shadow: 0 4px 18px rgb(17 19 24 / 4%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
   transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 [data-theme='dark'] .site-header:not([data-solid='true']) {
-  background: rgb(11 12 15 / 72%);
-  border-bottom-color: rgb(244 245 247 / 18%);
+  background: rgb(11 12 15 / 28%);
+  border-bottom-color: rgb(244 245 247 / 10%);
 }
 
 .site-header[data-solid='true'] {
@@ -106,6 +108,27 @@ button { color: inherit; }
   border-bottom-color: var(--border);
   box-shadow: 0 6px 20px rgb(17 19 24 / 8%);
 }
+
+@keyframes header-scroll-light {
+  from { background: rgb(255 255 255 / 28%); border-bottom-color: rgb(17 19 24 / 10%); box-shadow: 0 4px 18px rgb(17 19 24 / 4%); }
+  to { background: #fff; border-bottom-color: rgb(17 19 24 / 18%); box-shadow: 0 6px 20px rgb(17 19 24 / 8%); }
+}
+
+@keyframes header-scroll-dark {
+  from { background: rgb(11 12 15 / 28%); border-bottom-color: rgb(244 245 247 / 10%); box-shadow: 0 4px 18px rgb(0 0 0 / 12%); }
+  to { background: #121419; border-bottom-color: rgb(244 245 247 / 16%); box-shadow: 0 6px 20px rgb(0 0 0 / 30%); }
+}
+
+@supports (animation-timeline: scroll()) {
+  .site-header {
+    animation: header-scroll-light 1ms linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 72vh;
+  }
+
+  [data-theme='dark'] .site-header { animation-name: header-scroll-dark; }
+}
+
 .brand, .header-actions, .desktop-nav { display: flex; align-items: center; }
 .brand { justify-self: start; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: .02em; }
 .brand-mark {
@@ -571,6 +594,7 @@ button { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .site-header { animation: none; }
   .rotating-role__item { transform: none; }
   .rotating-role__item--exit { display: none; }
   .strategic-showcase__copy,
