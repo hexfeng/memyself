@@ -14,13 +14,31 @@ describe('portfolio content', () => {
     ]);
   });
 
-  test('keeps Experience as a complete timeline without hidden detail panels', () => {
+  test('keeps the exact rotating role order and spelling', () => {
+    expect(content.hero.roles).toEqual([
+      'Strategist',
+      'Product Manager',
+      'Developer',
+      'Project & Program Manager',
+      'Community Builder',
+    ]);
+    expect(content.hero.roles.join(' ')).not.toContain('Manger');
+  });
+
+  test('keeps six complete Experience entries with month and year dates', () => {
     expect(content.experience.items).toHaveLength(6);
     expect(content.experience.items[0]).toMatchObject({
       organization: 'Huawei Canada · Waterloo Research Center',
       role: 'COO / Operations Manager',
     });
-    expect(content.experience.items.every((item) => item.summary.length > 20)).toBe(true);
+    expect(
+      content.experience.items.every(
+        (item) => /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}$/.test(item.startDate)
+          && (item.endDate === 'Present'
+            || /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}$/.test(item.endDate))
+          && item.summary.length > 20,
+      ),
+    ).toBe(true);
   });
 
   test('keeps the four strategic projects in the approved order', () => {

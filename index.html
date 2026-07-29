@@ -8,6 +8,16 @@
       content="Xiaoyu Feng - turning technology opportunities into market outcomes and scalable organizations."
     />
     <title>Xiaoyu Feng - Strategy & Transformation</title>
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('portfolio-theme');
+          document.documentElement.dataset.theme = theme === 'dark' || theme === 'light' ? theme : 'light';
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

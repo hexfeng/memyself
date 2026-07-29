@@ -45,6 +45,7 @@ export const content = {
   },
   hero: {
     name: 'Xiaoyu Feng',
+    roles: ['Strategist', 'Product Manager', 'Developer', 'Project & Program Manager', 'Community Builder'],
     title: 'Turning technology opportunities into market outcomes and scalable organizations.',
     statement:
       'I connect market insight, technical roadmaps, customer co-innovation, and operating systems to create measurable business impact.',
