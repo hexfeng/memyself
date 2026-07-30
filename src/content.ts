@@ -22,6 +22,7 @@ export type CaseStudy = {
   summary: string;
   result: string;
   secondary: string;
+  outcomes?: Array<{ highlight: string; detail: string }>;
   image?: string;
 };
 
@@ -130,11 +131,17 @@ export const content = {
       'Translating market signals into product direction and commercial momentum by connecting customer needs, network capabilities, portfolio decisions, and cross-functional execution.',
     cases: [
       {
-        title: 'Greece Nova 5G FWA Commercial Launch',
+        title: 'GR Nova 5G FWA Commercial Launch',
         summary:
-          "Co-developed and validated the technical and commercial business plan with Nova for Greece's first 5G FWA tariff.",
+          "Partnered with Nova to launch Greece's first commercial 5G FWA service and advance an integrated FWA + FTTH strategy.",
         result: '15K subscribers in 4 months',
-        secondary: 'EUR 9M+ expected incremental revenue',
+        secondary: 'EUR 9M+ revenue growth',
+        outcomes: [
+          { highlight: '15K', detail: 'subscribers in 4 months' },
+          { highlight: 'EUR 9M+', detail: 'revenue growth' },
+          { highlight: 'First', detail: 'commercial 5G FWA network in Greece' },
+          { highlight: 'MetaAAU breakthrough', detail: 'in high-performance commercial deployment' },
+        ],
         image: '/images/greece-nova-5g-fwa.png',
       },
       {

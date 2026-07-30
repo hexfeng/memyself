@@ -58,6 +58,10 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.strategic-showcase__image\[src\$='greece-nova-5g-fwa\.png'\]\s*\{[^}]*object-fit:\s*contain;[^}]*background:\s*#fff;[^}]*transform:\s*none/s);
     expect(styles).not.toContain('background: #f3f4f6');
     expect(styles).toMatch(/\[data-theme='light'\] \.strategic-showcase:has\(\.strategic-showcase__image--enter\[src\$='greece-nova-5g-fwa\.png'\]\) \.strategic-showcase__media-frame::after\s*\{[^}]*width:\s*140px;[^}]*background:\s*linear-gradient\(96deg, rgb\(17 19 24 \/ 8%\), transparent 72%\)/s);
+    expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='0'\] \.strategic-showcase__statement h3\s*\{[^}]*font-size:\s*clamp\(28px, 2\.3vw, 36px\)/s);
+    expect(styles).toMatch(/\.strategic-showcase__outcomes\s*\{[^}]*display:\s*grid;[^}]*list-style:\s*none/s);
+    expect(styles).toMatch(/\.strategic-showcase__outcomes li\s*\{[^}]*font-size:\s*13px/s);
+    expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='0'\] \.strategic-showcase__statement\s*\{[^}]*margin:\s*clamp\(34px, 4\.5vh, 52px\) 0 0/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase\s*\{[^}]*gap:\s*16px/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase__copy-shell\s*\{[^}]*box-shadow:\s*var\(--showcase-shadow\)/s);
   });

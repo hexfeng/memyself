@@ -43,10 +43,19 @@ describe('portfolio content', () => {
 
   test('keeps the four strategic projects in the approved order', () => {
     expect(content.gtm.cases.map((project) => project.title)).toEqual([
-      'Greece Nova 5G FWA Commercial Launch',
+      'GR Nova 5G FWA Commercial Launch',
       'Greece Vodafone Spring 6 Strategic Partnership',
       'Green Antenna Modernization',
       'Strategic Business & Product Leadership',
     ]);
+    expect(content.gtm.cases[0].outcomes).toEqual([
+      { highlight: '15K', detail: 'subscribers in 4 months' },
+      { highlight: 'EUR 9M+', detail: 'revenue growth' },
+      { highlight: 'First', detail: 'commercial 5G FWA network in Greece' },
+      { highlight: 'MetaAAU breakthrough', detail: 'in high-performance commercial deployment' },
+    ]);
+    expect(content.gtm.cases[0].summary).toBe(
+      "Partnered with Nova to launch Greece's first commercial 5G FWA service and advance an integrated FWA + FTTH strategy.",
+    );
   });
 });

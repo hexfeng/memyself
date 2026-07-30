@@ -462,11 +462,13 @@ function StrategicProjectShowcase({ label, title, intro, cases }: { label: strin
 
 function ProjectShowcaseCopy({ project, index, state }: { project: CaseStudy; index: number; state: 'enter' | 'exit' }) {
   return (
-    <article className={`strategic-showcase__copy strategic-showcase__copy--${state}`} aria-hidden={state === 'exit'}>
+    <article className={`strategic-showcase__copy strategic-showcase__copy--${state}`} data-project-index={index} aria-hidden={state === 'exit'}>
       <p className="strategic-showcase__eyebrow">{String(index + 1).padStart(2, '0')} / Selected project</p>
       <div className="strategic-showcase__statement"><h3>{project.title}</h3><p>{project.summary}</p></div>
-      <div className="strategic-showcase__footer"><div><strong>{project.result}</strong><span>{project.secondary}</span></div>
-        <a href="#contact" tabIndex={state === 'exit' ? -1 : undefined}>Discuss project <ArrowUpRight size={17} aria-hidden="true" /></a>
+      <div className="strategic-showcase__footer">
+        {project.outcomes ? <ul className="strategic-showcase__outcomes">
+          {project.outcomes.map(({ highlight, detail }) => <li key={highlight}><strong>{highlight}</strong> {detail}</li>)}
+        </ul> : <div><strong>{project.result}</strong><span>{project.secondary}</span></div>}
       </div>
     </article>
   );

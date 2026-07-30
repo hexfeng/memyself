@@ -196,8 +196,11 @@ describe('App', () => {
 
     act(() => vi.advanceTimersByTime(30_000));
     expect(
-      within(showcase).getByRole('heading', { name: 'Greece Nova 5G FWA Commercial Launch' }),
+      within(showcase).getByRole('heading', { name: 'GR Nova 5G FWA Commercial Launch' }),
     ).toBeInTheDocument();
+    expect(within(showcase).queryByRole('link', { name: 'Discuss project' })).not.toBeInTheDocument();
+    expect(within(showcase).getByText('15K', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(showcase).getByText('MetaAAU breakthrough', { selector: 'strong' })).toBeInTheDocument();
 
     act(() => {
       callbacks.get(showcase)?.(
