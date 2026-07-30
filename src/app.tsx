@@ -4,10 +4,13 @@ import {
   ArrowUpRight,
   ChevronDown,
   Github,
+  Leaf,
   Linkedin,
   Mail,
+  Map,
   Moon,
   Sun,
+  TrendingUp,
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import huaweiLogo from './assets/logos/huawei.png';
@@ -21,6 +24,7 @@ import './styles.css';
 type Theme = 'light' | 'dark';
 
 const THEME_KEY = 'portfolio-theme';
+const outcomeIcons = { growth: TrendingUp, energy: Leaf, roadmap: Map };
 const experienceLogos: Record<string, string> = {
   huawei: huaweiLogo,
   rexel: rexelLogo,
@@ -467,7 +471,13 @@ function ProjectShowcaseCopy({ project, index, state }: { project: CaseStudy; in
       <div className="strategic-showcase__statement"><h3>{project.title}</h3><p>{project.summary}</p></div>
       <div className="strategic-showcase__footer">
         {project.outcomes ? <ul className="strategic-showcase__outcomes">
-          {project.outcomes.map(({ highlight, detail }) => <li key={highlight}><strong>{highlight}</strong> {detail}</li>)}
+          {project.outcomes.map(({ highlight, detail, secondaryHighlight, suffix, icon }) => {
+            const OutcomeIcon = icon ? outcomeIcons[icon] : null;
+            return <li key={highlight} className={OutcomeIcon ? 'strategic-showcase__outcome--icon' : undefined}>
+              {OutcomeIcon && <span className="strategic-showcase__outcome-icon" aria-hidden="true"><OutcomeIcon size={14} /></span>}
+              <span className="strategic-showcase__outcome-copy"><strong>{highlight}</strong> {detail}{secondaryHighlight && <> <strong>{secondaryHighlight}</strong> {suffix}</>}</span>
+            </li>;
+          })}
         </ul> : <div><strong>{project.result}</strong><span>{project.secondary}</span></div>}
       </div>
     </article>

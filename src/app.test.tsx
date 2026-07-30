@@ -219,6 +219,11 @@ describe('App', () => {
     expect(
       within(showcase).getByRole('heading', { name: 'Green Antenna Modernization' }),
     ).toBeInTheDocument();
+    const greenCopy = showcase.querySelector('.strategic-showcase__copy--enter') as HTMLElement;
+    expect(within(greenCopy).getByText('20%', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(greenCopy).getByText('15%', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(greenCopy).getByText('5+', { selector: 'strong' })).toBeInTheDocument();
+    expect(greenCopy.querySelectorAll('.strategic-showcase__outcome-icon')).toHaveLength(3);
 
     act(() => {
       callbacks.get(showcase)?.(

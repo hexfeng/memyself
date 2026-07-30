@@ -57,5 +57,14 @@ describe('portfolio content', () => {
     expect(content.gtm.cases[0].summary).toBe(
       "Partnered with Nova to launch Greece's first commercial 5G FWA service and advance an integrated FWA + FTTH strategy.",
     );
+    expect(content.gtm.cases[2]).toMatchObject({
+      summary:
+        "Served as the base station antenna product owner for the Greek market, led the country's antenna modernization program, and translated requirements from 12+ operator customers.",
+      outcomes: [
+        { highlight: '20%', detail: 'antenna revenue increase in 2 years', icon: 'growth' },
+        { highlight: '70%', detail: 'green antenna adoption with', secondaryHighlight: '15%', suffix: 'energy savings', icon: 'energy' },
+        { highlight: '30+', detail: 'product roadmap developed, with', secondaryHighlight: '5+', suffix: 'models swapped and upgraded in the Greek market', icon: 'roadmap' },
+      ],
+    });
   });
 });

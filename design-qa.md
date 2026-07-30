@@ -5,6 +5,7 @@
 - Source visual truth: `C:\Users\PC\Downloads\Generated image 1 (3).png` (1753 × 897, SHA-256 `878D2AE1A613AE0188C6D0B9933525A161EF2CF0A3A5255F0707D0A94EE45560`).
 - Light implementation: `C:\Users\PC\AppData\Local\Temp\personal-website-nova-emphasis.png` (1265 × 712).
 - Dark implementation: `C:\Users\PC\AppData\Local\Temp\personal-website-nova-copy-dark.png` (1265 × 712).
+- Green Antenna implementation: `C:\Users\PC\AppData\Local\Temp\personal-website-green-antenna-type-fixed.png` (1265 × 712).
 - Focused comparison: `C:\Users\PC\AppData\Local\Temp\personal-website-nova-image-comparison.png` (845 × 866); source normalized to 845 × 433 above, rendered media crop at 845 × 433 below.
 - Environment: `http://localhost:5173/#gtm`, 1280 × 720 CSS viewport, DPR 1.25, NOVA project selected.
 
@@ -17,6 +18,7 @@
 - Colors and tokens: the copy panel keeps the same white surface as every other light-mode project; a subtle NOVA-only gray gradient fades across the image side of the diagonal boundary, while borders remain absent.
 - Image quality: the deployed asset hash exactly matches the supplied PNG. Browser downscaling is clean with no transparency halo or distortion.
 - Copy and content: the title is constrained to two lines, the summary describes the joint commercial launch and FWA + FTTH strategy, and four 13 px outcomes emphasize `15K`, `EUR 9M+`, `First`, and `MetaAAU breakthrough`.
+- Green Antenna content: the summary now states Greek-market product ownership, modernization leadership, and operator-requirement translation; three icon-led outcomes emphasize `20%`, `70%`, and `30+`.
 - Interaction: Next Project and project 1 selection were exercised; the new image returned correctly after the transition.
 - Console: no relevant warnings or errors.
 
@@ -27,6 +29,8 @@
 3. Post-fix: the copy panel color stays consistent across projects, the light NOVA boundary remains readable without a drawn edge, and the gradient disappears on other projects and in dark mode.
 4. Copy update: renamed the project, added the launch and portfolio-strategy narrative, converted the four outcomes to bullets, and removed the Discuss project CTA from every showcase item.
 5. Hierarchy update: moved the NOVA title and results group upward, matched bullet text to the 13 px summary size, and strengthened the four outcome keywords with the theme accent.
+6. Green Antenna update: applied the same raised hierarchy, added three compact metric icons, and replaced the former two-line result block with the requested commercial, adoption, and roadmap outcomes.
+7. Outcome typography fix: removed the inherited 10 px footer override, matched every outcome line to the 13 px / 1.65 summary typography, and added accent emphasis to `15%` and `5+`.
 
 ## Remaining Findings
 

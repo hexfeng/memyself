@@ -61,7 +61,10 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='0'\] \.strategic-showcase__statement h3\s*\{[^}]*font-size:\s*clamp\(28px, 2\.3vw, 36px\)/s);
     expect(styles).toMatch(/\.strategic-showcase__outcomes\s*\{[^}]*display:\s*grid;[^}]*list-style:\s*none/s);
     expect(styles).toMatch(/\.strategic-showcase__outcomes li\s*\{[^}]*font-size:\s*13px/s);
-    expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='0'\] \.strategic-showcase__statement\s*\{[^}]*margin:\s*clamp\(34px, 4\.5vh, 52px\) 0 0/s);
+    expect(styles).toMatch(/\.strategic-showcase__copy:has\(\.strategic-showcase__outcomes\) \.strategic-showcase__statement\s*\{[^}]*margin:\s*clamp\(34px, 4\.5vh, 52px\) 0 0/s);
+    expect(styles).toMatch(/\.strategic-showcase__outcomes li\.strategic-showcase__outcome--icon\s*\{[^}]*grid-template-columns:\s*24px 1fr/s);
+    expect(styles).toMatch(/\.strategic-showcase__footer \.strategic-showcase__outcome-icon\s*\{[^}]*border:\s*1px solid var\(--border\);[^}]*color:\s*var\(--accent-text\)/s);
+    expect(styles).toMatch(/\.strategic-showcase__footer \.strategic-showcase__outcome-copy\s*\{[^}]*font-size:\s*13px;[^}]*line-height:\s*1\.65/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase\s*\{[^}]*gap:\s*16px/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase__copy-shell\s*\{[^}]*box-shadow:\s*var\(--showcase-shadow\)/s);
   });

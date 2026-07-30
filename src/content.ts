@@ -22,7 +22,13 @@ export type CaseStudy = {
   summary: string;
   result: string;
   secondary: string;
-  outcomes?: Array<{ highlight: string; detail: string }>;
+  outcomes?: Array<{
+    highlight: string;
+    detail: string;
+    secondaryHighlight?: string;
+    suffix?: string;
+    icon?: 'growth' | 'energy' | 'roadmap';
+  }>;
   image?: string;
 };
 
@@ -155,9 +161,14 @@ export const content = {
       {
         title: 'Green Antenna Modernization',
         summary:
-          'Translated requirements from 12+ operator customers into a 30+ product antenna roadmap across R&D, account, and delivery teams.',
+          "Served as the base station antenna product owner for the Greek market, led the country's antenna modernization program, and translated requirements from 12+ operator customers.",
         result: '20%+ order growth',
         secondary: '70%+ SDIF share of Greece antenna orders',
+        outcomes: [
+          { highlight: '20%', detail: 'antenna revenue increase in 2 years', icon: 'growth' },
+          { highlight: '70%', detail: 'green antenna adoption with', secondaryHighlight: '15%', suffix: 'energy savings', icon: 'energy' },
+          { highlight: '30+', detail: 'product roadmap developed, with', secondaryHighlight: '5+', suffix: 'models swapped and upgraded in the Greek market', icon: 'roadmap' },
+        ],
         image: '/images/green-antenna-modernization.png',
       },
       {
