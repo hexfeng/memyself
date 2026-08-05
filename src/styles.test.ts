@@ -27,14 +27,18 @@ describe('light-first theme styles', () => {
 
   test('uses one combined transformation page and a compact dark contact band', () => {
     expect(styles).toMatch(/\.combined-projects\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s);
+    expect(styles).toMatch(/\.combined-project-layout \.section-copy\s*\{[^}]*max-width:\s*none/s);
     expect(styles).toMatch(/\.beside-work\s*\{[^}]*background:\s*var\(--surface\)/s);
+    expect(styles).toMatch(/\.beside-work__layout \.section-copy\s*\{[^}]*max-width:\s*none/s);
     expect(styles).toMatch(/\.beside-work__items\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
     expect(styles).toMatch(/\.beside-work__item img\s*\{[^}]*aspect-ratio:\s*3\s*\/\s*2/s);
+    expect(styles).toMatch(/\.strategic-projects__header \.section-copy\s*\{[^}]*max-width:\s*none/s);
     expect(styles).toMatch(/\.contact-band\s*\{[^}]*min-height:\s*clamp\(320px, 34svh, 420px\);[^}]*background:\s*#0b0c0f/s);
     expect(styles).toMatch(/\[data-theme='dark'\] \.contact-band\s*\{[^}]*background:\s*var\(--surface-alt\)/s);
   });
 
   test('keeps the minimal business theme around the authored Cohere panel motion', () => {
+    expect(styles).toMatch(/\.section-copy h2\s*\{[^}]*text-wrap:\s*pretty/s);
     expect(styles).toMatch(/\.project-screen--showcase\s*\{[^}]*background:\s*var\(--page\)/s);
     expect(styles).not.toContain(".site-header[data-section='gtm']");
     expect(styles).toMatch(/\.strategic-showcase\s*\{[^}]*height:\s*clamp\(440px, 37vw, 560px\)/s);
