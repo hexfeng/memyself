@@ -368,10 +368,10 @@ button { color: inherit; }
   inset: 0;
   overflow: hidden;
   background-color: var(--page);
-  background-image: radial-gradient(circle, rgb(85 118 252 / 38%) 1px, transparent 1.5px);
+  background-image: radial-gradient(circle, rgb(17 19 24 / 38%) 1px, transparent 1.5px);
   background-size: 44px 44px;
 }
-[data-theme='dark'] .net-background { background-image: radial-gradient(circle, rgb(141 164 255 / 25%) 1px, transparent 1.5px); }
+[data-theme='dark'] .net-background { background-image: radial-gradient(circle, rgb(255 255 255 / 24%) 1px, transparent 1.5px); }
 .net-background canvas { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; opacity: .46; }
 .thinking-lab__content {
   position: relative;
@@ -622,6 +622,7 @@ button { color: inherit; }
 @keyframes showcase-copy-exit-previous { from { opacity: 1; clip-path: inset(0); transform: translateX(0); } to { opacity: 0; clip-path: inset(0 0 0 100%); transform: translateX(18px); } }
 
 .contact-band { min-height: clamp(320px, 34svh, 420px); background: #0b0c0f; color: #f4f5f7; }
+[data-theme='dark'] .contact-band { background: var(--surface-alt); }
 .contact-layout { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7vw; align-items: center; padding-block: 54px 48px; }
 .contact-copy { max-width: 760px; }
 .contact-copy .section-label { margin-bottom: 12px; color: #8da4ff; }

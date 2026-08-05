@@ -454,7 +454,7 @@ function NetBackground({ theme }: { theme: Theme }) {
           minWidth: 200,
           scale: 1,
           scaleMobile: 1,
-          color: theme === 'light' ? 0x5576fc : 0x8da4ff,
+          color: theme === 'light' ? 0x111318 : 0xffffff,
           backgroundColor: theme === 'light' ? 0xf7f8fa : 0x0b0c0f,
           points: 10,
           maxDistance: 18,

@@ -29,6 +29,7 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.combined-projects\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s);
     expect(styles).toMatch(/\.beside-work\s*\{[^}]*background:\s*var\(--surface\)/s);
     expect(styles).toMatch(/\.contact-band\s*\{[^}]*min-height:\s*clamp\(320px, 34svh, 420px\);[^}]*background:\s*#0b0c0f/s);
+    expect(styles).toMatch(/\[data-theme='dark'\] \.contact-band\s*\{[^}]*background:\s*var\(--surface-alt\)/s);
   });
 
   test('keeps the minimal business theme around the authored Cohere panel motion', () => {
@@ -77,6 +78,8 @@ describe('light-first theme styles', () => {
 
   test('builds Thinking Lab as a full Net canvas with six floating image cards', () => {
     expect(styles).toMatch(/\.net-background\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0/s);
+    expect(styles).toContain('rgb(17 19 24 / 38%)');
+    expect(styles).toContain('rgb(255 255 255 / 24%)');
     expect(styles).toMatch(/\.thinking-lab__overview\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:/s);
     expect(styles).toMatch(/\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
     expect(styles).toMatch(/\.lab-project-card\s*\{[^}]*grid-template-columns:\s*48%[^}]*border-radius:\s*16px;[^}]*box-shadow:/s);

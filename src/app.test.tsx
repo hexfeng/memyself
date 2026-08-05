@@ -336,6 +336,18 @@ describe('App', () => {
     expect(netDestroy).toHaveBeenCalled();
   });
 
+  test('uses black and white for the Thinking Lab Net', async () => {
+    stubMotion(false);
+    render(<App />);
+
+    await waitFor(() => expect(netFactory).toHaveBeenCalledTimes(1));
+    expect(netFactory.mock.calls[0]?.[0]).toMatchObject({ color: 0x111318 });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Switch to dark mode' }));
+    await waitFor(() => expect(netFactory).toHaveBeenCalledTimes(2));
+    expect(netFactory.mock.calls[1]?.[0]).toMatchObject({ color: 0xffffff });
+  });
+
   test('keeps the fallback and reports a Vanta initialization failure', async () => {
     stubMotion(false);
     const failure = new Error('WebGL unavailable');
