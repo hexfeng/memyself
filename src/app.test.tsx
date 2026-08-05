@@ -68,6 +68,8 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: 'Xiaoyu Feng' })).toBeInTheDocument();
     expect(document.querySelector('.scene-backdrop')).not.toBeInTheDocument();
     expect(document.querySelector('.fog-background')).toBeInTheDocument();
+    expect(document.querySelector('#experience .experience-threads .threads-container')).toBeInTheDocument();
+    expect(document.querySelector('#experience .threads-container canvas')).not.toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: 'Section progress' })).toBeInTheDocument();
 
     const main = screen.getByRole('main');

@@ -96,6 +96,8 @@ describe('light-first theme styles', () => {
   test('styles native Experience disclosure rows and reduced motion', () => {
     expect(styles).toMatch(/\.experience-timeline\s*\{[^}]*display:\s*grid;[^}]*gap:\s*14px/s);
     expect(styles).toMatch(/\.experience-entry\s*\{[^}]*border:\s*1px solid var\(--border\);[^}]*border-radius:\s*6px/s);
+    expect(styles).toMatch(/\.experience-entry\s*\{[^}]*background:\s*rgb\(255 255 255 \/ 42%\);[^}]*backdrop-filter:\s*blur\(6px\)/s);
+    expect(styles).toContain("[data-theme='dark'] .experience-entry { background: rgb(24 27 34 / 38%); }");
     expect(styles).toMatch(/\.experience-entry > summary\s*\{[^}]*min-height:\s*112px/s);
     expect(styles).toContain('.experience-entry[open]');
     expect(styles).toMatch(/\.experience-logo\s*\{[^}]*width:\s*84px;[^}]*height:\s*56px;[^}]*padding:\s*0;[^}]*background:\s*transparent;[^}]*border:\s*0/s);

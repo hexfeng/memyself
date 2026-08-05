@@ -20,12 +20,14 @@ import unswLogo from './assets/logos/unsw.png';
 import utorontoLogo from './assets/logos/utoronto.svg';
 import { content, sections, type CaseStudy, type ExperienceItem, type LabProject, type SectionId } from './content';
 import { githubContributionSnapshot, githubContributionSnapshotDate, type ContributionDay } from './github-contributions';
+import { Threads } from './threads';
 import './styles.css';
 
 type Theme = 'light' | 'dark';
 
 const THEME_KEY = 'portfolio-theme';
 const outcomeIcons = { growth: TrendingUp, energy: Leaf, roadmap: Map };
+const experienceThreadColors: Record<Theme, [number, number, number]> = { light: [0, 0, 0], dark: [1, 1, 1] };
 const experienceLogos: Record<string, string> = {
   huawei: huaweiLogo,
   rexel: rexelLogo,
@@ -96,7 +98,7 @@ export function App() {
       <SectionProgress currentSection={currentSection} />
       <main>
         <Hero theme={theme} />
-        <Experience />
+        <Experience theme={theme} />
         <Projects />
         <Transformation />
         <ThinkingLab theme={theme} />
@@ -320,9 +322,12 @@ function FogBackground({ theme }: { theme: Theme }) {
   return <div ref={ref} className="fog-background" aria-hidden="true" />;
 }
 
-function Experience() {
+function Experience({ theme }: { theme: Theme }) {
   return (
     <section id="experience" className="screen screen--experience" aria-labelledby="experience-title">
+      <div className="experience-threads" aria-hidden="true">
+        <Threads color={experienceThreadColors[theme]} amplitude={1} distance={0} enableMouseInteraction />
+      </div>
       <div className="page-shell screen-content experience-layout">
         <SectionCopy label={content.experience.label} title={content.experience.title} intro={content.experience.intro} titleId="experience-title" />
         <ExperienceTimeline items={content.experience.items} />
