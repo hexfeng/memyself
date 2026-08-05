@@ -25,6 +25,12 @@ describe('light-first theme styles', () => {
     expect(styles).toContain('@media (prefers-reduced-motion: reduce)');
   });
 
+  test('uses one combined transformation page and a compact dark contact band', () => {
+    expect(styles).toMatch(/\.combined-projects\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s);
+    expect(styles).toMatch(/\.beside-work\s*\{[^}]*background:\s*var\(--surface\)/s);
+    expect(styles).toMatch(/\.contact-band\s*\{[^}]*min-height:\s*clamp\(320px, 34svh, 420px\);[^}]*background:\s*#0b0c0f/s);
+  });
+
   test('keeps the minimal business theme around the authored Cohere panel motion', () => {
     expect(styles).toMatch(/\.project-screen--showcase\s*\{[^}]*background:\s*var\(--page\)/s);
     expect(styles).not.toContain(".site-header[data-section='gtm']");

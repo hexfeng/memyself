@@ -75,7 +75,16 @@ describe('App', () => {
       within(main)
         .getAllByRole('region')
         .map((section) => section.id),
-    ).toEqual(['top', 'experience', 'gtm', 'transformation', 'ecosystem', 'lab', 'contact']);
+    ).toEqual(['top', 'experience', 'gtm', 'transformation', 'lab', 'beside', 'contact']);
+
+    const transformation = screen.getByRole('region', { name: 'Turning operating systems and relationships into momentum.' });
+    expect(transformation.querySelectorAll('.project-group')).toHaveLength(2);
+    expect(within(transformation).getByRole('heading', { name: 'AI Transformation' })).toBeInTheDocument();
+    expect(within(transformation).getByRole('heading', { name: 'Executive & Ecosystem Engagement' })).toBeInTheDocument();
+
+    const beside = screen.getByRole('region', { name: 'A life shaped by curiosity, places, and people.' });
+    expect(beside.querySelectorAll('.beside-work__item')).toHaveLength(3);
+    expect(document.querySelector('.screen--contact')).toHaveClass('contact-band');
   });
 
   test('renders the dedicated Thinking Lab with a live contribution summary and six linked image cards', async () => {

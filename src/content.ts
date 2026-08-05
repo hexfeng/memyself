@@ -3,8 +3,8 @@ export type SectionId =
   | 'experience'
   | 'gtm'
   | 'transformation'
-  | 'ecosystem'
   | 'lab'
+  | 'beside'
   | 'contact';
 
 export type ExperienceItem = {
@@ -44,8 +44,8 @@ export const sections: Array<{ id: SectionId; label: string }> = [
   { id: 'experience', label: 'Experience' },
   { id: 'gtm', label: 'Projects' },
   { id: 'transformation', label: 'Transformation' },
-  { id: 'ecosystem', label: 'Ecosystem' },
   { id: 'lab', label: 'Thinking Lab' },
+  { id: 'beside', label: 'Beside Work' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -54,6 +54,7 @@ export const content = {
     experience: 'Experience',
     work: 'Projects',
     lab: 'Thinking Lab',
+    beside: 'Beside Work',
     contact: 'Contact',
     resume: 'Resume',
   },
@@ -189,65 +190,67 @@ export const content = {
     ] satisfies CaseStudy[],
   },
   transformation: {
-    label: '03 - Operations & AI Transformation',
-    title: 'Building the operating system for AI research execution.',
+    label: '03 - AI Transformation & Engagement',
+    title: 'Turning operating systems and relationships into momentum.',
     intro:
-      'Operations becomes strategic when it creates clarity, control, collaboration, and a repeatable path from research ambition to execution.',
-    cases: [
+      'Sustainable transformation needs both: a clear system for execution and the relationships that move complex programs forward.',
+    groups: [
       {
-        title: 'Waterloo Research Center Operations',
-        summary:
-          'Coordinates planning, multimillion-dollar resources, risk, and execution across a multidisciplinary research environment.',
-        result: '4 research labs',
-        secondary: '10+ research projects supported',
+        title: 'AI Transformation',
+        cases: [
+          {
+            title: 'Waterloo Research Center Operations',
+            summary:
+              'Coordinates planning, multimillion-dollar resources, risk, and execution across a multidisciplinary research environment.',
+            result: '4 research labs',
+            secondary: '10+ research projects supported',
+          },
+          {
+            title: 'Blue Zone AI Lab Environment',
+            summary:
+              'Supports a controlled AI development environment by aligning infrastructure, process, compliance, and researcher needs.',
+            result: 'Reliable experimentation',
+            secondary: 'Detailed public outcomes to be added',
+          },
+          {
+            title: 'AI-Enabled Workflow Transformation',
+            summary:
+              'Identifies fragmented operational work and applies practical AI and automation with adoption and control in mind.',
+            result: 'From manual to repeatable',
+            secondary: 'Quantitative outcomes to be added',
+          },
+        ] satisfies CaseStudy[],
       },
       {
-        title: 'Blue Zone AI Lab Environment',
-        summary:
-          'Supports a controlled AI development environment by aligning infrastructure, process, compliance, and researcher needs.',
-        result: 'Reliable experimentation',
-        secondary: 'Detailed public outcomes to be added',
+        title: 'Executive & Ecosystem Engagement',
+        cases: [
+          {
+            title: 'Executive & Customer Engagement',
+            summary:
+              'Led strategic conversations among CXOs, product teams, technical experts, and commercial stakeholders.',
+            result: '50+ summits & workshops',
+            secondary: 'Across customer and executive audiences',
+          },
+          {
+            title: 'Joint Innovation',
+            summary:
+              'Connected customer problems with technical capabilities and internal product resources through co-innovation and proof-of-concept programs.',
+            result: '10+ initiatives',
+            secondary: 'Opportunity validation through collaboration',
+          },
+          {
+            title: 'University & Research Ecosystem',
+            summary:
+              'Develops relationships with Canadian universities, professors, labs, and student communities around research and talent.',
+            result: 'Research to community',
+            secondary: 'Selected public partners to be added',
+          },
+        ] satisfies CaseStudy[],
       },
-      {
-        title: 'AI-Enabled Workflow Transformation',
-        summary:
-          'Identifies fragmented operational work and applies practical AI and automation with adoption and control in mind.',
-        result: 'From manual to repeatable',
-        secondary: 'Quantitative outcomes to be added',
-      },
-    ] satisfies CaseStudy[],
-  },
-  ecosystem: {
-    label: '04 - Executive & Ecosystem Engagement',
-    title: 'Creating the connections that allow technology, business, and research to move together.',
-    intro:
-      'Complex programs advance when diverse stakeholders share context, trust, and a concrete next step.',
-    cases: [
-      {
-        title: 'Executive & Customer Engagement',
-        summary:
-          'Led strategic conversations among CXOs, product teams, technical experts, and commercial stakeholders.',
-        result: '50+ summits & workshops',
-        secondary: 'Across customer and executive audiences',
-      },
-      {
-        title: 'Joint Innovation',
-        summary:
-          'Connected customer problems with technical capabilities and internal product resources through co-innovation and proof-of-concept programs.',
-        result: '10+ initiatives',
-        secondary: 'Opportunity validation through collaboration',
-      },
-      {
-        title: 'University & Research Ecosystem',
-        summary:
-          'Develops relationships with Canadian universities, professors, labs, and student communities around research and talent.',
-        result: 'Research to community',
-        secondary: 'Selected public partners to be added',
-      },
-    ] satisfies CaseStudy[],
+    ],
   },
   lab: {
-    label: '05 - Thinking Lab',
+    label: '04 - Thinking Lab',
     title: 'Side Projects — ideas become useful when they are made tangible.',
     intro:
       'A working collection of small products, AI experiments, and tools for thinking more clearly.',
@@ -290,8 +293,19 @@ export const content = {
       },
     ] satisfies LabProject[],
   },
+  beside: {
+    label: '05 - Beside Work',
+    title: 'A life shaped by curiosity, places, and people.',
+    intro:
+      'Outside work, I make room for unfamiliar places, small things made just for the joy of it, and conversations that widen how I see the world.',
+    items: [
+      { title: 'Explore', text: 'New places and different ways of living are a reminder that every familiar assumption is only one possible answer.' },
+      { title: 'Make', text: 'I enjoy following small curiosities, learning by doing, and turning everyday friction into something a little more useful.' },
+      { title: 'Connect', text: 'Time with friends, family, and communities keeps ambition grounded in the people it is ultimately meant to serve.' },
+    ],
+  },
   contact: {
-    label: '06 - Contact',
+    label: 'Contact',
     title: 'Let us turn a complex technology opportunity into a clear path forward.',
     intro:
       'I am interested in conversations at the intersection of product strategy, AI transformation, technical program leadership, and ecosystem development.',

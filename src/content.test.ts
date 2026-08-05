@@ -9,10 +9,23 @@ describe('portfolio content', () => {
       'experience',
       'gtm',
       'transformation',
-      'ecosystem',
       'lab',
+      'beside',
       'contact',
     ]);
+  });
+
+  test('combines transformation and engagement while keeping both content groups', () => {
+    expect(content.transformation.groups.map((group) => group.title)).toEqual([
+      'AI Transformation',
+      'Executive & Ecosystem Engagement',
+    ]);
+    expect(content.transformation.groups.flatMap((group) => group.cases)).toHaveLength(6);
+  });
+
+  test('keeps Beside Work concise and separate from Thinking Lab', () => {
+    expect(content.beside.title).toBe('A life shaped by curiosity, places, and people.');
+    expect(content.beside.items).toHaveLength(3);
   });
 
   test('keeps the exact rotating role order and spelling', () => {

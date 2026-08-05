@@ -12,7 +12,7 @@ import {
   Sun,
   TrendingUp,
 } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import huaweiLogo from './assets/logos/huawei.png';
 import rexelLogo from './assets/logos/rexel.svg';
 import unswDarkLogo from './assets/logos/unsw-dark.png';
@@ -32,19 +32,6 @@ const experienceLogos: Record<string, string> = {
   unsw: unswLogo,
   utoronto: utorontoLogo,
 };
-const projectSections: Array<{
-  id: SectionId;
-  label: string;
-  title: string;
-  intro: string;
-  cases: CaseStudy[];
-  reverse?: boolean;
-}> = [
-  { id: 'gtm', ...content.gtm },
-  { id: 'transformation', ...content.transformation, reverse: true },
-  { id: 'ecosystem', ...content.ecosystem },
-];
-
 function initialTheme(): Theme {
   try {
     const saved = localStorage.getItem(THEME_KEY);
@@ -110,10 +97,10 @@ export function App() {
       <main>
         <Hero theme={theme} />
         <Experience />
-        {projectSections.map((section) => (
-          <ProjectSection key={section.id} {...section} />
-        ))}
+        <Projects />
+        <Transformation />
         <ThinkingLab theme={theme} />
+        <BesideWork />
         <Contact />
       </main>
     </>
@@ -138,10 +125,11 @@ function Header({
       </a>
       <nav className="desktop-nav" aria-label="Primary navigation">
         <HeaderLink href="#experience" active={currentSection === 'experience'}>{content.nav.experience}</HeaderLink>
-        <HeaderLink href="#gtm" active={['gtm', 'transformation', 'ecosystem'].includes(currentSection)}>
+        <HeaderLink href="#gtm" active={['gtm', 'transformation'].includes(currentSection)}>
           {content.nav.work}
         </HeaderLink>
         <HeaderLink href="#lab" active={currentSection === 'lab'}>{content.nav.lab}</HeaderLink>
+        <HeaderLink href="#beside" active={currentSection === 'beside'}>{content.nav.beside}</HeaderLink>
         <HeaderLink href="#contact" active={currentSection === 'contact'}>{content.nav.contact}</HeaderLink>
       </nav>
       <div className="header-actions">
@@ -366,24 +354,32 @@ function ExperienceTimeline({ items }: { items: ExperienceItem[] }) {
   );
 }
 
-function ProjectSection({ id, label, title, intro, cases, reverse = false }: {
-  id: SectionId; label: string; title: string; intro: string; cases: CaseStudy[]; reverse?: boolean;
-}) {
-  if (id === 'gtm') {
-    return <section id={id} className="screen project-screen project-screen--showcase" aria-labelledby={`${id}-title`}>
-      <StrategicProjectShowcase label={label} title={title} intro={intro} cases={cases} />
-    </section>;
-  }
+function Projects() {
+  return <section id="gtm" className="screen project-screen project-screen--showcase" aria-labelledby="gtm-title">
+    <StrategicProjectShowcase {...content.gtm} />
+  </section>;
+}
+
+function Transformation() {
   return (
-    <section id={id} className={`screen project-screen ${reverse ? 'project-screen--reverse' : ''}`} aria-labelledby={`${id}-title`}>
-      <div className="page-shell screen-content project-layout">
-        <SectionCopy label={label} title={title} intro={intro} titleId={`${id}-title`} />
-        <div className="project-cards">
-          {cases.slice(0, 3).map((item, index) => (
-            <article className="project-card" key={item.title}>
-              <div className="project-card__media" aria-hidden="true"><span>{String(index + 1).padStart(2, '0')}</span></div>
-              <div className="project-card__body"><h3>{item.title}</h3><p>{item.summary}</p>
-                <div className="project-card__result"><strong>{item.result}</strong><span>{item.secondary}</span></div>
+    <section id="transformation" className="screen project-screen project-screen--reverse" aria-labelledby="transformation-title">
+      <div className="page-shell screen-content combined-project-layout">
+        <SectionCopy {...content.transformation} titleId="transformation-title" />
+        <div className="combined-projects">
+          {content.transformation.groups.map((group, groupIndex) => (
+            <article className="project-group" key={group.title} aria-labelledby={`project-group-${groupIndex}`}>
+              <header className="project-group__header">
+                <span aria-hidden="true">0{groupIndex + 1}</span>
+                <h3 id={`project-group-${groupIndex}`}>{group.title}</h3>
+              </header>
+              <div className="project-group__items">
+                {group.cases.map((item) => (
+                  <article className="project-group__item" key={item.title}>
+                    <h4>{item.title}</h4>
+                    <p>{item.summary}</p>
+                    <div><strong>{item.result}</strong><span>{item.secondary}</span></div>
+                  </article>
+                ))}
               </div>
             </article>
           ))}
@@ -410,6 +406,25 @@ function ThinkingLab({ theme }: { theme: Theme }) {
         <div className="thinking-lab__projects">
           {content.lab.experiments.map((project) => <LabProjectCard key={project.title} project={project} />)}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function BesideWork() {
+  return (
+    <section id="beside" className="screen beside-work" aria-labelledby="beside-title">
+      <div className="page-shell screen-content beside-work__layout">
+        <SectionCopy {...content.beside} titleId="beside-title" />
+        <ol className="beside-work__items">
+          {content.beside.items.map((item, index) => (
+            <li className="beside-work__item" key={item.title}>
+              <span aria-hidden="true">0{index + 1}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
@@ -639,22 +654,26 @@ function SectionCopy({ label, title, intro, titleId }: { label: string; title: s
 }
 
 function Contact() {
-  const links = useMemo(() => [
+  const links = [
     { icon: Mail, label: content.contact.emailLabel, href: 'mailto:' },
     { icon: Linkedin, label: content.contact.linkedinLabel, href: 'https://www.linkedin.com/in/xiaoyufeng/' },
     { icon: Github, label: 'GitHub', href: 'https://github.com/hexfeng' },
-  ], []);
+  ];
   return (
-    <section id="contact" className="screen screen--contact" aria-labelledby="contact-title">
-      <div className="page-shell screen-content contact-layout">
-        <SectionCopy label={content.contact.label} title={content.contact.title} intro={content.contact.intro} titleId="contact-title" />
+    <section id="contact" className="screen screen--contact contact-band" aria-labelledby="contact-title">
+      <div className="page-shell contact-layout">
+        <div className="contact-copy">
+          <p className="section-label">{content.contact.label}</p>
+          <h2 id="contact-title">{content.contact.title}</h2>
+          <p>{content.contact.intro}</p>
+        </div>
         <div className="contact-links">
           {links.map(({ icon: Icon, label, href }) => <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
             <span className="contact-link__icon" aria-hidden="true"><Icon size={20} /></span><span>{label}</span><ArrowUpRight size={18} aria-hidden="true" />
           </a>)}
         </div>
       </div>
-      <footer className="page-shell site-footer"><span className="brand-mark" aria-hidden="true">XF</span><span>{content.footer}</span><span>© {new Date().getFullYear()} Xiaoyu Feng</span></footer>
+      <footer className="page-shell site-footer"><span>{content.footer}</span><span>© {new Date().getFullYear()} Xiaoyu Feng</span></footer>
     </section>
   );
 }
