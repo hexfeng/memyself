@@ -18,7 +18,8 @@ import rexelLogo from './assets/logos/rexel.svg';
 import unswDarkLogo from './assets/logos/unsw-dark.png';
 import unswLogo from './assets/logos/unsw.png';
 import utorontoLogo from './assets/logos/utoronto.svg';
-import { content, sections, type CaseStudy, type ExperienceItem, type SectionId } from './content';
+import { content, sections, type CaseStudy, type ExperienceItem, type LabProject, type SectionId } from './content';
+import { githubContributionSnapshot, githubContributionSnapshotDate, type ContributionDay } from './github-contributions';
 import './styles.css';
 
 type Theme = 'light' | 'dark';
@@ -42,7 +43,6 @@ const projectSections: Array<{
   { id: 'gtm', ...content.gtm },
   { id: 'transformation', ...content.transformation, reverse: true },
   { id: 'ecosystem', ...content.ecosystem },
-  { id: 'lab', ...content.lab, cases: content.lab.experiments, reverse: true },
 ];
 
 function initialTheme(): Theme {
@@ -113,6 +113,7 @@ export function App() {
         {projectSections.map((section) => (
           <ProjectSection key={section.id} {...section} />
         ))}
+        <ThinkingLab theme={theme} />
         <Contact />
       </main>
     </>
@@ -389,6 +390,155 @@ function ProjectSection({ id, label, title, intro, cases, reverse = false }: {
         </div>
       </div>
     </section>
+  );
+}
+
+function ThinkingLab({ theme }: { theme: Theme }) {
+  return (
+    <section id="lab" className="screen thinking-lab" aria-labelledby="lab-title">
+      <NetBackground theme={theme} />
+      <div className="page-shell thinking-lab__content">
+        <div className="thinking-lab__overview">
+          <SectionCopy
+            label={content.lab.label}
+            title={content.lab.title}
+            intro={content.lab.intro}
+            titleId="lab-title"
+          />
+          <GitHubCalendar />
+        </div>
+        <div className="thinking-lab__projects">
+          {content.lab.experiments.map((project) => <LabProjectCard key={project.title} project={project} />)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function NetBackground({ theme }: { theme: Theme }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let cancelled = false;
+    let effect: { destroy: () => void } | undefined;
+    Promise.all([import('three'), import('vanta/dist/vanta.net.min')])
+      .then(([THREE, netModule]) => {
+        if (cancelled) return;
+        const netExport = netModule.default;
+        const net = typeof netExport === 'function' ? netExport : netExport.default;
+        effect = net({
+          THREE,
+          el: node,
+          mouseControls: true,
+          touchControls: false,
+          gyroControls: false,
+          minHeight: 200,
+          minWidth: 200,
+          scale: 1,
+          scaleMobile: 1,
+          color: theme === 'light' ? 0x5576fc : 0x8da4ff,
+          backgroundColor: theme === 'light' ? 0xf7f8fa : 0x0b0c0f,
+          points: 10,
+          maxDistance: 18,
+          spacing: 17,
+        });
+      })
+      .catch((error: unknown) => {
+        console.warn('Thinking Lab Net failed to initialize; using CSS fallback.', error);
+      });
+
+    return () => {
+      cancelled = true;
+      effect?.destroy();
+    };
+  }, [theme]);
+
+  return <div ref={ref} className="net-background" aria-hidden="true" />;
+}
+
+function GitHubCalendar() {
+  const [days, setDays] = useState<ContributionDay[]>(githubContributionSnapshot);
+  const [status, setStatus] = useState<'snapshot' | 'live'>('snapshot');
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('https://github-contributions-api.jogruber.de/v4/hexfeng?y=last', { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(`GitHub contribution request failed: ${response.status}`);
+        return response.json() as Promise<{ contributions: ContributionDay[] }>;
+      })
+      .then((data) => {
+        if (!Array.isArray(data.contributions) || data.contributions.length < 7 || data.contributions.some((day) => (
+          typeof day.date !== 'string' || typeof day.count !== 'number' || typeof day.level !== 'number'
+        ))) throw new Error('GitHub contribution response is invalid');
+        setDays(data.contributions.slice(-371));
+        setStatus('live');
+      })
+      .catch((error: unknown) => {
+        if ((error as Error).name === 'AbortError') return;
+      });
+    return () => controller.abort();
+  }, []);
+
+  const contributions = days.reduce((sum, day) => sum + day.count, 0);
+  const activeWeeks = days.reduce((weeks, day, index) => {
+    if (day.count > 0) weeks.add(Math.floor(index / 7));
+    return weeks;
+  }, new Set<number>()).size;
+  const monthLabels = days.reduce<Array<{ label: string; week: number }>>((labels, day, index) => {
+    if (day.date.endsWith('-01')) {
+      labels.push({
+        label: new Date(`${day.date}T00:00:00`).toLocaleString('en', { month: 'short' }),
+        week: Math.floor(index / 7) + 1,
+      });
+    }
+    return labels;
+  }, []);
+
+  return (
+    <aside className="github-calendar" aria-labelledby="github-calendar-title">
+      <div className="github-calendar__header">
+        <span className="github-calendar__mark" aria-hidden="true"><Github /></span>
+        <div><h3 id="github-calendar-title">Building in public</h3><p>A year of experiments, iterations, and useful commits.</p></div>
+        <a href="https://github.com/hexfeng" target="_blank" rel="noreferrer">View GitHub <ArrowUpRight aria-hidden="true" /></a>
+      </div>
+      <div className="github-calendar__chart" role="img" aria-label={`${contributions} GitHub contributions in the last year`} data-status={status}>
+        <div className="github-calendar__months" aria-hidden="true">
+          {monthLabels.map(({ label, week }) => <span key={`${label}-${week}`} style={{ gridColumn: week }}>{label}</span>)}
+        </div>
+        <div className="github-calendar__days" aria-hidden="true"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+        <div className="github-calendar__grid" aria-hidden="true">
+          {days.map((day) => (
+            <span
+              key={day.date}
+              data-level={day.level}
+              title={`${day.date}: ${day.count} contribution${day.count === 1 ? '' : 's'}`}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="github-calendar__footer" title={status === 'snapshot' ? `Snapshot captured ${githubContributionSnapshotDate}` : 'Live public GitHub data'}>
+        <div className="github-calendar__legend" aria-hidden="true"><span>Less</span>{[0, 1, 2, 3, 4].map((level) => <i key={level} data-level={level} />)}<span>More</span></div>
+        <p>{contributions.toLocaleString()} contributions <span>·</span> {activeWeeks} active weeks</p>
+      </div>
+    </aside>
+  );
+}
+
+function LabProjectCard({ project }: { project: LabProject }) {
+  return (
+    <a className="lab-project-card" href={project.href} target="_blank" rel="noreferrer">
+      <img src={project.image} alt="" loading="lazy" />
+      <span className="lab-project-card__body">
+        <ArrowUpRight aria-hidden="true" />
+        <strong>{project.title}</strong>
+        <span>{project.summary}</span>
+      </span>
+      <span className="sr-only">View {project.title} on GitHub</span>
+    </a>
   );
 }
 

@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { content, sections } from './content';
+import { githubContributionSnapshot } from './github-contributions';
 
 describe('portfolio content', () => {
   test('keeps the approved section order and anchors', () => {
@@ -66,5 +67,30 @@ describe('portfolio content', () => {
         { highlight: '30+', detail: 'product roadmap developed, with', secondaryHighlight: '5+', suffix: 'models swapped and upgraded in the Greek market', icon: 'roadmap' },
       ],
     });
+  });
+
+  test('keeps the approved Thinking Lab copy and six complete linked projects', () => {
+    expect(content.lab.title).toBe('Side Projects — ideas become useful when they are made tangible.');
+    expect(content.lab.experiments).toHaveLength(6);
+    expect(content.lab.experiments.map((project) => project.title)).toEqual([
+      'Personal Finance Dashboard',
+      'Voice Input Application',
+      'Research Agent Workflow',
+      'Screenshot Privacy Tool',
+      'AI Usage Dashboard',
+      'Event Intelligence Extractor',
+    ]);
+    expect(content.lab.experiments.every((project) => (
+      project.image.startsWith('/images/thinking-lab/')
+      && project.href.startsWith('https://github.com/hexfeng/')
+      && project.summary.length > 30
+    ))).toBe(true);
+  });
+
+  test('keeps a real contribution snapshot as the network fallback', () => {
+    expect(githubContributionSnapshot).toHaveLength(368);
+    expect(githubContributionSnapshot[0].date).toBe('2025-08-03');
+    expect(githubContributionSnapshot.at(-1)?.date).toBe('2026-08-05');
+    expect(githubContributionSnapshot.reduce((total, day) => total + day.count, 0)).toBe(301);
   });
 });

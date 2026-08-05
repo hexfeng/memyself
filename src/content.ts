@@ -32,6 +32,13 @@ export type CaseStudy = {
   image?: string;
 };
 
+export type LabProject = {
+  title: string;
+  summary: string;
+  image: string;
+  href: string;
+};
+
 export const sections: Array<{ id: SectionId; label: string }> = [
   { id: 'top', label: 'Intro' },
   { id: 'experience', label: 'Experience' },
@@ -241,31 +248,47 @@ export const content = {
   },
   lab: {
     label: '05 - Thinking Lab',
-    title: 'Small experiments for exploring better products and better ways of working.',
+    title: 'Side Projects — ideas become useful when they are made tangible.',
     intro:
-      'These are practical learning environments used to test product hypotheses, emerging technology, and personal workflows.',
+      'A working collection of small products, AI experiments, and tools for thinking more clearly.',
     experiments: [
       {
         title: 'Personal Finance Dashboard',
-        summary: 'Organizing fragmented financial data into a more useful personal decision system.',
-        result: '01',
-        secondary: 'Product hypothesis',
+        summary: 'Turning fragmented financial data into a clearer personal decision system.',
+        image: '/images/thinking-lab/personal-finance-dashboard.webp',
+        href: 'https://github.com/hexfeng/Iquant',
       },
       {
         title: 'Voice Input Application',
-        summary:
-          'Exploring lower-cost, privacy-aware speech input with AI editing and personal vocabulary.',
-        result: '02',
-        secondary: 'AI workflow',
+        summary: 'Exploring private, low-friction speech input with AI-assisted editing.',
+        image: '/images/thinking-lab/voice-input-application.webp',
+        href: 'https://github.com/hexfeng/Gospeak',
       },
       {
         title: 'Research Agent Workflow',
-        summary:
-          'Testing multi-step AI workflows for research collection, verification, and structured synthesis.',
-        result: '03',
-        secondary: 'Research system',
+        summary: 'Testing structured AI workflows for collection, verification, and synthesis.',
+        image: '/images/thinking-lab/research-agent-workflow.webp',
+        href: 'https://github.com/hexfeng/InsightFlow',
       },
-    ] satisfies CaseStudy[],
+      {
+        title: 'Screenshot Privacy Tool',
+        summary: 'A faster way to capture, redact, annotate, and share safely.',
+        image: '/images/thinking-lab/screenshot-privacy-tool.webp',
+        href: 'https://github.com/hexfeng/EasyCapture',
+      },
+      {
+        title: 'AI Usage Dashboard',
+        summary: 'Making model usage, cost, and limits visible at a glance.',
+        image: '/images/thinking-lab/ai-usage-dashboard.webp',
+        href: 'https://github.com/hexfeng/CodexUsageDashboard',
+      },
+      {
+        title: 'Event Intelligence Extractor',
+        summary: 'Turning event pages into structured, reviewable winner data.',
+        image: '/images/thinking-lab/event-intelligence-extractor.webp',
+        href: 'https://github.com/hexfeng/Accumulate',
+      },
+    ] satisfies LabProject[],
   },
   contact: {
     label: '06 - Contact',

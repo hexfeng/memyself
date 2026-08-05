@@ -69,6 +69,15 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase__copy-shell\s*\{[^}]*box-shadow:\s*var\(--showcase-shadow\)/s);
   });
 
+  test('builds Thinking Lab as a full Net canvas with six floating image cards', () => {
+    expect(styles).toMatch(/\.net-background\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0/s);
+    expect(styles).toMatch(/\.thinking-lab__overview\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:/s);
+    expect(styles).toMatch(/\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
+    expect(styles).toMatch(/\.lab-project-card\s*\{[^}]*grid-template-columns:\s*48%[^}]*border-radius:\s*16px;[^}]*box-shadow:/s);
+    expect(styles).toMatch(/\.lab-project-card > img\s*\{[^}]*object-fit:\s*cover/s);
+    expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*1fr/s);
+  });
+
   test('styles native Experience disclosure rows and reduced motion', () => {
     expect(styles).toMatch(/\.experience-timeline\s*\{[^}]*display:\s*grid;[^}]*gap:\s*14px/s);
     expect(styles).toMatch(/\.experience-entry\s*\{[^}]*border:\s*1px solid var\(--border\);[^}]*border-radius:\s*6px/s);

@@ -2,13 +2,22 @@ import { act, fireEvent, render, screen, waitFor, within } from '@testing-librar
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { App } from './app';
 
-const { fogFactory, fogDestroy } = vi.hoisted(() => ({
+const { fogFactory, fogDestroy, netFactory, netDestroy } = vi.hoisted(() => ({
   fogFactory: vi.fn(),
   fogDestroy: vi.fn(),
+  netFactory: vi.fn(),
+  netDestroy: vi.fn(),
 }));
 
 vi.mock('three', () => ({ Scene: class Scene {} }));
 vi.mock('vanta/dist/vanta.fog.min', () => ({ default: { default: fogFactory } }));
+vi.mock('vanta/dist/vanta.net.min', () => ({ default: { default: netFactory } }));
+
+const contributionFixture = Array.from({ length: 14 }, (_, index) => ({
+  date: `2026-07-${String(index + 1).padStart(2, '0')}`,
+  count: index === 2 ? 2 : index === 9 ? 1 : 0,
+  level: index === 2 ? 2 : index === 9 ? 1 : 0,
+}));
 
 const originalScrollIntoView = Element.prototype.scrollIntoView;
 
@@ -35,7 +44,14 @@ describe('App', () => {
     stubMotion(true);
     fogFactory.mockReset();
     fogDestroy.mockReset();
+    netFactory.mockReset();
+    netDestroy.mockReset();
     fogFactory.mockReturnValue({ destroy: fogDestroy });
+    netFactory.mockReturnValue({ destroy: netDestroy });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ contributions: contributionFixture }),
+    }));
   });
 
   afterEach(() => {
@@ -60,6 +76,33 @@ describe('App', () => {
         .getAllByRole('region')
         .map((section) => section.id),
     ).toEqual(['top', 'experience', 'gtm', 'transformation', 'ecosystem', 'lab', 'contact']);
+  });
+
+  test('renders the dedicated Thinking Lab with a live contribution summary and six linked image cards', async () => {
+    render(<App />);
+
+    const lab = screen.getByRole('region', { name: 'Side Projects — ideas become useful when they are made tangible.' });
+    expect(within(lab).getByRole('heading', { name: 'Building in public' })).toBeInTheDocument();
+    await waitFor(() => expect(within(lab).getByRole('img', { name: '3 GitHub contributions in the last year' })).toBeInTheDocument());
+    expect(within(lab).getByText(/3 contributions/)).toBeInTheDocument();
+    expect(lab.querySelectorAll('.lab-project-card')).toHaveLength(6);
+    expect(lab.querySelectorAll('.lab-project-card > img')).toHaveLength(6);
+    expect(within(lab).getByRole('link', { name: /View Personal Finance Dashboard on GitHub/ })).toHaveAttribute(
+      'href',
+      'https://github.com/hexfeng/Iquant',
+    );
+    expect(lab).not.toHaveTextContent('01');
+    expect(lab).not.toHaveTextContent('02');
+  });
+
+  test('keeps the real contribution snapshot when the live request is unavailable', () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
+    render(<App />);
+
+    const chart = screen.getByRole('img', { name: '301 GitHub contributions in the last year' });
+    expect(chart).toHaveAttribute('data-status', 'snapshot');
+    expect(screen.getByText(/301 contributions/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /View GitHub/ })).toHaveAttribute('href', 'https://github.com/hexfeng');
   });
 
   test('defaults to light and toggles a persisted manual theme with a destination label', () => {
@@ -243,11 +286,13 @@ describe('App', () => {
     const reduced = render(<App />);
     await act(async () => Promise.resolve());
     expect(fogFactory).not.toHaveBeenCalled();
+    expect(netFactory).not.toHaveBeenCalled();
     reduced.unmount();
 
     stubMotion(false);
     const animated = render(<App />);
     await waitFor(() => expect(fogFactory).toHaveBeenCalled());
+    await waitFor(() => expect(netFactory).toHaveBeenCalled());
     const fogOptions = fogFactory.mock.calls[0]?.[0] as Record<string, unknown>;
     const {
       mouseControls,
@@ -279,6 +324,7 @@ describe('App', () => {
     });
     animated.unmount();
     expect(fogDestroy).toHaveBeenCalled();
+    expect(netDestroy).toHaveBeenCalled();
   });
 
   test('keeps the fallback and reports a Vanta initialization failure', async () => {
@@ -292,6 +338,19 @@ describe('App', () => {
     render(<App />);
     await waitFor(() => expect(warn).toHaveBeenCalledWith('Hero Fog failed to initialize; using CSS fallback.', failure));
     expect(document.querySelector('.fog-background')).toBeInTheDocument();
+  });
+
+  test('keeps the full-section fallback when the Thinking Lab Net cannot initialize', async () => {
+    stubMotion(false);
+    const failure = new Error('WebGL unavailable');
+    netFactory.mockImplementationOnce(() => {
+      throw failure;
+    });
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+
+    render(<App />);
+    await waitFor(() => expect(warn).toHaveBeenCalledWith('Thinking Lab Net failed to initialize; using CSS fallback.', failure));
+    expect(document.querySelector('.net-background')).toBeInTheDocument();
   });
 
   test('scrolls to an initial hash but does not intercept wheel input', async () => {
