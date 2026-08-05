@@ -450,12 +450,18 @@ button { color: inherit; }
 .lab-project-card__body > span { margin-top: 12px; color: var(--text-soft); font-size: 12px; line-height: 1.65; }
 
 .beside-work { background: var(--surface); }
-.beside-work__layout { display: grid; grid-template-columns: minmax(320px, .85fr) minmax(520px, 1.15fr); align-items: center; gap: clamp(64px, 10vw, 160px); }
-.beside-work__items { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border); }
-.beside-work__item { display: grid; grid-template-columns: 44px minmax(110px, .32fr) 1fr; gap: 20px; align-items: baseline; padding: 30px 0; border-bottom: 1px solid var(--border); }
-.beside-work__item > span { color: var(--accent-text); font-size: 10px; font-weight: 600; }
-.beside-work__item h3 { margin: 0; font-family: 'Manrope', sans-serif; font-size: 21px; letter-spacing: -.03em; }
-.beside-work__item p { margin: 0; color: var(--text-soft); font-size: 13px; line-height: 1.65; }
+.beside-work__layout { display: flex; flex-direction: column; justify-content: center; }
+.beside-work__layout .section-copy { max-width: 920px; }
+.beside-work__layout .section-copy h2 { font-size: clamp(35px, 4vw, 60px); }
+.beside-work__layout .section-copy > p:last-child { max-width: 760px; margin-top: 16px; font-size: 13px; }
+.beside-work__items { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: clamp(32px, 5vh, 52px) 0 0; padding: 0; list-style: none; }
+.beside-work__item { min-width: 0; padding: 16px 16px 24px; border-radius: 20px; background: var(--surface-alt); }
+.beside-work__item img { width: 100%; aspect-ratio: 3 / 2; border-radius: 13px; object-fit: cover; }
+[data-theme='dark'] .beside-work__item img { filter: brightness(.9) contrast(1.04); }
+.beside-work__item-content { padding: 22px 4px 0; }
+.beside-work__item-content > span { color: var(--accent-text); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.beside-work__item h3 { margin: 22px 0 0; font-family: 'Manrope', sans-serif; font-size: clamp(24px, 2vw, 31px); letter-spacing: -.04em; }
+.beside-work__item p { margin: 12px 0 0; color: var(--text-soft); font-size: 13px; line-height: 1.65; }
 
 .project-screen--showcase { background: var(--page); }
 .strategic-projects { display: flex; flex-direction: column; justify-content: center; min-height: 100svh; padding-block: 105px 56px; }
@@ -643,7 +649,6 @@ button { color: inherit; }
   .thinking-lab__overview { grid-template-columns: 1fr; gap: 34px; }
   .thinking-lab__overview .section-copy { max-width: 760px; }
   .thinking-lab__projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .beside-work__layout { grid-template-columns: minmax(260px, .7fr) minmax(460px, 1.3fr); gap: 48px; }
 }
 
 @media (max-width: 767px) {
@@ -672,7 +677,7 @@ button { color: inherit; }
   .hero-action--compact svg { width: 14px; }
   .section-copy h2 { font-size: 38px; }
   .section-copy > p:last-child { font-size: 14px; }
-  .experience-layout, .beside-work__layout, .contact-layout { grid-template-columns: 1fr; gap: 52px; }
+  .experience-layout, .contact-layout { grid-template-columns: 1fr; gap: 52px; }
   .experience-layout .section-copy { position: static; }
   .experience-timeline { gap: 12px; }
   .experience-entry > summary { grid-template-columns: 68px minmax(0, 1fr) 18px; gap: 14px; min-height: 104px; padding: 18px 16px; }
@@ -700,9 +705,10 @@ button { color: inherit; }
   .lab-project-card__body { padding: 24px 34px 22px 20px; }
   .lab-project-card__body strong { font-size: 16px; }
   .lab-project-card__body > span { margin-top: 9px; font-size: 11px; }
-  .beside-work__items { margin-top: 2px; }
-  .beside-work__item { grid-template-columns: 34px 1fr; gap: 10px 14px; padding: 24px 0; }
-  .beside-work__item p { grid-column: 2; }
+  .beside-work__items { grid-template-columns: 1fr; gap: 16px; margin-top: 30px; }
+  .beside-work__item { padding: 14px 14px 22px; }
+  .beside-work__item-content { padding: 20px 4px 0; }
+  .beside-work__item h3 { margin-top: 17px; font-size: 27px; }
   .strategic-projects { min-height: auto; padding-block: 96px 72px; }
   .strategic-projects__header { grid-template-columns: 1fr; margin-bottom: 28px; }
   .strategic-projects__controls { justify-self: end; }

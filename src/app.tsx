@@ -419,9 +419,12 @@ function BesideWork() {
         <ol className="beside-work__items">
           {content.beside.items.map((item, index) => (
             <li className="beside-work__item" key={item.title}>
-              <span aria-hidden="true">0{index + 1}</span>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
+              <img src={item.image} alt="" loading="lazy" decoding="async" />
+              <div className="beside-work__item-content">
+                <span aria-hidden="true">0{index + 1} / Beside work</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
             </li>
           ))}
         </ol>

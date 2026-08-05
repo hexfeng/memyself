@@ -297,11 +297,23 @@ export const content = {
     label: '05 - Beside Work',
     title: 'A life shaped by curiosity, places, and people.',
     intro:
-      'Outside work, I make room for unfamiliar places, small things made just for the joy of it, and conversations that widen how I see the world.',
+      'Outside work, I recharge by exploring new places, noticing the world through a lens, and getting lost in well-made games.',
     items: [
-      { title: 'Explore', text: 'New places and different ways of living are a reminder that every familiar assumption is only one possible answer.' },
-      { title: 'Make', text: 'I enjoy following small curiosities, learning by doing, and turning everyday friction into something a little more useful.' },
-      { title: 'Connect', text: 'Time with friends, family, and communities keeps ambition grounded in the people it is ultimately meant to serve.' },
+      {
+        title: 'Travelling',
+        text: 'New places and different ways of living keep me curious about the many ways people see the world.',
+        image: '/images/beside-work/travelling.webp',
+      },
+      {
+        title: 'Photography',
+        text: 'Photography helps me slow down and notice light, texture, and the quiet details that are easy to miss.',
+        image: '/images/beside-work/photography.webp',
+      },
+      {
+        title: 'Gaming',
+        text: 'I enjoy games that reward strategy, exploration, and learning through carefully designed worlds.',
+        image: '/images/beside-work/gaming.webp',
+      },
     ],
   },
   contact: {

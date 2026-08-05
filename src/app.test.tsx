@@ -84,6 +84,10 @@ describe('App', () => {
 
     const beside = screen.getByRole('region', { name: 'A life shaped by curiosity, places, and people.' });
     expect(beside.querySelectorAll('.beside-work__item')).toHaveLength(3);
+    expect(beside.querySelectorAll('.beside-work__item img')).toHaveLength(3);
+    for (const title of ['Travelling', 'Photography', 'Gaming']) {
+      expect(within(beside).getByRole('heading', { name: title })).toBeInTheDocument();
+    }
     expect(document.querySelector('.screen--contact')).toHaveClass('contact-band');
   });
 

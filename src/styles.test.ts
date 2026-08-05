@@ -28,6 +28,8 @@ describe('light-first theme styles', () => {
   test('uses one combined transformation page and a compact dark contact band', () => {
     expect(styles).toMatch(/\.combined-projects\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s);
     expect(styles).toMatch(/\.beside-work\s*\{[^}]*background:\s*var\(--surface\)/s);
+    expect(styles).toMatch(/\.beside-work__items\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
+    expect(styles).toMatch(/\.beside-work__item img\s*\{[^}]*aspect-ratio:\s*3\s*\/\s*2/s);
     expect(styles).toMatch(/\.contact-band\s*\{[^}]*min-height:\s*clamp\(320px, 34svh, 420px\);[^}]*background:\s*#0b0c0f/s);
     expect(styles).toMatch(/\[data-theme='dark'\] \.contact-band\s*\{[^}]*background:\s*var\(--surface-alt\)/s);
   });
