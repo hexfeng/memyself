@@ -20,6 +20,7 @@ import unswLogo from './assets/logos/unsw.png';
 import utorontoLogo from './assets/logos/utoronto.svg';
 import { content, sections, type CaseStudy, type ExperienceItem, type LabProject, type SectionId } from './content';
 import { githubContributionSnapshot, githubContributionSnapshotDate, type ContributionDay } from './github-contributions';
+import { PhotographyGallery } from './photography-gallery';
 import { Threads } from './threads';
 import './styles.css';
 
@@ -418,33 +419,69 @@ function ThinkingLab({ theme }: { theme: Theme }) {
 
 function BesideWork() {
   const [openFolder, setOpenFolder] = useState<number | null>(null);
+  const [galleryOpening, setGalleryOpening] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const galleryTimer = useRef<number | null>(null);
+  const photographyTrigger = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => () => {
+    if (galleryTimer.current !== null) window.clearTimeout(galleryTimer.current);
+  }, []);
+
+  function openPhotographyGallery() {
+    setGalleryOpening(true);
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 420;
+    galleryTimer.current = window.setTimeout(() => {
+      setGalleryOpening(false);
+      setGalleryOpen(true);
+    }, delay);
+  }
+
+  function closePhotographyGallery() {
+    setGalleryOpen(false);
+    window.requestAnimationFrame(() => photographyTrigger.current?.focus());
+  }
 
   return (
     <section id="beside" className="screen beside-work" aria-labelledby="beside-title">
       <div className="page-shell screen-content beside-work__layout">
         <SectionCopy {...content.beside} titleId="beside-title" />
         <ol className="beside-work__items">
-          {content.beside.items.map((item, index) => (
-            <li className="beside-work__item" data-open={openFolder === index} key={item.title}>
-              <img src={item.image} alt="" loading="lazy" decoding="async" />
-              <div className="beside-work__item-content">
-                <span aria-hidden="true">0{index + 1} / Beside work</span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </div>
-              <button
-                type="button"
-                className="beside-work__trigger"
-                aria-label={`Toggle ${item.title} folder`}
-                aria-pressed={openFolder === index}
-                onClick={() => setOpenFolder(openFolder === index ? null : index)}
+          {content.beside.items.map((item, index) => {
+            const isPhotography = item.title === 'Photography';
+            return (
+              <li
+                className="beside-work__item"
+                data-open={openFolder === index}
+                data-gallery-opening={isPhotography && galleryOpening}
+                key={item.title}
               >
-                <ArrowRight aria-hidden="true" />
-              </button>
-            </li>
-          ))}
+                <img src={item.image} alt="" loading="lazy" decoding="async" />
+                <div className="beside-work__item-content">
+                  <span aria-hidden="true">0{index + 1} / Beside work</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+                <button
+                  ref={isPhotography ? photographyTrigger : undefined}
+                  type="button"
+                  className="beside-work__trigger"
+                  aria-label={isPhotography ? 'Open Photography gallery' : `Toggle ${item.title} folder`}
+                  aria-haspopup={isPhotography ? 'dialog' : undefined}
+                  aria-pressed={isPhotography ? undefined : openFolder === index}
+                  disabled={isPhotography && galleryOpening}
+                  onClick={isPhotography
+                    ? openPhotographyGallery
+                    : () => setOpenFolder(openFolder === index ? null : index)}
+                >
+                  <ArrowRight aria-hidden="true" />
+                </button>
+              </li>
+            );
+          })}
         </ol>
       </div>
+      {galleryOpen && <PhotographyGallery onClose={closePhotographyGallery} />}
     </section>
   );
 }

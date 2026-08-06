@@ -536,12 +536,101 @@ button { color: inherit; }
 }
 .beside-work__trigger svg { position: absolute; right: 18px; bottom: 15px; width: 22px; height: 22px; transition: transform 280ms ease; }
 .beside-work__trigger:focus-visible { outline-offset: -5px; }
+.beside-work__trigger:disabled { cursor: wait; }
 .beside-work__item:is(:hover, [data-open='true']) { transform: translateY(-6px); box-shadow: 0 20px 36px rgb(17 19 24 / 14%); }
 .beside-work__item:is(:hover, [data-open='true'])::before { opacity: 1; transform: translateY(8px) scale(.985); }
 .beside-work__item:is(:hover, [data-open='true']) img { transform: translateY(-16px) rotateX(4deg) scale(.985); box-shadow: 0 18px 30px rgb(17 19 24 / 18%); }
 .beside-work__item:is(:hover, [data-open='true']) .beside-work__item-content { transform: translateY(7px) rotateX(-5deg); box-shadow: 0 -12px 24px rgb(17 19 24 / 8%); }
 .beside-work__item:is(:hover, [data-open='true']) .beside-work__trigger svg { transform: translateX(4px); }
+.beside-work__item[data-gallery-opening='true'] img { z-index: 5; transform: translateY(-28px) scale(1.1); box-shadow: 0 28px 60px rgb(17 19 24 / 30%); }
 [data-theme='dark'] .beside-work__item:is(:hover, [data-open='true']) { box-shadow: 0 22px 40px rgb(0 0 0 / 38%); }
+
+.photo-gallery {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: rgb(5 6 10 / 94%);
+  color: #fff;
+  animation: photo-gallery-in 360ms ease both;
+}
+.photo-gallery__close,
+.photo-gallery__arrow {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 999px;
+  background: rgb(18 20 26 / 62%);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.photo-gallery__close:hover,
+.photo-gallery__arrow:hover { border-color: rgb(255 255 255 / 52%); background: rgb(35 38 48 / 88%); }
+.photo-gallery__close:focus-visible,
+.photo-gallery__arrow:focus-visible,
+.photo-gallery__card:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.photo-gallery__close { position: absolute; z-index: 40; top: 22px; right: 24px; width: 46px; height: 46px; }
+.photo-gallery__close svg { width: 21px; height: 21px; }
+.photo-gallery__carousel {
+  position: relative;
+  width: min(96vw, 1500px);
+  height: min(82svh, 840px);
+  perspective: 1600px;
+  perspective-origin: 50% 50%;
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+}
+.photo-gallery__carousel:active { cursor: grabbing; }
+.photo-gallery__stage {
+  --active-half: min(39vw, 590px);
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.photo-gallery__card {
+  --peek: calc(var(--depth) * clamp(38px, 3.4vw, 50px) + 8px);
+  position: absolute;
+  z-index: calc(20 - var(--depth));
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: auto;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  box-shadow: none;
+  opacity: calc(1 - var(--depth) * .22);
+  filter: brightness(calc(1 - var(--depth) * .1));
+  transform: translate3d(-50%, -50%, 0);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transition: transform 700ms cubic-bezier(.22, 1, .36, 1), opacity 700ms ease, filter 700ms ease;
+}
+.photo-gallery__card[data-side='left'] {
+  transform: translate3d(calc(0px - var(--active-half) - var(--peek)), -50%, 0) scale(calc(1 - var(--depth) * .055));
+  transform-origin: left center;
+}
+.photo-gallery__card[data-side='right'] {
+  transform: translate3d(calc(-100% + var(--active-half) + var(--peek)), -50%, 0) scale(calc(1 - var(--depth) * .055));
+  transform-origin: right center;
+}
+.photo-gallery__card[data-active='true'] { opacity: 1; filter: brightness(1); transition-property: transform; cursor: grab; }
+.photo-gallery__card[data-buffer='true'] { opacity: 0; pointer-events: none; }
+.photo-gallery__card img { display: block; width: auto; height: auto; max-width: min(78vw, 1180px); max-height: min(72svh, 760px); border-radius: 18px; filter: drop-shadow(0 28px 44px rgb(0 0 0 / 72%)); pointer-events: none; }
+.photo-gallery__arrow { position: absolute; z-index: 30; top: 50%; width: 48px; height: 48px; transform: translateY(-50%); }
+.photo-gallery__arrow:active { transform: translateY(-50%) scale(.94); }
+.photo-gallery__arrow--previous { left: 18px; }
+.photo-gallery__arrow--next { right: 18px; }
+.photo-gallery__arrow svg { width: 22px; height: 22px; }
+.photo-gallery__counter { position: absolute; bottom: 18px; margin: 0; font-size: 12px; letter-spacing: .12em; }
+@keyframes photo-gallery-in { from { opacity: 0; transform: scale(.985); } }
 
 .project-screen--showcase { background: var(--page); }
 .strategic-projects { display: flex; flex-direction: column; justify-content: center; min-height: 100svh; padding-block: 105px 56px; }
@@ -789,6 +878,18 @@ button { color: inherit; }
   .beside-work__item { padding: 14px 14px 0; }
   .beside-work__item-content { margin: -8px -14px 0; padding: 28px 18px 50px; }
   .beside-work__item h3 { margin-top: 17px; font-size: 27px; }
+  .photo-gallery__close { top: 14px; right: 14px; width: 42px; height: 42px; }
+  .photo-gallery__carousel { width: 100vw; height: 78svh; }
+  .photo-gallery__card {
+    --peek: calc(var(--depth) * 13px + 5px);
+    border-radius: 14px;
+  }
+  .photo-gallery__card img { max-width: 76vw; max-height: 68svh; border-radius: 14px; filter: drop-shadow(0 22px 36px rgb(0 0 0 / 70%)); }
+  .photo-gallery__card[data-active='true']:focus-visible { outline: none; }
+  .photo-gallery__arrow { width: 44px; height: 44px; }
+  .photo-gallery__arrow--previous { left: 8px; }
+  .photo-gallery__arrow--next { right: 8px; }
+  .photo-gallery__counter { bottom: 12px; }
   .strategic-projects { min-height: auto; padding-block: 96px 72px; }
   .strategic-projects__header { grid-template-columns: 1fr; margin-bottom: 28px; }
   .strategic-projects__controls { justify-self: end; }
@@ -833,4 +934,5 @@ button { color: inherit; }
   .beside-work__item:is(:hover, [data-open='true'])::before,
   .beside-work__item:is(:hover, [data-open='true']) img,
   .beside-work__item:is(:hover, [data-open='true']) .beside-work__item-content { transform: none; }
+  .beside-work__item[data-gallery-opening='true'] img { transform: none; }
 }

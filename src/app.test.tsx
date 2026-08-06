@@ -98,6 +98,39 @@ describe('App', () => {
     expect(document.querySelector('.screen--contact')).toHaveClass('contact-band');
   });
 
+  test('opens the Photography depth gallery after the cover zoom and keeps its cover first', () => {
+    vi.useFakeTimers();
+    stubMotion(false);
+    render(<App />);
+
+    const trigger = screen.getByRole('button', { name: 'Open Photography gallery' });
+    const card = trigger.closest('.beside-work__item');
+    fireEvent.click(trigger);
+    expect(card).toHaveAttribute('data-gallery-opening', 'true');
+    expect(screen.queryByRole('dialog', { name: 'Photography gallery' })).not.toBeInTheDocument();
+
+    act(() => vi.advanceTimersByTime(420));
+    const gallery = screen.getByRole('dialog', { name: 'Photography gallery' });
+    expect(gallery.querySelectorAll('.photo-gallery__card')).toHaveLength(9);
+    expect(gallery.querySelectorAll(".photo-gallery__card[data-buffer='true']")).toHaveLength(2);
+    expect(gallery.querySelectorAll(".photo-gallery__card[data-side='left']:not([data-buffer='true'])")).toHaveLength(3);
+    expect(gallery.querySelectorAll(".photo-gallery__card[data-side='right']:not([data-buffer='true'])")).toHaveLength(3);
+    const firstPhoto = within(gallery).getByRole('button', { name: 'Photo 1 of 58' });
+    expect(firstPhoto.querySelector('img')).toHaveAttribute('src', '/images/beside-work/photography.webp');
+    expect(within(gallery).getByText('1 / 58')).toBeInTheDocument();
+
+    fireEvent.click(within(gallery).getByRole('button', { name: 'Next photo' }));
+    expect(gallery.querySelector('.photo-gallery__stage')).toHaveAttribute('data-direction', 'next');
+    expect(within(gallery).getByRole('button', { name: 'Photo 2 of 58' })).toBeInTheDocument();
+    fireEvent.keyDown(window, { key: 'ArrowLeft' });
+    expect(gallery.querySelector('.photo-gallery__stage')).toHaveAttribute('data-direction', 'previous');
+    expect(within(gallery).getByRole('button', { name: 'Photo 1 of 58' })).toBeInTheDocument();
+    fireEvent.keyDown(window, { key: 'Escape' });
+    act(() => vi.advanceTimersByTime(20));
+    expect(screen.queryByRole('dialog', { name: 'Photography gallery' })).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+  });
+
   test('renders the dedicated Thinking Lab with a live contribution summary and six linked image cards', async () => {
     render(<App />);
 

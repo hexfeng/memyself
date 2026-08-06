@@ -306,7 +306,7 @@ export const content = {
       },
       {
         title: 'Photography',
-        text: 'Photography helps me slow down and notice light, texture, and the quiet details that are easy to miss.',
+        text: 'Unprofessional photographer—click to explore the gallery.',
         image: '/images/beside-work/photography.webp',
       },
       {
