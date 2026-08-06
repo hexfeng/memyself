@@ -301,8 +301,8 @@ export const content = {
     items: [
       {
         title: 'Travelling',
-        text: 'New places and different ways of living keep me curious about the many ways people see the world.',
-        image: '/images/beside-work/travelling.webp',
+        text: 'My footprints span 18 countries and 60+ cities, and I’m still unlocking new perspectives and discovering the boundaries of what’s possible.',
+        image: '/images/beside-work/world-low-pixels.svg',
       },
       {
         title: 'Photography',

@@ -417,19 +417,30 @@ function ThinkingLab({ theme }: { theme: Theme }) {
 }
 
 function BesideWork() {
+  const [openFolder, setOpenFolder] = useState<number | null>(null);
+
   return (
     <section id="beside" className="screen beside-work" aria-labelledby="beside-title">
       <div className="page-shell screen-content beside-work__layout">
         <SectionCopy {...content.beside} titleId="beside-title" />
         <ol className="beside-work__items">
           {content.beside.items.map((item, index) => (
-            <li className="beside-work__item" key={item.title}>
+            <li className="beside-work__item" data-open={openFolder === index} key={item.title}>
               <img src={item.image} alt="" loading="lazy" decoding="async" />
               <div className="beside-work__item-content">
                 <span aria-hidden="true">0{index + 1} / Beside work</span>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </div>
+              <button
+                type="button"
+                className="beside-work__trigger"
+                aria-label={`Toggle ${item.title} folder`}
+                aria-pressed={openFolder === index}
+                onClick={() => setOpenFolder(openFolder === index ? null : index)}
+              >
+                <ArrowRight aria-hidden="true" />
+              </button>
             </li>
           ))}
         </ol>

@@ -90,6 +90,11 @@ describe('App', () => {
     for (const title of ['Travelling', 'Photography', 'Gaming']) {
       expect(within(beside).getByRole('heading', { name: title })).toBeInTheDocument();
     }
+    const travellingFolder = within(beside).getByRole('button', { name: 'Toggle Travelling folder' });
+    expect(travellingFolder).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.click(travellingFolder);
+    expect(travellingFolder).toHaveAttribute('aria-pressed', 'true');
+    expect(travellingFolder.closest('.beside-work__item')).toHaveAttribute('data-open', 'true');
     expect(document.querySelector('.screen--contact')).toHaveClass('contact-band');
   });
 

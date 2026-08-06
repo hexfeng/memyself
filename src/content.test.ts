@@ -26,6 +26,11 @@ describe('portfolio content', () => {
   test('keeps Beside Work concise and separate from Thinking Lab', () => {
     expect(content.beside.title).toBe('A life shaped by curiosity, places, and people.');
     expect(content.beside.items).toHaveLength(3);
+    expect(content.beside.items[0]).toEqual({
+      title: 'Travelling',
+      text: 'My footprints span 18 countries and 60+ cities, and I’m still unlocking new perspectives and discovering the boundaries of what’s possible.',
+      image: '/images/beside-work/world-low-pixels.svg',
+    });
   });
 
   test('keeps the exact rotating role order and spelling', () => {
