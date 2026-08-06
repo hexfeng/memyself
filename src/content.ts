@@ -311,7 +311,7 @@ export const content = {
       },
       {
         title: 'Gaming',
-        text: 'I enjoy games that reward strategy, exploration, and learning through carefully designed worlds.',
+        text: 'Former semi-professional Dota 2 player—once 9K MMR and previously teamed with BSJ.',
         image: '/images/beside-work/gaming.webp',
       },
     ],
