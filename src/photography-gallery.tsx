@@ -69,8 +69,6 @@ export function PhotographyGallery({ onClose }: { onClose: () => void }) {
   const [direction, setDirection] = useState<-1 | 0 | 1>(0);
   const dialog = useRef<HTMLDivElement>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
-  const stage = useRef<HTMLDivElement>(null);
-  const activeImage = useRef<HTMLImageElement>(null);
   const dragStart = useRef<number | null>(null);
   const count = photographyImages.length;
   const move = (step: number) => {
@@ -110,16 +108,6 @@ export function PhotographyGallery({ onClose }: { onClose: () => void }) {
     };
   }, [onClose]);
 
-  useEffect(() => {
-    const measure = () => stage.current?.style.setProperty('--active-half', `${(activeImage.current?.getBoundingClientRect().width ?? 0) / 2}px`);
-    const frame = requestAnimationFrame(measure);
-    window.addEventListener('resize', measure);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('resize', measure);
-    };
-  }, [active]);
-
   const finishDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (dragStart.current !== null && Math.abs(event.clientX - dragStart.current) > 45) {
       move(event.clientX < dragStart.current ? 1 : -1);
@@ -141,7 +129,7 @@ export function PhotographyGallery({ onClose }: { onClose: () => void }) {
         onPointerUp={finishDrag}
         onPointerCancel={() => { dragStart.current = null; }}
       >
-        <div ref={stage} className="photo-gallery__stage" data-direction={direction < 0 ? 'previous' : direction > 0 ? 'next' : 'idle'}>
+        <div className="photo-gallery__stage" data-direction={direction < 0 ? 'previous' : direction > 0 ? 'next' : 'idle'}>
           {renderedOffsets.map((offset) => {
             const index = (active + offset + count) % count;
             const isBuffer = Math.abs(offset) === 4;
@@ -161,12 +149,10 @@ export function PhotographyGallery({ onClose }: { onClose: () => void }) {
                 key={index}
               >
                 <img
-                  ref={offset === 0 ? activeImage : undefined}
                   src={photographyImages[index]}
                   alt={offset === 0 ? `Photography gallery image ${index + 1}` : ''}
                   draggable="false"
                   decoding="async"
-                  onLoad={() => stage.current?.style.setProperty('--active-half', `${(activeImage.current?.getBoundingClientRect().width ?? 0) / 2}px`)}
                 />
               </button>
             );
