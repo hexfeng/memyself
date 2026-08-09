@@ -49,15 +49,40 @@ describe('portfolio content', () => {
     expect(content.experience.items[0]).toMatchObject({
       organization: 'Huawei Canada · Waterloo Research Center',
       role: 'COO / Operations Manager',
+      summary: [
+        'Oversaw a multi-million-dollar R&D portfolio across four research labs, managing industry–academia collaborations in Generative AI, LLMs, cybersecurity, and next-generation software engineering while improving governance for 10+ research projects across planning, budgeting, risk control, scheduling, and resource allocation.',
+        'Led RC-level AI transformation and external ecosystem engagement, including AI-enabled workflow adoption, external Blue Zone AI Lab development, AI community collaborations, partnerships with events across universities and organizations(HTN).',
+      ],
     });
     expect(
       content.experience.items.every(
         (item) => /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}$/.test(item.startDate)
           && (item.endDate === 'Present'
             || /^(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4}$/.test(item.endDate))
-          && item.summary.length > 20,
+          && item.summary.length > 0
+          && item.summary.every((description) => description.length > 20),
       ),
     ).toBe(true);
+
+    expect(content.experience.items.map((item) => item.summary)).toEqual([
+      [
+        'Oversaw a multi-million-dollar R&D portfolio across four research labs, managing industry–academia collaborations in Generative AI, LLMs, cybersecurity, and next-generation software engineering while improving governance for 10+ research projects across planning, budgeting, risk control, scheduling, and resource allocation.',
+        'Led RC-level AI transformation and external ecosystem engagement, including AI-enabled workflow adoption, external Blue Zone AI Lab development, AI community collaborations, partnerships with events across universities and organizations(HTN).',
+      ],
+      [
+        'Owned wireless network product and solution strategy for the Greece market, delivering 10%+ YoY sales order growth for two consecutive years and enabling 10+ major product & solution breakthroughs/wins.',
+        'Developed and implemented market strategies and provided technical & commercial solutions to achieve the wireless network sales target and solution guidance for Greece market.',
+        'Served as single-threaded owner for market strategy across 3 national operator customers, aligning spectrum, technology roadmap, and commercial execution. Participated in 50+ summit/workshop preparation and operation, and successfully launched 10+ Joint innovation projects/POC tests with customers.',
+      ],
+      [
+        'Partnered with Product Owners to validate and commercialize 15+ 5G NR DL features, ensuring zero live-network incidents post-launch, developed a python-based tool that improved test case parameter configuration & generation efficiency by 65%.',
+      ],
+      [
+        'Analyzed historical purchase data to identify key drivers behind declining rebate amounts and ratios; developed a standardized supplier scoring methodology and business model optimization recommendations, resulting in an estimated 11% rebate uplift and stronger supplier engagement on strategic offerings.',
+      ],
+      ['Master of Statistics with excellence (distinction)'],
+      ['Double major in Computer Science & Statistics'],
+    ]);
   });
 
   test('keeps the four strategic projects in the approved order', () => {

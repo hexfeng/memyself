@@ -352,7 +352,10 @@ function ExperienceTimeline({ items }: { items: ExperienceItem[] }) {
               <span className="experience-dates">{item.startDate} - {item.endDate}</span>
               <ChevronDown className="experience-chevron" aria-hidden="true" />
             </summary>
-            <div className="experience-detail"><span>{item.stage}</span><p>{item.summary}</p></div>
+            <div className="experience-detail">
+              <span>{item.stage}</span>
+              <ul>{item.summary.map((description) => <li key={description}>{description}</li>)}</ul>
+            </div>
           </details>
         </li>
       ))}

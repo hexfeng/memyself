@@ -346,7 +346,9 @@ button { color: inherit; }
 .experience-entry[open] .experience-chevron { transform: rotate(180deg); }
 .experience-detail { padding: 20px 64px 26px 130px; border-top: 1px solid var(--border); color: var(--text-soft); }
 .experience-detail span { color: var(--accent-text); font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-.experience-detail p { margin: 10px 0 0; font-size: 13px; line-height: 1.65; }
+.experience-detail ul { margin: 10px 0 0; padding-left: 18px; list-style-type: disc; }
+.experience-detail li { font-size: 13px; line-height: 1.65; }
+.experience-detail li + li { margin-top: 8px; }
 
 .project-screen { background: var(--page); }
 .project-screen--reverse { background: var(--surface-alt); }

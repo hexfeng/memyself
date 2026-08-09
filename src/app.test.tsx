@@ -263,6 +263,10 @@ describe('App', () => {
     ).toBe(true);
     expect(entries[4].querySelectorAll('img')).toHaveLength(2);
     expect(entries[4].querySelector('.experience-logo__dark')?.getAttribute('src')).toContain('unsw-dark');
+    expect(Array.from(entries[0].querySelectorAll('.experience-detail li')).map((item) => item.textContent)).toEqual([
+      'Oversaw a multi-million-dollar R&D portfolio across four research labs, managing industry–academia collaborations in Generative AI, LLMs, cybersecurity, and next-generation software engineering while improving governance for 10+ research projects across planning, budgeting, risk control, scheduling, and resource allocation.',
+      'Led RC-level AI transformation and external ecosystem engagement, including AI-enabled workflow adoption, external Blue Zone AI Lab development, AI community collaborations, partnerships with events across universities and organizations(HTN).',
+    ]);
 
     const summaries = entries.map((entry) => entry.querySelector('summary') as HTMLElement);
     fireEvent.click(summaries[0]);

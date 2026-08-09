@@ -13,7 +13,7 @@ export type ExperienceItem = {
   stage: string;
   organization: string;
   role: string;
-  summary: string;
+  summary: string[];
   logo: string;
 };
 
@@ -85,8 +85,10 @@ export const content = {
         stage: 'Organizational scale',
         organization: 'Huawei Canada · Waterloo Research Center',
         role: 'COO / Operations Manager',
-        summary:
-          'Builds the operating environment for AI research, collaboration, governance, and growth.',
+        summary: [
+          'Oversaw a multi-million-dollar R&D portfolio across four research labs, managing industry–academia collaborations in Generative AI, LLMs, cybersecurity, and next-generation software engineering while improving governance for 10+ research projects across planning, budgeting, risk control, scheduling, and resource allocation.',
+          'Led RC-level AI transformation and external ecosystem engagement, including AI-enabled workflow adoption, external Blue Zone AI Lab development, AI community collaborations, partnerships with events across universities and organizations(HTN).',
+        ],
         logo: 'huawei',
       },
       {
@@ -95,8 +97,11 @@ export const content = {
         stage: 'Market ownership',
         organization: 'Huawei Greece',
         role: 'Product Manager, Wireless Network',
-        summary:
-          'Connected customer priorities, product roadmaps, and GTM execution across national operators.',
+        summary: [
+          'Owned wireless network product and solution strategy for the Greece market, delivering 10%+ YoY sales order growth for two consecutive years and enabling 10+ major product & solution breakthroughs/wins.',
+          'Developed and implemented market strategies and provided technical & commercial solutions to achieve the wireless network sales target and solution guidance for Greece market.',
+          'Served as single-threaded owner for market strategy across 3 national operator customers, aligning spectrum, technology roadmap, and commercial execution. Participated in 50+ summit/workshop preparation and operation, and successfully launched 10+ Joint innovation projects/POC tests with customers.',
+        ],
         logo: 'huawei',
       },
       {
@@ -105,8 +110,9 @@ export const content = {
         stage: 'Technical depth',
         organization: 'Huawei',
         role: 'Software Engineer',
-        summary:
-          'Turned telecom requirements into reliable 5G software and more efficient engineering workflows.',
+        summary: [
+          'Partnered with Product Owners to validate and commercialize 15+ 5G NR DL features, ensuring zero live-network incidents post-launch, developed a python-based tool that improved test case parameter configuration & generation efficiency by 65%.',
+        ],
         logo: 'huawei',
       },
       {
@@ -115,7 +121,9 @@ export const content = {
         stage: 'Career foundation',
         organization: 'Rexel Canada',
         role: 'Data Analyst',
-        summary: 'Used supplier and performance data to identify material commercial opportunities.',
+        summary: [
+          'Analyzed historical purchase data to identify key drivers behind declining rebate amounts and ratios; developed a standardized supplier scoring methodology and business model optimization recommendations, resulting in an estimated 11% rebate uplift and stronger supplier engagement on strategic offerings.',
+        ],
         logo: 'rexel',
       },
       {
@@ -124,7 +132,7 @@ export const content = {
         stage: 'Graduate study',
         organization: 'University of New South Wales',
         role: 'Master of Statistics',
-        summary: 'Deepened the analytical discipline used to frame complex business decisions.',
+        summary: ['Master of Statistics with excellence (distinction)'],
         logo: 'unsw',
       },
       {
@@ -133,7 +141,7 @@ export const content = {
         stage: 'Undergraduate foundation',
         organization: 'University of Toronto',
         role: 'B.Sc. in Computer Science & Statistics',
-        summary: 'Built a dual foundation in computational thinking and quantitative analysis.',
+        summary: ['Double major in Computer Science & Statistics'],
         logo: 'utoronto',
       },
     ] satisfies ExperienceItem[],
