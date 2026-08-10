@@ -19,6 +19,7 @@ import unswDarkLogo from './assets/logos/unsw-dark.png';
 import unswLogo from './assets/logos/unsw.png';
 import utorontoLogo from './assets/logos/utoronto.svg';
 import { content, sections, type CaseStudy, type ExperienceItem, type LabProject, type SectionId } from './content';
+import { DriftWall, LogoLoop, type DriftWallItem, type LogoLoopItem } from './engagement-effects';
 import { githubContributionSnapshot, githubContributionSnapshotDate, type ContributionDay } from './github-contributions';
 import { PhotographyGallery } from './photography-gallery';
 import { Threads } from './threads';
@@ -35,6 +36,22 @@ const experienceLogos: Record<string, string> = {
   unsw: unswLogo,
   utoronto: utorontoLogo,
 };
+const engagementImages: DriftWallItem[] = Array.from({ length: 21 }, (_, index) => ({
+  image: `/images/engagement/engagement-${String(index + 1).padStart(2, '0')}.webp`,
+}));
+const engagementLogos: LogoLoopItem[] = [
+  { name: 'NOVA Greece', src: '/logos/engagement/01_nova-greece.svg', width: 174, height: 36, slotWidth: 138, offsetY: 4 },
+  { name: 'Vodafone', src: '/logos/engagement/02_vodafone.svg', width: 174, height: 44, slotWidth: 138 },
+  { name: 'Huawei', src: '/logos/engagement/03_huawei.svg', width: 88, height: 64, slotWidth: 80 },
+  { name: 'COSMOTE Greece', src: '/logos/engagement/04_cosmote-greece.svg', width: 148, height: 54, slotWidth: 121, offsetY: 1 },
+  { name: 'Hack the North', src: '/logos/engagement/05_hack-the-north.svg', width: 62, height: 62, slotWidth: 62 },
+  { name: 'Techyon', src: '/logos/engagement/06_techyon.svg', width: 58, height: 58, slotWidth: 60 },
+  { name: 'UofTHacks', src: '/logos/engagement/07_uofthacks.svg', width: 72, height: 62, slotWidth: 70 },
+  { name: 'Victus Networks', src: '/logos/engagement/08_victus-networks.svg', width: 78, height: 62, slotWidth: 74 },
+  { name: 'EETT', src: '/logos/engagement/09_eett.svg', width: 64, height: 64, slotWidth: 65 },
+  { name: 'University of Toronto', src: '/logos/engagement/10_university-of-toronto.svg', width: 44, height: 68, slotWidth: 51 },
+  { name: 'University of Waterloo', src: '/logos/engagement/11_university-of-waterloo.svg', width: 58, height: 68, slotWidth: 61, preserveDetail: true },
+];
 function initialTheme(): Theme {
   try {
     const saved = localStorage.getItem(THEME_KEY);
@@ -101,7 +118,7 @@ export function App() {
         <Hero theme={theme} />
         <Experience theme={theme} />
         <Projects />
-        <Transformation />
+        <Transformation theme={theme} />
         <ThinkingLab theme={theme} />
         <BesideWork />
         <Contact />
@@ -369,29 +386,28 @@ function Projects() {
   </section>;
 }
 
-function Transformation() {
+function Transformation({ theme }: { theme: Theme }) {
   return (
     <section id="transformation" className="screen project-screen project-screen--reverse" aria-labelledby="transformation-title">
-      <div className="page-shell screen-content combined-project-layout">
+      <div className="page-shell screen-content transformation-layout">
         <SectionCopy {...content.transformation} titleId="transformation-title" />
-        <div className="combined-projects">
-          {content.transformation.groups.map((group, groupIndex) => (
-            <article className="project-group" key={group.title} aria-labelledby={`project-group-${groupIndex}`}>
-              <header className="project-group__header">
-                <span aria-hidden="true">0{groupIndex + 1}</span>
-                <h3 id={`project-group-${groupIndex}`}>{group.title}</h3>
-              </header>
-              <div className="project-group__items">
-                {group.cases.map((item) => (
-                  <article className="project-group__item" key={item.title}>
-                    <h4>{item.title}</h4>
-                    <p>{item.summary}</p>
-                    <div><strong>{item.result}</strong><span>{item.secondary}</span></div>
-                  </article>
-                ))}
-              </div>
-            </article>
-          ))}
+        <div className="transformation-main">
+          <div className="engagement-points">
+            {content.transformation.cases.map((item, index) => (
+              <article className="engagement-point" key={item.title}>
+                <span className="engagement-point__index" aria-hidden="true">0{index + 1}</span>
+                <div className="engagement-point__content">
+                  <h3>{item.title}</h3>
+                  <p>{item.summary}</p>
+                  <footer><strong>{item.result}</strong><span>{item.secondary}</span></footer>
+                </div>
+              </article>
+            ))}
+          </div>
+          <DriftWall items={engagementImages} theme={theme} />
+        </div>
+        <div className="engagement-logo-band">
+          <LogoLoop logos={engagementLogos} theme={theme} />
         </div>
       </div>
     </section>

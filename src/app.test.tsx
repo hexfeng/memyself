@@ -80,9 +80,24 @@ describe('App', () => {
     ).toEqual(['top', 'experience', 'gtm', 'transformation', 'lab', 'beside', 'contact']);
 
     const transformation = screen.getByRole('region', { name: 'Turning operating systems and relationships into momentum.' });
-    expect(transformation.querySelectorAll('.project-group')).toHaveLength(2);
-    expect(within(transformation).getByRole('heading', { name: 'AI Transformation' })).toBeInTheDocument();
-    expect(within(transformation).getByRole('heading', { name: 'Executive & Ecosystem Engagement' })).toBeInTheDocument();
+    expect(transformation.querySelectorAll('.engagement-point')).toHaveLength(3);
+    expect(within(transformation).queryByRole('heading', { name: 'AI Transformation' })).not.toBeInTheDocument();
+    for (const title of ['Executive & Customer Engagement', 'Joint Innovation', 'University & Research Ecosystem']) {
+      expect(within(transformation).getByRole('heading', { name: title })).toBeInTheDocument();
+    }
+    expect(within(transformation).getByRole('img', { name: 'Engagement moments' })).toBeInTheDocument();
+    expect(transformation.querySelectorAll('.engagement-drift-wall__static img')).toHaveLength(8);
+    expect(within(transformation).queryByText('Selected ecosystem')).not.toBeInTheDocument();
+    const ecosystem = screen.getByRole('group', { name: 'Selected ecosystem' });
+    expect(within(ecosystem).getAllByRole('img')).toHaveLength(11);
+    expect(within(ecosystem).getByRole('img', { name: 'COSMOTE Greece' })).toHaveAttribute(
+      'src',
+      '/logos/engagement/04_cosmote-greece.svg',
+    );
+    expect(within(ecosystem).getByRole('img', { name: 'University of Waterloo' }).closest('li')).toHaveAttribute(
+      'data-preserve-detail',
+      'true',
+    );
 
     const beside = screen.getByRole('region', { name: 'A life shaped by curiosity, places, and people.' });
     expect(beside.querySelectorAll('.beside-work__item')).toHaveLength(3);

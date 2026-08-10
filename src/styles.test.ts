@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { describe, expect, test } from 'vitest';
 
 const styles = readFileSync(join(process.cwd(), 'src', 'styles.css'), 'utf8');
+const engagementEffects = readFileSync(join(process.cwd(), 'src', 'engagement-effects.tsx'), 'utf8');
 
 describe('light-first theme styles', () => {
   test('defines the approved light and dark tokens with accessible light accent text', () => {
@@ -26,8 +27,23 @@ describe('light-first theme styles', () => {
   });
 
   test('uses one combined transformation page and a compact dark contact band', () => {
-    expect(styles).toMatch(/\.combined-projects\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s);
-    expect(styles).toMatch(/\.combined-project-layout \.section-copy\s*\{[^}]*max-width:\s*none/s);
+    expect(styles).toMatch(/\.transformation-main\s*\{[^}]*grid-template-columns:\s*minmax\(330px,/s);
+    expect(styles).toMatch(/\.transformation-layout \.section-copy\s*\{[^}]*max-width:\s*none/s);
+    expect(styles).toMatch(/\.engagement-points\s*\{[^}]*grid-template-rows:\s*repeat\(3,/s);
+    expect(styles).toMatch(/\.engagement-drift-wall\s*\{[^}]*height:\s*540px;[^}]*background:\s*transparent;[^}]*mask-image:\s*linear-gradient/s);
+    expect(styles).toMatch(/\.engagement-drift-wall__plane\s*\{[^}]*transform:\s*translate\(-50%, -50%\) scale\(1\.18\) translateZ\(-270px\)/s);
+    expect(engagementEffects).not.toContain('pointerRef');
+    expect(engagementEffects).not.toContain('wallHoveredRef');
+    expect(engagementEffects).not.toContain('rotateX');
+    expect(engagementEffects).toContain('const target = hoveredColumnRef.current === index ? 0 : baseVelocities[index]');
+    expect(engagementEffects).toContain("if (event.pointerType !== 'mouse') return");
+    expect(styles).toMatch(/\.engagement-logo-band\s*\{[^}]*width:\s*100%;[^}]*padding-block:\s*10px;[^}]*background:\s*rgb\(255 255 255 \/ 42%\)/s);
+    expect(styles).toMatch(/\.engagement-logo-loop__item img\s*\{[^}]*filter:\s*grayscale\(1\) brightness\(0\) drop-shadow\([^;]+;[^}]*transform:\s*translateY\(var\(--logo-offset-y\)\)/s);
+    expect(styles).toMatch(/\[data-theme='dark'\] \.engagement-logo-loop__item img\s*\{[^}]*filter:\s*grayscale\(1\) brightness\(0\) invert\(1\) drop-shadow\(/s);
+    expect(styles).toContain(".engagement-logo-loop__item[data-preserve-detail='true'] img");
+    expect(styles).toContain("[data-theme='dark'] .engagement-logo-band");
+    expect(engagementEffects).not.toContain('isHovered');
+    expect(engagementEffects).not.toContain('onMouseEnter');
     expect(styles).toMatch(/\.beside-work\s*\{[^}]*background:\s*var\(--surface\)/s);
     expect(styles).toMatch(/\.beside-work__layout \.section-copy\s*\{[^}]*max-width:\s*none/s);
     expect(styles).toMatch(/\.beside-work__items\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 252 205">
+  <g fill="none" stroke="#202020" stroke-width="3.2" stroke-linejoin="miter">
+    <path d="M20 16L117 58L141 202L89 198L1 103Z"/>
+    <path d="M117 48L221 1L251 75L117 198L60 151Z"/>
+  </g>
+</svg>

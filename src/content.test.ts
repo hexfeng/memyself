@@ -15,12 +15,12 @@ describe('portfolio content', () => {
     ]);
   });
 
-  test('combines transformation and engagement while keeping both content groups', () => {
-    expect(content.transformation.groups.map((group) => group.title)).toEqual([
-      'AI Transformation',
-      'Executive & Ecosystem Engagement',
+  test('keeps the three approved engagement stories without a separate AI transformation group', () => {
+    expect(content.transformation.cases.map((item) => item.title)).toEqual([
+      'Executive & Customer Engagement',
+      'Joint Innovation',
+      'University & Research Ecosystem',
     ]);
-    expect(content.transformation.groups.flatMap((group) => group.cases)).toHaveLength(6);
   });
 
   test('keeps Beside Work concise and separate from Thinking Lab', () => {

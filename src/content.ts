@@ -202,60 +202,29 @@ export const content = {
     title: 'Turning operating systems and relationships into momentum.',
     intro:
       'Sustainable transformation needs both: a clear system for execution and the relationships that move complex programs forward.',
-    groups: [
+    cases: [
       {
-        title: 'AI Transformation',
-        cases: [
-          {
-            title: 'Waterloo Research Center Operations',
-            summary:
-              'Coordinates planning, multimillion-dollar resources, risk, and execution across a multidisciplinary research environment.',
-            result: '4 research labs',
-            secondary: '10+ research projects supported',
-          },
-          {
-            title: 'Blue Zone AI Lab Environment',
-            summary:
-              'Supports a controlled AI development environment by aligning infrastructure, process, compliance, and researcher needs.',
-            result: 'Reliable experimentation',
-            secondary: 'Detailed public outcomes to be added',
-          },
-          {
-            title: 'AI-Enabled Workflow Transformation',
-            summary:
-              'Identifies fragmented operational work and applies practical AI and automation with adoption and control in mind.',
-            result: 'From manual to repeatable',
-            secondary: 'Quantitative outcomes to be added',
-          },
-        ] satisfies CaseStudy[],
+        title: 'Executive & Customer Engagement',
+        summary:
+          'Led strategic conversations among CXOs, product teams, technical experts, and commercial stakeholders.',
+        result: '50+ summits & workshops',
+        secondary: 'Across customer and executive audiences',
       },
       {
-        title: 'Executive & Ecosystem Engagement',
-        cases: [
-          {
-            title: 'Executive & Customer Engagement',
-            summary:
-              'Led strategic conversations among CXOs, product teams, technical experts, and commercial stakeholders.',
-            result: '50+ summits & workshops',
-            secondary: 'Across customer and executive audiences',
-          },
-          {
-            title: 'Joint Innovation',
-            summary:
-              'Connected customer problems with technical capabilities and internal product resources through co-innovation and proof-of-concept programs.',
-            result: '10+ initiatives',
-            secondary: 'Opportunity validation through collaboration',
-          },
-          {
-            title: 'University & Research Ecosystem',
-            summary:
-              'Develops relationships with Canadian universities, professors, labs, and student communities around research and talent.',
-            result: 'Research to community',
-            secondary: 'Selected public partners to be added',
-          },
-        ] satisfies CaseStudy[],
+        title: 'Joint Innovation',
+        summary:
+          'Connected customer problems with technical capabilities and internal product resources through co-innovation and proof-of-concept programs.',
+        result: '10+ initiatives',
+        secondary: 'Opportunity validation through collaboration',
       },
-    ],
+      {
+        title: 'University & Research Ecosystem',
+        summary:
+          'Develops relationships with Canadian universities, professors, labs, and student communities around research and talent.',
+        result: 'Research to community',
+        secondary: 'Selected public partners to be added',
+      },
+    ] satisfies CaseStudy[],
   },
   lab: {
     label: '04 - Thinking Lab',
