@@ -111,6 +111,8 @@ describe('light-first theme styles', () => {
     expect(styles).toContain('rgb(17 19 24 / 38%)');
     expect(styles).toContain('rgb(255 255 255 / 24%)');
     expect(styles).toMatch(/\.thinking-lab__overview\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:/s);
+    expect(styles).toMatch(/\.thinking-lab__overview\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1\.08fr\) minmax\(660px, \.92fr\)/s);
+    expect(styles).toMatch(/@media \(max-width: 1280px\)[\s\S]*?\.thinking-lab__overview\s*\{[^}]*grid-template-columns:\s*1fr/s);
     expect(styles).toMatch(/\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
     expect(styles).toMatch(/\.lab-project-card\s*\{[^}]*grid-template-columns:\s*48%[^}]*border-radius:\s*16px;[^}]*box-shadow:/s);
     expect(styles).toMatch(/\.lab-project-card--preview\s*\{[^}]*grid-template-columns:\s*52%/s);

@@ -434,7 +434,7 @@ button { color: inherit; }
   min-height: 100svh;
   padding-block: 54px 48px;
 }
-.thinking-lab__overview { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(600px, .92fr); gap: clamp(48px, 5vw, 82px); align-items: center; }
+.thinking-lab__overview { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(660px, .92fr); gap: clamp(48px, 5vw, 82px); align-items: center; }
 .thinking-lab__overview .section-copy { max-width: 720px; }
 .thinking-lab__overview .section-copy h2 { font-size: clamp(42px, 4vw, 64px); }
 .thinking-lab__overview .section-copy > p:last-child { max-width: 520px; margin-top: 20px; font-size: 14px; line-height: 1.65; }
@@ -884,11 +884,14 @@ button { color: inherit; }
 .contact-links a:hover { background: #f4f5f7; color: #0b0c0f; }
 .site-footer { display: flex; justify-content: space-between; gap: 18px; padding: 20px 0 24px; border-top: 1px solid #2b2f37; color: #7f8590; font-size: 10px; }
 
+@media (max-width: 1280px) {
+  .thinking-lab__overview { grid-template-columns: 1fr; gap: 34px; }
+  .thinking-lab__overview .section-copy { max-width: 760px; }
+}
+
 @media (max-width: 1050px) {
   .experience-layout { grid-template-columns: minmax(250px, .7fr) minmax(460px, 1.3fr); gap: 48px; }
   .desktop-nav { gap: 22px; }
-  .thinking-lab__overview { grid-template-columns: 1fr; gap: 34px; }
-  .thinking-lab__overview .section-copy { max-width: 760px; }
   .thinking-lab__projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
