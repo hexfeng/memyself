@@ -101,7 +101,15 @@ describe('App', () => {
 
     const beside = screen.getByRole('region', { name: 'A life shaped by curiosity, places, and people.' });
     expect(beside.querySelectorAll('.beside-work__item')).toHaveLength(3);
-    expect(beside.querySelectorAll('.beside-work__item img')).toHaveLength(3);
+    expect(beside.querySelectorAll('.beside-work__item img')).toHaveLength(6);
+    const photographyCollage = beside.querySelector('.beside-work__photo-collage');
+    expect(photographyCollage).toBeInTheDocument();
+    expect(Array.from(photographyCollage?.querySelectorAll('img') ?? []).map((image) => image.getAttribute('src'))).toEqual([
+      '/images/photography/_dsc0488.webp',
+      '/images/photography/_dsc2207.webp',
+      '/images/photography/_dsc2983.webp',
+      '/images/photography/_dsc2295.webp',
+    ]);
     for (const title of ['Travelling', 'Photography', 'Gaming']) {
       expect(within(beside).getByRole('heading', { name: title })).toBeInTheDocument();
     }

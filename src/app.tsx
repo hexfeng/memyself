@@ -30,6 +30,12 @@ type Theme = 'light' | 'dark';
 const THEME_KEY = 'portfolio-theme';
 const outcomeIcons = { growth: TrendingUp, energy: Leaf, roadmap: Map };
 const experienceThreadColors: Record<Theme, [number, number, number]> = { light: [0, 0, 0], dark: [1, 1, 1] };
+const photographyCoverImages = [
+  '/images/photography/_dsc0488.webp',
+  '/images/photography/_dsc2207.webp',
+  '/images/photography/_dsc2983.webp',
+  '/images/photography/_dsc2295.webp',
+];
 const experienceLogos: Record<string, string> = {
   huawei: huaweiLogo,
   rexel: rexelLogo,
@@ -475,7 +481,15 @@ function BesideWork() {
                 data-gallery-opening={isPhotography && galleryOpening}
                 key={item.title}
               >
-                <img src={item.image} alt="" loading="lazy" decoding="async" />
+                {isPhotography ? (
+                  <span className="beside-work__photo-collage" aria-hidden="true">
+                    {photographyCoverImages.map((image) => (
+                      <img key={image} src={image} alt="" loading="lazy" decoding="async" />
+                    ))}
+                  </span>
+                ) : (
+                  <img src={item.image} alt="" loading="lazy" decoding="async" />
+                )}
                 <div className="beside-work__item-content">
                   <span aria-hidden="true">0{index + 1} / Beside work</span>
                   <h3>{item.title}</h3>

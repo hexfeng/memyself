@@ -48,11 +48,14 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.beside-work__layout \.section-copy\s*\{[^}]*max-width:\s*none/s);
     expect(styles).toMatch(/\.beside-work__items\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
     expect(styles).toMatch(/\.beside-work__item\s*\{[^}]*display:\s*flex;[^}]*flex-direction:\s*column/s);
-    expect(styles).toMatch(/\.beside-work__item img\s*\{[^}]*aspect-ratio:\s*3\s*\/\s*2/s);
+    expect(styles).toMatch(/\.beside-work__item > img,[\s\S]*?\.beside-work__photo-collage\s*\{[^}]*aspect-ratio:\s*3\s*\/\s*2/s);
+    expect(styles).toMatch(/\.beside-work__photo-collage\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);[^}]*grid-template-rows:\s*repeat\(2, minmax\(0, 1fr\)\);[^}]*gap:\s*3px/s);
+    expect(styles).toMatch(/\.beside-work__photo-collage img\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%;[^}]*object-fit:\s*cover/s);
     expect(styles).toMatch(/\.beside-work__item-content\s*\{[^}]*flex:\s*1/s);
     expect(styles).toMatch(/img\[src\$='world-low-pixels\.svg'\]\s*\{[^}]*background:\s*#000;[^}]*object-fit:\s*contain/s);
     expect(styles).toMatch(/\.beside-work__item::before\s*\{[^}]*opacity:\s*0;[^}]*transform:\s*translateY\(-4px\) scale\(\.97\)/s);
-    expect(styles).toContain(".beside-work__item:is(:hover, [data-open='true']) img");
+    expect(styles).toContain(".beside-work__item:is(:hover, [data-open='true']) > img");
+    expect(styles).toContain(".beside-work__item:is(:hover, [data-open='true']) .beside-work__photo-collage");
     expect(styles).toContain('.beside-work__trigger:focus-visible');
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.beside-work__item-content\s*\{[^}]*padding:\s*28px 18px 50px/s);
     expect(styles).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.beside-work__item:is\([^}]*transform:\s*none/s);
