@@ -154,11 +154,32 @@ describe('App', () => {
     await waitFor(() => expect(within(lab).getByRole('img', { name: '3 GitHub contributions in the last year' })).toBeInTheDocument());
     expect(within(lab).getByText(/3 contributions/)).toBeInTheDocument();
     expect(lab.querySelectorAll('.lab-project-card')).toHaveLength(6);
-    expect(lab.querySelectorAll('.lab-project-card > img')).toHaveLength(6);
-    expect(within(lab).getByRole('link', { name: /View Personal Finance Dashboard on GitHub/ })).toHaveAttribute(
-      'href',
-      'https://github.com/hexfeng/Iquant',
+    expect(lab.querySelectorAll('.lab-project-card__media')).toHaveLength(6);
+    const finSightLink = within(lab).getByRole('link', { name: /View FinSight on GitHub/ });
+    expect(finSightLink.querySelectorAll('.lab-project-card__image')).toHaveLength(2);
+    expect(finSightLink.querySelector('.lab-project-card__image--primary')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/finsight-dashboard.jpg',
     );
+    expect(finSightLink.querySelector('.lab-project-card__image--hover')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/finsight-investments.jpg',
+    );
+    expect(finSightLink).toHaveAttribute(
+      'href',
+      'https://github.com/hexfeng/Accumulate',
+    );
+    const websiteLink = within(lab).getByRole('link', { name: /View This Website on GitHub/ });
+    expect(websiteLink).toHaveClass('lab-project-card--swap-dark');
+    expect(websiteLink.querySelector('.lab-project-card__image--primary')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/this-website-light.jpg',
+    );
+    expect(websiteLink.querySelector('.lab-project-card__image--hover')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/this-website-dark.jpg',
+    );
+    expect(websiteLink).toHaveAttribute('href', 'https://github.com/hexfeng/memyself');
     expect(lab).not.toHaveTextContent('01');
     expect(lab).not.toHaveTextContent('02');
   });

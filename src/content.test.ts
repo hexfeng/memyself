@@ -116,13 +116,28 @@ describe('portfolio content', () => {
     expect(content.lab.title).toBe('Side Projects — ideas become useful when they are made tangible.');
     expect(content.lab.experiments).toHaveLength(6);
     expect(content.lab.experiments.map((project) => project.title)).toEqual([
-      'Personal Finance Dashboard',
-      'Voice Input Application',
+      'FinSight',
+      'This Website',
       'Research Agent Workflow',
       'Screenshot Privacy Tool',
       'AI Usage Dashboard',
       'Event Intelligence Extractor',
     ]);
+    expect(content.lab.experiments[0]).toMatchObject({
+      title: 'FinSight',
+      summary: 'An open-source, local-first personal finance dashboard that brings all your financial data together through SimpleFIN Bridge.',
+      image: '/images/thinking-lab/finsight-dashboard.jpg',
+      hoverImage: '/images/thinking-lab/finsight-investments.jpg',
+      href: 'https://github.com/hexfeng/Accumulate',
+    });
+    expect(content.lab.experiments[1]).toMatchObject({
+      title: 'This Website',
+      summary: 'This personal website was designed and built with Codex, turning strategy, experiments, and side projects into a fast, responsive digital portfolio.',
+      image: '/images/thinking-lab/this-website-light.jpg',
+      hoverImage: '/images/thinking-lab/this-website-dark.jpg',
+      swapPreviewInDark: true,
+      href: 'https://github.com/hexfeng/memyself',
+    });
     expect(content.lab.experiments.every((project) => (
       project.image.startsWith('/images/thinking-lab/')
       && project.href.startsWith('https://github.com/hexfeng/')

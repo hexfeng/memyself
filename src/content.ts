@@ -36,6 +36,8 @@ export type LabProject = {
   title: string;
   summary: string;
   image: string;
+  hoverImage?: string;
+  swapPreviewInDark?: boolean;
   href: string;
 };
 
@@ -233,16 +235,19 @@ export const content = {
       'A working collection of small products, AI experiments, and tools for thinking more clearly.',
     experiments: [
       {
-        title: 'Personal Finance Dashboard',
-        summary: 'Turning fragmented financial data into a clearer personal decision system.',
-        image: '/images/thinking-lab/personal-finance-dashboard.webp',
-        href: 'https://github.com/hexfeng/Iquant',
+        title: 'FinSight',
+        summary: 'An open-source, local-first personal finance dashboard that brings all your financial data together through SimpleFIN Bridge.',
+        image: '/images/thinking-lab/finsight-dashboard.jpg',
+        hoverImage: '/images/thinking-lab/finsight-investments.jpg',
+        href: 'https://github.com/hexfeng/Accumulate',
       },
       {
-        title: 'Voice Input Application',
-        summary: 'Exploring private, low-friction speech input with AI-assisted editing.',
-        image: '/images/thinking-lab/voice-input-application.webp',
-        href: 'https://github.com/hexfeng/Gospeak',
+        title: 'This Website',
+        summary: 'This personal website was designed and built with Codex, turning strategy, experiments, and side projects into a fast, responsive digital portfolio.',
+        image: '/images/thinking-lab/this-website-light.jpg',
+        hoverImage: '/images/thinking-lab/this-website-dark.jpg',
+        swapPreviewInDark: true,
+        href: 'https://github.com/hexfeng/memyself',
       },
       {
         title: 'Research Agent Workflow',

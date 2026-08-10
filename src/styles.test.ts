@@ -113,7 +113,19 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.thinking-lab__overview\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:/s);
     expect(styles).toMatch(/\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
     expect(styles).toMatch(/\.lab-project-card\s*\{[^}]*grid-template-columns:\s*48%[^}]*border-radius:\s*16px;[^}]*box-shadow:/s);
-    expect(styles).toMatch(/\.lab-project-card > img\s*\{[^}]*object-fit:\s*cover/s);
+    expect(styles).toMatch(/\.lab-project-card--preview\s*\{[^}]*grid-template-columns:\s*52%/s);
+    expect(styles).toMatch(/\.lab-project-card__image\s*\{[^}]*object-fit:\s*cover/s);
+    expect(styles).toMatch(/\.lab-project-card__media--contain\s*\{[^}]*background:\s*#eef1f5/s);
+    expect(styles).toMatch(/\[data-theme='dark'\] \.lab-project-card__media--contain\s*\{[^}]*background:\s*var\(--surface-alt\)/s);
+    expect(styles).toMatch(/\.lab-project-card__media--contain \.lab-project-card__image\s*\{[^}]*object-fit:\s*contain;[^}]*object-position:\s*center/s);
+    expect(styles).toMatch(/\.lab-project-card--swap-dark \.lab-project-card__image\s*\{[^}]*right:\s*auto;[^}]*width:\s*115%;[^}]*max-width:\s*none;[^}]*object-position:\s*left center/s);
+    expect(styles).toMatch(/\.lab-project-card__image--hover\s*\{[^}]*opacity:\s*0/s);
+    expect(styles).toMatch(/@media \(hover:\s*hover\)[\s\S]*?\.lab-project-card--preview:hover \.lab-project-card__image--primary\s*\{[^}]*opacity:\s*0/s);
+    expect(styles).toMatch(/@media \(hover:\s*hover\)[\s\S]*?\.lab-project-card:hover \.lab-project-card__image--hover\s*\{[^}]*opacity:\s*1/s);
+    expect(styles).toMatch(/\[data-theme='dark'\] \.lab-project-card--swap-dark \.lab-project-card__image--primary\s*\{[^}]*opacity:\s*0/s);
+    expect(styles).toMatch(/\[data-theme='dark'\] \.lab-project-card--swap-dark \.lab-project-card__image--hover\s*\{[^}]*opacity:\s*1/s);
+    expect(styles).toMatch(/@media \(hover:\s*hover\)[\s\S]*?\[data-theme='dark'\] \.lab-project-card--swap-dark:hover \.lab-project-card__image--primary\s*\{[^}]*opacity:\s*1/s);
+    expect(styles).toMatch(/@media \(hover:\s*hover\)[\s\S]*?\[data-theme='dark'\] \.lab-project-card--swap-dark:hover \.lab-project-card__image--hover\s*\{[^}]*opacity:\s*0/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*1fr/s);
   });
 
