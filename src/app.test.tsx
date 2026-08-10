@@ -198,6 +198,18 @@ describe('App', () => {
       '/images/thinking-lab/codex-usage-dashboard.webp',
     );
     expect(codexUsageLink).toHaveAttribute('href', 'https://github.com/hexfeng/CodexUsageDashboard');
+    const goSpeakLink = within(lab).getByRole('link', { name: /View GoSpeak on GitHub/ });
+    expect(goSpeakLink).toHaveClass('lab-project-card--preview');
+    expect(goSpeakLink.querySelectorAll('.lab-project-card__image')).toHaveLength(2);
+    expect(goSpeakLink.querySelector('.lab-project-card__image--primary')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/gospeak-general.webp',
+    );
+    expect(goSpeakLink.querySelector('.lab-project-card__image--hover')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/gospeak-providers.webp',
+    );
+    expect(goSpeakLink).toHaveAttribute('href', 'https://github.com/hexfeng/Gospeak');
     expect(lab).not.toHaveTextContent('01');
     expect(lab).not.toHaveTextContent('02');
   });

@@ -119,7 +119,7 @@ describe('portfolio content', () => {
       'FinSight',
       'This Website',
       'Codex Usage Dashboard',
-      'Screenshot Privacy Tool',
+      'GoSpeak',
       'AI Usage Dashboard',
       'Event Intelligence Extractor',
     ]);
@@ -144,6 +144,13 @@ describe('portfolio content', () => {
       image: '/images/thinking-lab/codex-usage-dashboard.webp',
       showFullImage: true,
       href: 'https://github.com/hexfeng/CodexUsageDashboard',
+    });
+    expect(content.lab.experiments[3]).toMatchObject({
+      title: 'GoSpeak',
+      summary: 'Open-source Windows voice input for 90% typeless workflows at near-zero cost, with configurable ASR and AI rewriting.',
+      image: '/images/thinking-lab/gospeak-general.webp',
+      hoverImage: '/images/thinking-lab/gospeak-providers.webp',
+      href: 'https://github.com/hexfeng/Gospeak',
     });
     expect(content.lab.experiments.every((project) => (
       project.image.startsWith('/images/thinking-lab/')

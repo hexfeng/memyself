@@ -119,6 +119,7 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
     expect(styles).toMatch(/\.lab-project-card\s*\{[^}]*grid-template-columns:\s*48%[^}]*border-radius:\s*16px;[^}]*box-shadow:/s);
     expect(styles).toMatch(/\.lab-project-card--preview\s*\{[^}]*grid-template-columns:\s*52%/s);
+    expect(styles).toMatch(/@media \(min-width:\s*1051px\)[\s\S]*?\.lab-project-card--preview\s*\{[^}]*min-height:\s*226px/s);
     expect(styles).toMatch(/\.lab-project-card__image\s*\{[^}]*object-fit:\s*cover/s);
     expect(styles).toMatch(/\.lab-project-card__media--contain\s*\{[^}]*background:\s*#eef1f5/s);
     expect(styles).toMatch(/\[data-theme='dark'\] \.lab-project-card__media--contain\s*\{[^}]*background:\s*var\(--surface-alt\)/s);

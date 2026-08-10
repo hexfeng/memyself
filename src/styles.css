@@ -492,6 +492,9 @@ button { color: inherit; }
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 .lab-project-card--preview { grid-template-columns: 52% minmax(0, 1fr); }
+@media (min-width: 1051px) {
+  .lab-project-card--preview { min-height: 226px; }
+}
 [data-theme='dark'] .lab-project-card { box-shadow: 0 16px 32px rgb(0 0 0 / 38%), 0 4px 10px rgb(0 0 0 / 24%); }
 .lab-project-card:hover { transform: translateY(-4px); box-shadow: 0 18px 34px rgb(17 19 24 / 15%), 0 6px 12px rgb(17 19 24 / 7%); }
 .lab-project-card__media { position: relative; min-width: 0; min-height: 174px; overflow: hidden; }

@@ -258,10 +258,11 @@ export const content = {
         href: 'https://github.com/hexfeng/CodexUsageDashboard',
       },
       {
-        title: 'Screenshot Privacy Tool',
-        summary: 'A faster way to capture, redact, annotate, and share safely.',
-        image: '/images/thinking-lab/screenshot-privacy-tool.webp',
-        href: 'https://github.com/hexfeng/EasyCapture',
+        title: 'GoSpeak',
+        summary: 'Open-source Windows voice input for 90% typeless workflows at near-zero cost, with configurable ASR and AI rewriting.',
+        image: '/images/thinking-lab/gospeak-general.webp',
+        hoverImage: '/images/thinking-lab/gospeak-providers.webp',
+        href: 'https://github.com/hexfeng/Gospeak',
       },
       {
         title: 'AI Usage Dashboard',
