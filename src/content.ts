@@ -199,7 +199,7 @@ export const content = {
   },
   transformation: {
     label: '03 - AI Transformation & Engagement',
-    title: 'Turning operating systems and relationships into momentum.',
+    title: 'Building momentum through engagement, innovation, and ecosystems.',
     intro:
       'Sustainable transformation needs both: a clear system for execution and the relationships that move complex programs forward.',
     cases: [

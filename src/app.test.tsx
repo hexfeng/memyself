@@ -79,7 +79,7 @@ describe('App', () => {
         .map((section) => section.id),
     ).toEqual(['top', 'experience', 'gtm', 'transformation', 'lab', 'beside', 'contact']);
 
-    const transformation = screen.getByRole('region', { name: 'Turning operating systems and relationships into momentum.' });
+    const transformation = screen.getByRole('region', { name: 'Building momentum through engagement, innovation, and ecosystems.' });
     expect(transformation.querySelectorAll('.engagement-point')).toHaveLength(3);
     expect(within(transformation).queryByRole('heading', { name: 'AI Transformation' })).not.toBeInTheDocument();
     for (const title of ['Executive & Customer Engagement', 'Joint Innovation', 'University & Research Ecosystem']) {
