@@ -188,6 +188,16 @@ describe('App', () => {
       '/images/thinking-lab/this-website-dark.jpg',
     );
     expect(websiteLink).toHaveAttribute('href', 'https://github.com/hexfeng/memyself');
+    const codexUsageLink = within(lab).getByRole('link', { name: /View Codex Usage Dashboard on GitHub/ });
+    expect(codexUsageLink).toHaveClass('lab-project-card--full-image');
+    expect(codexUsageLink.querySelector('.lab-project-card__media')).toHaveClass('lab-project-card__media--contain');
+    expect(codexUsageLink.querySelector('.lab-project-card__image--backdrop')).not.toBeInTheDocument();
+    expect(codexUsageLink.querySelectorAll('.lab-project-card__image')).toHaveLength(1);
+    expect(codexUsageLink.querySelector('.lab-project-card__image--primary')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/codex-usage-dashboard.webp',
+    );
+    expect(codexUsageLink).toHaveAttribute('href', 'https://github.com/hexfeng/CodexUsageDashboard');
     expect(lab).not.toHaveTextContent('01');
     expect(lab).not.toHaveTextContent('02');
   });

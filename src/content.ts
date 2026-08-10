@@ -37,6 +37,7 @@ export type LabProject = {
   summary: string;
   image: string;
   hoverImage?: string;
+  showFullImage?: boolean;
   swapPreviewInDark?: boolean;
   href: string;
 };
@@ -250,10 +251,11 @@ export const content = {
         href: 'https://github.com/hexfeng/memyself',
       },
       {
-        title: 'Research Agent Workflow',
-        summary: 'Testing structured AI workflows for collection, verification, and synthesis.',
-        image: '/images/thinking-lab/research-agent-workflow.webp',
-        href: 'https://github.com/hexfeng/InsightFlow',
+        title: 'Codex Usage Dashboard',
+        summary: 'A lightweight floating Windows widget for monitoring Codex five-hour and weekly usage limits at a glance.',
+        image: '/images/thinking-lab/codex-usage-dashboard.webp',
+        showFullImage: true,
+        href: 'https://github.com/hexfeng/CodexUsageDashboard',
       },
       {
         title: 'Screenshot Privacy Tool',

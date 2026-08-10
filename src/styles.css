@@ -502,6 +502,10 @@ button { color: inherit; }
   object-fit: contain;
   object-position: center;
 }
+.lab-project-card--full-image .lab-project-card__image--primary {
+  z-index: 1;
+  transform: scale(1.16);
+}
 .lab-project-card--swap-dark .lab-project-card__image {
   right: auto;
   width: 115%;

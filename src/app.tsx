@@ -634,8 +634,8 @@ function GitHubCalendar() {
 
 function LabProjectCard({ project }: { project: LabProject }) {
   return (
-    <a className={`lab-project-card${project.hoverImage ? ' lab-project-card--preview' : ''}${project.swapPreviewInDark ? ' lab-project-card--swap-dark' : ''}`} href={project.href} target="_blank" rel="noreferrer">
-      <span className={`lab-project-card__media${project.hoverImage ? ' lab-project-card__media--contain' : ''}`}>
+    <a className={`lab-project-card${project.hoverImage ? ' lab-project-card--preview' : ''}${project.showFullImage ? ' lab-project-card--full-image' : ''}${project.swapPreviewInDark ? ' lab-project-card--swap-dark' : ''}`} href={project.href} target="_blank" rel="noreferrer">
+      <span className={`lab-project-card__media${project.hoverImage || project.showFullImage ? ' lab-project-card__media--contain' : ''}`}>
         <img className="lab-project-card__image lab-project-card__image--primary" src={project.image} alt="" loading="lazy" decoding="async" />
         {project.hoverImage && (
           <img className="lab-project-card__image lab-project-card__image--hover" src={project.hoverImage} alt="" loading="lazy" decoding="async" />

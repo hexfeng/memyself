@@ -118,7 +118,7 @@ describe('portfolio content', () => {
     expect(content.lab.experiments.map((project) => project.title)).toEqual([
       'FinSight',
       'This Website',
-      'Research Agent Workflow',
+      'Codex Usage Dashboard',
       'Screenshot Privacy Tool',
       'AI Usage Dashboard',
       'Event Intelligence Extractor',
@@ -137,6 +137,13 @@ describe('portfolio content', () => {
       hoverImage: '/images/thinking-lab/this-website-dark.jpg',
       swapPreviewInDark: true,
       href: 'https://github.com/hexfeng/memyself',
+    });
+    expect(content.lab.experiments[2]).toMatchObject({
+      title: 'Codex Usage Dashboard',
+      summary: 'A lightweight floating Windows widget for monitoring Codex five-hour and weekly usage limits at a glance.',
+      image: '/images/thinking-lab/codex-usage-dashboard.webp',
+      showFullImage: true,
+      href: 'https://github.com/hexfeng/CodexUsageDashboard',
     });
     expect(content.lab.experiments.every((project) => (
       project.image.startsWith('/images/thinking-lab/')
