@@ -210,6 +210,27 @@ describe('App', () => {
       '/images/thinking-lab/gospeak-providers.webp',
     );
     expect(goSpeakLink).toHaveAttribute('href', 'https://github.com/hexfeng/Gospeak');
+    const play = vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue();
+    const pause = vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => undefined);
+    const blinkLink = within(lab).getByRole('link', { name: /View Blink on GitHub/ });
+    const blinkVideo = blinkLink.querySelector('video');
+    expect(blinkLink).toHaveClass('lab-project-card--preview', 'lab-project-card--video');
+    expect(blinkLink).toHaveAttribute('href', 'https://github.com/hexfeng/Blink');
+    expect(blinkLink.querySelector('.lab-project-card__image--primary')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/blink-first-frame.webp',
+    );
+    expect(blinkVideo).toHaveAttribute('src', '/videos/thinking-lab/blink-demo.mp4');
+    expect(blinkVideo).toHaveAttribute('loop');
+    expect(blinkVideo).toHaveAttribute('playsinline');
+    expect(blinkVideo).toHaveAttribute('preload', 'auto');
+    expect(blinkVideo).toHaveProperty('muted', true);
+    fireEvent.mouseEnter(blinkLink);
+    expect(play).toHaveBeenCalledOnce();
+    Object.defineProperty(blinkVideo, 'currentTime', { configurable: true, writable: true, value: 4 });
+    fireEvent.mouseLeave(blinkLink);
+    expect(pause).toHaveBeenCalledOnce();
+    expect(blinkVideo).toHaveProperty('currentTime', 0);
     expect(lab).not.toHaveTextContent('01');
     expect(lab).not.toHaveTextContent('02');
   });

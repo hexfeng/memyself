@@ -37,6 +37,7 @@ export type LabProject = {
   summary: string;
   image: string;
   hoverImage?: string;
+  video?: string;
   showFullImage?: boolean;
   swapPreviewInDark?: boolean;
   href: string;
@@ -265,10 +266,11 @@ export const content = {
         href: 'https://github.com/hexfeng/Gospeak',
       },
       {
-        title: 'AI Usage Dashboard',
-        summary: 'Making model usage, cost, and limits visible at a glance.',
-        image: '/images/thinking-lab/ai-usage-dashboard.webp',
-        href: 'https://github.com/hexfeng/CodexUsageDashboard',
+        title: 'Blink',
+        summary: 'An open-source Chrome extension that optimizes LLM prompts in one click, right where you type.',
+        image: '/images/thinking-lab/blink-first-frame.webp',
+        video: '/videos/thinking-lab/blink-demo.mp4',
+        href: 'https://github.com/hexfeng/Blink',
       },
       {
         title: 'Event Intelligence Extractor',

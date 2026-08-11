@@ -120,7 +120,7 @@ describe('portfolio content', () => {
       'This Website',
       'Codex Usage Dashboard',
       'GoSpeak',
-      'AI Usage Dashboard',
+      'Blink',
       'Event Intelligence Extractor',
     ]);
     expect(content.lab.experiments[0]).toMatchObject({
@@ -151,6 +151,13 @@ describe('portfolio content', () => {
       image: '/images/thinking-lab/gospeak-general.webp',
       hoverImage: '/images/thinking-lab/gospeak-providers.webp',
       href: 'https://github.com/hexfeng/Gospeak',
+    });
+    expect(content.lab.experiments[4]).toMatchObject({
+      title: 'Blink',
+      summary: 'An open-source Chrome extension that optimizes LLM prompts in one click, right where you type.',
+      image: '/images/thinking-lab/blink-first-frame.webp',
+      video: '/videos/thinking-lab/blink-demo.mp4',
+      href: 'https://github.com/hexfeng/Blink',
     });
     expect(content.lab.experiments.every((project) => (
       project.image.startsWith('/images/thinking-lab/')

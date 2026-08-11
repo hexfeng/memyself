@@ -121,6 +121,9 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.lab-project-card--preview\s*\{[^}]*grid-template-columns:\s*52%/s);
     expect(styles).toMatch(/@media \(min-width:\s*1051px\)[\s\S]*?\.lab-project-card--preview\s*\{[^}]*min-height:\s*226px/s);
     expect(styles).toMatch(/\.lab-project-card__image\s*\{[^}]*object-fit:\s*cover/s);
+    expect(styles).toMatch(/\.lab-project-card__video\s*\{[^}]*object-fit:\s*contain;[^}]*object-position:\s*center/s);
+    expect(styles).toMatch(/\.lab-project-card--video :is\(\.lab-project-card__image--primary, \.lab-project-card__video\)\s*\{[^}]*transform:\s*scale\(1\.22\)/s);
+    expect(styles).toMatch(/\.lab-project-card--video:hover \.lab-project-card__image--primary\s*\{[^}]*opacity:\s*0/s);
     expect(styles).toMatch(/\.lab-project-card__media--contain\s*\{[^}]*background:\s*#eef1f5/s);
     expect(styles).toMatch(/\[data-theme='dark'\] \.lab-project-card__media--contain\s*\{[^}]*background:\s*var\(--surface-alt\)/s);
     expect(styles).toMatch(/\.lab-project-card__media--contain \.lab-project-card__image\s*\{[^}]*object-fit:\s*contain;[^}]*object-position:\s*center/s);

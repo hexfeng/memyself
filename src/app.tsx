@@ -634,8 +634,27 @@ function GitHubCalendar() {
 
 function LabProjectCard({ project }: { project: LabProject }) {
   return (
-    <a className={`lab-project-card${project.hoverImage ? ' lab-project-card--preview' : ''}${project.showFullImage ? ' lab-project-card--full-image' : ''}${project.swapPreviewInDark ? ' lab-project-card--swap-dark' : ''}`} href={project.href} target="_blank" rel="noreferrer">
-      <span className={`lab-project-card__media${project.hoverImage || project.showFullImage ? ' lab-project-card__media--contain' : ''}`}>
+    <a
+      className={`lab-project-card${project.hoverImage || project.video ? ' lab-project-card--preview' : ''}${project.video ? ' lab-project-card--video' : ''}${project.showFullImage ? ' lab-project-card--full-image' : ''}${project.swapPreviewInDark ? ' lab-project-card--swap-dark' : ''}`}
+      href={project.href}
+      target="_blank"
+      rel="noreferrer"
+      onMouseEnter={project.video ? (event) => {
+        const video = event.currentTarget.querySelector('video');
+        if (video) void video.play().catch(() => undefined);
+      } : undefined}
+      onMouseLeave={project.video ? (event) => {
+        const video = event.currentTarget.querySelector('video');
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      } : undefined}
+    >
+      <span className={`lab-project-card__media${project.hoverImage || project.video || project.showFullImage ? ' lab-project-card__media--contain' : ''}`}>
+        {project.video && (
+          <video className="lab-project-card__video" src={project.video} poster={project.image} muted loop playsInline preload="auto" aria-hidden="true" />
+        )}
         <img className="lab-project-card__image lab-project-card__image--primary" src={project.image} alt="" loading="lazy" decoding="async" />
         {project.hoverImage && (
           <img className="lab-project-card__image lab-project-card__image--hover" src={project.hoverImage} alt="" loading="lazy" decoding="async" />
