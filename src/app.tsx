@@ -598,16 +598,22 @@ function GitHubCalendar() {
     return () => controller.abort();
   }, []);
 
+  const firstWeekday = days.length === 0 ? 0 : new Date(`${days[0].date}T00:00:00Z`).getUTCDay();
+  const calendarPosition = (index: number) => {
+    const position = firstWeekday + index;
+    return { week: Math.floor(position / 7) + 1, weekday: position % 7 + 1 };
+  };
+  const weekCount = Math.max(1, Math.ceil((firstWeekday + days.length) / 7));
   const contributions = days.reduce((sum, day) => sum + day.count, 0);
   const activeWeeks = days.reduce((weeks, day, index) => {
-    if (day.count > 0) weeks.add(Math.floor(index / 7));
+    if (day.count > 0) weeks.add(calendarPosition(index).week);
     return weeks;
   }, new Set<number>()).size;
   const monthLabels = days.reduce<Array<{ label: string; week: number }>>((labels, day, index) => {
     if (day.date.endsWith('-01')) {
       labels.push({
         label: new Date(`${day.date}T00:00:00`).toLocaleString('en', { month: 'short' }),
-        week: Math.floor(index / 7) + 1,
+        week: calendarPosition(index).week,
       });
     }
     return labels;
@@ -620,17 +626,24 @@ function GitHubCalendar() {
         <div><h3 id="github-calendar-title">Building in public</h3><p>A year of experiments, iterations, and useful commits.</p></div>
         <a href="https://github.com/hexfeng" target="_blank" rel="noreferrer">View GitHub <ArrowUpRight aria-hidden="true" /></a>
       </div>
-      <div className="github-calendar__chart" role="img" aria-label={`${contributions} GitHub contributions in the last year`} data-status={status}>
+      <div
+        className="github-calendar__chart"
+        role="img"
+        aria-label={`${contributions} GitHub contributions in the last year`}
+        data-status={status}
+        style={{ '--github-week-count': weekCount } as CSSProperties}
+      >
         <div className="github-calendar__months" aria-hidden="true">
           {monthLabels.map(({ label, week }) => <span key={`${label}-${week}`} style={{ gridColumn: week }}>{label}</span>)}
         </div>
         <div className="github-calendar__days" aria-hidden="true"><span>Mon</span><span>Wed</span><span>Fri</span></div>
         <div className="github-calendar__grid" aria-hidden="true">
-          {days.map((day) => (
+          {days.map((day, index) => (
             <span
               key={day.date}
               data-level={day.level}
               title={`${day.date}: ${day.count} contribution${day.count === 1 ? '' : 's'}`}
+              style={{ gridColumn: calendarPosition(index).week, gridRow: calendarPosition(index).weekday }}
             />
           ))}
         </div>

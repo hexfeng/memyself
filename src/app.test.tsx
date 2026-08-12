@@ -165,8 +165,13 @@ describe('App', () => {
 
     const lab = screen.getByRole('region', { name: 'Side Projects — ideas become useful when they are made tangible.' });
     expect(within(lab).getByRole('heading', { name: 'Building in public' })).toBeInTheDocument();
-    await waitFor(() => expect(within(lab).getByRole('img', { name: '3 GitHub contributions in the last year' })).toBeInTheDocument());
+    const chart = await waitFor(() => within(lab).getByRole('img', { name: '3 GitHub contributions in the last year' }));
     expect(within(lab).getByText(/3 contributions/)).toBeInTheDocument();
+    expect(chart.style.getPropertyValue('--github-week-count')).toBe('3');
+    const contributionDays = lab.querySelectorAll<HTMLElement>('.github-calendar__grid > span');
+    expect(contributionDays[0]).toHaveStyle({ gridColumn: '1', gridRow: '4' });
+    expect(contributionDays[4]).toHaveStyle({ gridColumn: '2', gridRow: '1' });
+    expect(lab.querySelector('.github-calendar__months span')).toHaveStyle({ gridColumn: '1' });
     expect(lab.querySelectorAll('.lab-project-card')).toHaveLength(6);
     expect(lab.querySelectorAll('.lab-project-card__media')).toHaveLength(6);
     expect(within(lab).getByText('More projects ongoing')).toHaveClass('thinking-lab__continuation-label');
