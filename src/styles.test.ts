@@ -52,6 +52,7 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.beside-work__photo-collage\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);[^}]*grid-template-rows:\s*repeat\(2, minmax\(0, 1fr\)\);[^}]*gap:\s*3px/s);
     expect(styles).toMatch(/\.beside-work__photo-collage img\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%;[^}]*object-fit:\s*cover/s);
     expect(styles).toMatch(/\.beside-work__item-content\s*\{[^}]*flex:\s*1/s);
+    expect(styles).toMatch(/\.beside-work__gallery-prompt\s*\{[^}]*color:\s*var\(--accent-text\);[^}]*font-family:\s*'Manrope', sans-serif;[^}]*font-weight:\s*700;[^}]*text-decoration:\s*underline/s);
     expect(styles).toMatch(/img\[src\$='world-low-pixels\.svg'\]\s*\{[^}]*background:\s*#000;[^}]*object-fit:\s*contain/s);
     expect(styles).toMatch(/\.beside-work__item::before\s*\{[^}]*opacity:\s*0;[^}]*transform:\s*translateY\(-4px\) scale\(\.97\)/s);
     expect(styles).toContain(".beside-work__item:is(:hover, [data-open='true']) > img");

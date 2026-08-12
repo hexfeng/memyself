@@ -616,6 +616,7 @@ button { color: inherit; }
 .beside-work__item-content > span { color: var(--accent-text); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .beside-work__item h3 { margin: 22px 0 0; font-family: 'Manrope', sans-serif; font-size: clamp(24px, 2vw, 31px); letter-spacing: -.04em; }
 .beside-work__item p { margin: 12px 0 0; color: var(--text-soft); font-size: 13px; line-height: 1.65; }
+.beside-work__gallery-prompt { color: var(--accent-text); font-family: 'Manrope', sans-serif; font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .beside-work__trigger {
   position: absolute;
   z-index: 4;

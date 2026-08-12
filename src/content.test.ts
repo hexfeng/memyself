@@ -31,6 +31,12 @@ describe('portfolio content', () => {
       text: 'My footprints span 18 countries and 60+ cities, and I’m still unlocking new perspectives and discovering the boundaries of what’s possible.',
       image: '/images/beside-work/world-low-pixels.svg',
     });
+    expect(content.beside.items[1]).toEqual({
+      title: 'Photography',
+      text: 'Unprofessional photographer—',
+      callToAction: 'click to explore the gallery.',
+      image: '/images/beside-work/photography.webp',
+    });
   });
 
   test('keeps the exact rotating role order and spelling', () => {

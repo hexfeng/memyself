@@ -496,7 +496,12 @@ function BesideWork() {
                 <div className="beside-work__item-content">
                   <span aria-hidden="true">0{index + 1} / Beside work</span>
                   <h3>{item.title}</h3>
-                  <p>{item.text}</p>
+                  <p>
+                    {item.text}
+                    {'callToAction' in item && (
+                      <span className="beside-work__gallery-prompt">{item.callToAction}</span>
+                    )}
+                  </p>
                 </div>
                 <button
                   ref={isPhotography ? photographyTrigger : undefined}

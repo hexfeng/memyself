@@ -298,7 +298,8 @@ export const content = {
       },
       {
         title: 'Photography',
-        text: 'Unprofessional photographer—click to explore the gallery.',
+        text: 'Unprofessional photographer—',
+        callToAction: 'click to explore the gallery.',
         image: '/images/beside-work/photography.webp',
       },
       {
