@@ -157,6 +157,32 @@ export const content = {
       'Translating market signals into product direction and commercial momentum by connecting customer needs, network capabilities, portfolio decisions, and cross-functional execution.',
     cases: [
       {
+        title: 'Green Antenna Modernization',
+        summary:
+          "Served as the base station antenna product owner for the Greek market, led the country's antenna modernization program, and translated requirements from 12+ operator customers.",
+        result: '20%+ order growth',
+        secondary: '70%+ SDIF share of Greece antenna orders',
+        outcomes: [
+          { highlight: '20%', detail: 'antenna revenue increase in 2 years', icon: 'growth' },
+          { highlight: '70%', detail: 'green antenna adoption with', secondaryHighlight: '15%', suffix: 'energy savings', icon: 'energy' },
+          { highlight: '30+', detail: 'product roadmap developed, with', secondaryHighlight: '5+', suffix: 'models swapped and upgraded in the Greek market', icon: 'roadmap' },
+        ],
+        image: '/images/green-antenna-modernization.png',
+      },
+      {
+        title: 'GR Vodafone Strategic Partnership',
+        summary:
+          "Served as SR for Vodafone Greece's wireless business, leading network planning, network evolution, and product roadmaps while advancing strategic cooperation and joint innovation to strengthen commercial success and network leadership.",
+        result: 'Strategic partnership',
+        secondary: 'Commercial success and network leadership',
+        outcomes: [
+          { highlight: 'Strategic cooperation', detail: 'secured in S Project', icon: 'customers' },
+          { highlight: 'Biggest score increase', detail: 'achieved in Umlaut benchmarking (2023–2024)', icon: 'growth' },
+          { highlight: 'Multiple solution breakthroughs', detail: 'across wideband and high-performance AAUs', icon: 'innovation' },
+        ],
+        image: '/images/greece-vodafone-spring-6.png',
+      },
+      {
         title: 'GR Nova 5G FWA Commercial Launch',
         summary:
           "Partnered with Nova to launch Greece's first commercial 5G FWA service and advance an integrated FWA + FTTH strategy.",
@@ -169,27 +195,6 @@ export const content = {
           { highlight: 'MetaAAU breakthrough', detail: 'in high-performance commercial deployment' },
         ],
         image: '/images/greece-nova-5g-fwa.png',
-      },
-      {
-        title: 'Greece Vodafone Spring 6 Strategic Partnership',
-        summary:
-          'A mock strategic partnership program aligning executive priorities, technology roadmaps, and joint commercial initiatives with Vodafone Greece.',
-        result: 'Strategic partnership',
-        secondary: 'Mock copy - public outcomes to be added',
-        image: '/images/greece-vodafone-spring-6.png',
-      },
-      {
-        title: 'Green Antenna Modernization',
-        summary:
-          "Served as the base station antenna product owner for the Greek market, led the country's antenna modernization program, and translated requirements from 12+ operator customers.",
-        result: '20%+ order growth',
-        secondary: '70%+ SDIF share of Greece antenna orders',
-        outcomes: [
-          { highlight: '20%', detail: 'antenna revenue increase in 2 years', icon: 'growth' },
-          { highlight: '70%', detail: 'green antenna adoption with', secondaryHighlight: '15%', suffix: 'energy savings', icon: 'energy' },
-          { highlight: '30+', detail: 'product roadmap developed, with', secondaryHighlight: '5+', suffix: 'models swapped and upgraded in the Greek market', icon: 'roadmap' },
-        ],
-        image: '/images/green-antenna-modernization.png',
       },
       {
         title: 'SEE Wireless Business Strategy & Execution',

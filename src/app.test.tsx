@@ -408,11 +408,14 @@ describe('App', () => {
 
     act(() => vi.advanceTimersByTime(30_000));
     expect(
-      within(showcase).getByRole('heading', { name: 'GR Nova 5G FWA Commercial Launch' }),
+      within(showcase).getByRole('heading', { name: 'Green Antenna Modernization' }),
     ).toBeInTheDocument();
     expect(within(showcase).queryByRole('link', { name: 'Discuss project' })).not.toBeInTheDocument();
-    expect(within(showcase).getByText('15K', { selector: 'strong' })).toBeInTheDocument();
-    expect(within(showcase).getByText('MetaAAU breakthrough', { selector: 'strong' })).toBeInTheDocument();
+    const initialGreenCopy = showcase.querySelector('.strategic-showcase__copy--enter') as HTMLElement;
+    expect(within(initialGreenCopy).getByText('20%', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(initialGreenCopy).getByText('15%', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(initialGreenCopy).getByText('5+', { selector: 'strong' })).toBeInTheDocument();
+    expect(initialGreenCopy.querySelectorAll('.strategic-showcase__outcome-icon')).toHaveLength(3);
 
     act(() => {
       callbacks.get(showcase)?.(
@@ -424,19 +427,21 @@ describe('App', () => {
 
     fireEvent.click(within(showcase).getByRole('button', { name: 'Next project' }));
     expect(
-      within(showcase).getByRole('heading', { name: 'Greece Vodafone Spring 6 Strategic Partnership' }),
+      within(showcase).getByRole('heading', { name: 'GR Vodafone Strategic Partnership' }),
     ).toBeInTheDocument();
     expect(progress).toHaveStyle({ '--active-index': '1' });
+    const vodafoneCopy = showcase.querySelector('.strategic-showcase__copy--enter') as HTMLElement;
+    expect(within(vodafoneCopy).getByText('Strategic cooperation', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(vodafoneCopy).getByText('Biggest score increase', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(vodafoneCopy).getByText('Multiple solution breakthroughs', { selector: 'strong' })).toBeInTheDocument();
+    expect(vodafoneCopy.querySelectorAll('.strategic-showcase__outcome-icon')).toHaveLength(3);
 
     act(() => vi.advanceTimersByTime(30_000));
     expect(
-      within(showcase).getByRole('heading', { name: 'Green Antenna Modernization' }),
+      within(showcase).getByRole('heading', { name: 'GR Nova 5G FWA Commercial Launch' }),
     ).toBeInTheDocument();
-    const greenCopy = showcase.querySelector('.strategic-showcase__copy--enter') as HTMLElement;
-    expect(within(greenCopy).getByText('20%', { selector: 'strong' })).toBeInTheDocument();
-    expect(within(greenCopy).getByText('15%', { selector: 'strong' })).toBeInTheDocument();
-    expect(within(greenCopy).getByText('5+', { selector: 'strong' })).toBeInTheDocument();
-    expect(greenCopy.querySelectorAll('.strategic-showcase__outcome-icon')).toHaveLength(3);
+    expect(within(showcase).getByText('15K', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(showcase).getByText('MetaAAU breakthrough', { selector: 'strong' })).toBeInTheDocument();
 
     fireEvent.click(within(showcase).getByRole('button', { name: 'Next project' }));
     expect(
