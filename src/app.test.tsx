@@ -89,7 +89,7 @@ describe('App', () => {
     expect(transformation.querySelectorAll('.engagement-drift-wall__static img')).toHaveLength(8);
     expect(within(transformation).queryByText('Selected ecosystem')).not.toBeInTheDocument();
     const ecosystem = screen.getByRole('group', { name: 'Selected ecosystem' });
-    expect(within(ecosystem).getAllByRole('img')).toHaveLength(11);
+    expect(within(ecosystem).getAllByRole('img')).toHaveLength(12);
     expect(within(ecosystem).getByRole('img', { name: 'COSMOTE Greece' })).toHaveAttribute(
       'src',
       '/logos/engagement/04_cosmote-greece.svg',
@@ -97,6 +97,10 @@ describe('App', () => {
     expect(within(ecosystem).getByRole('img', { name: 'University of Waterloo' }).closest('li')).toHaveAttribute(
       'data-preserve-detail',
       'true',
+    );
+    expect(within(ecosystem).getByRole('img', { name: 'CARI' })).toHaveAttribute(
+      'src',
+      '/logos/engagement/12_cari.svg',
     );
 
     const beside = screen.getByRole('region', { name: 'A life shaped by curiosity, places, and people.' });
@@ -378,8 +382,15 @@ describe('App', () => {
     render(<App />);
 
     const showcase = screen.getByRole('group', { name: 'Strategic project showcase' });
-    const stage = showcase.querySelector('.strategic-showcase');
+    const stage = showcase.querySelector('.strategic-showcase') as HTMLElement;
     expect(stage).toHaveAttribute('data-entered', 'false');
+    const progress = showcase.querySelector('.strategic-showcase__progress') as HTMLElement;
+    expect(progress).toHaveStyle({ '--active-index': '0' });
+    expect(progress.querySelector('.strategic-showcase__progress-indicator')).toBeInTheDocument();
+    const imageNote = within(showcase).getByText('* Image shown for illustrative purposes only.');
+    expect(imageNote).toHaveClass('strategic-showcase__image-note');
+    expect(stage.nextElementSibling).toBe(imageNote);
+    expect(imageNote.nextElementSibling).toBe(progress);
 
     act(() => vi.advanceTimersByTime(30_000));
     expect(
@@ -401,6 +412,7 @@ describe('App', () => {
     expect(
       within(showcase).getByRole('heading', { name: 'Greece Vodafone Spring 6 Strategic Partnership' }),
     ).toBeInTheDocument();
+    expect(progress).toHaveStyle({ '--active-index': '1' });
 
     act(() => vi.advanceTimersByTime(30_000));
     expect(
@@ -416,6 +428,7 @@ describe('App', () => {
     expect(
       within(showcase).getByRole('heading', { name: 'SEE Wireless Business Strategy & Execution' }),
     ).toBeInTheDocument();
+    expect(progress).toHaveStyle({ '--active-index': '3' });
     const strategyCopy = showcase.querySelector('.strategic-showcase__copy--enter') as HTMLElement;
     expect(within(strategyCopy).getByText('SEE Wireless Business')).toBeInTheDocument();
     expect(within(strategyCopy).getByText('Strategy & Execution')).toBeInTheDocument();

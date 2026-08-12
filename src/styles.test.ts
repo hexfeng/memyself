@@ -104,6 +104,10 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='3'\] \.strategic-showcase__statement h3\s*\{[^}]*font-size:\s*clamp\(24px, 2\.1vw, 32px\)/s);
     expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='3'\] \.strategic-showcase__statement h3 span\s*\{[^}]*display:\s*block;[^}]*white-space:\s*nowrap/s);
     expect(styles).toMatch(/\.strategic-showcase__image\[src\$='south-east-europe-wireless-strategy\.png'\]\s*\{[^}]*object-fit:\s*contain;[^}]*background:\s*#fff;[^}]*transform:\s*none/s);
+    expect(styles).toMatch(/\.strategic-showcase__image-note\s*\{[^}]*margin:\s*10px 0 0;[^}]*font-size:\s*11px;[^}]*font-style:\s*italic;[^}]*text-align:\s*right/s);
+    expect(styles).toMatch(/\.strategic-showcase__progress\s*\{[^}]*width:\s*min\(420px, 100%\);[^}]*margin:\s*12px auto 0/s);
+    expect(styles).toMatch(/\.strategic-showcase__progress button:focus-visible\s*\{[^}]*outline:\s*none;[^}]*box-shadow:\s*0 0 0 3px rgb\(59 100 244 \/ 18%\)/s);
+    expect(styles).toMatch(/\.strategic-showcase__progress-indicator\s*\{[^}]*background:\s*linear-gradient\(90deg, #3b64f4 0%, #ff8a34 100%\);[^}]*transform:\s*translateX\(calc\(var\(--active-index\) \* \(100% \+ 7px\)\)\);[^}]*transition:\s*transform 480ms cubic-bezier\(\.22, 1, \.36, 1\)/s);
     expect(styles).toMatch(/\.strategic-showcase__outcomes\s*\{[^}]*display:\s*grid;[^}]*list-style:\s*none/s);
     expect(styles).toMatch(/\.strategic-showcase__outcomes li\s*\{[^}]*font-size:\s*13px/s);
     expect(styles).toMatch(/\.strategic-showcase__copy:has\(\.strategic-showcase__outcomes\) \.strategic-showcase__statement\s*\{[^}]*margin:\s*clamp\(34px, 4\.5vh, 52px\) 0 0/s);
@@ -162,6 +166,8 @@ describe('light-first theme styles', () => {
     expect(styles).toContain("[data-theme='dark'] .experience-logo[data-logo='unsw'] .experience-logo__dark");
     expect(styles).toContain(".experience-logo[data-logo='unsw'] .experience-logo__dark { display: block; filter: grayscale(1)");
     expect(styles).toContain("[data-theme='dark'] .experience-logo[data-logo='rexel'] img { filter: grayscale(1)");
+    expect(styles).toMatch(/\.engagement-logo-loop__item img\[src\$='12_cari\.svg'\]\s*\{[^}]*filter:\s*none;[^}]*mix-blend-mode:\s*multiply;[^}]*opacity:\s*\.9/s);
+    expect(styles).toMatch(/\[data-theme='dark'\] \.engagement-logo-loop__item img\[src\$='12_cari\.svg'\]\s*\{[^}]*filter:\s*invert\(1\);[^}]*mix-blend-mode:\s*screen;[^}]*opacity:\s*\.82/s);
     expect(styles).toMatch(
       /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.rotating-role__item\s*\{[^}]*transform:\s*none/s,
     );

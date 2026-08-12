@@ -400,6 +400,8 @@ button { color: inherit; }
 .engagement-logo-loop__item img { display: block; width: var(--logo-width); height: var(--logo-height); object-fit: contain; filter: grayscale(1) brightness(0) drop-shadow(0 2px 2px rgb(17 19 24 / 18%)); opacity: .72; transform: translateY(var(--logo-offset-y)); transition: opacity 180ms ease; }
 .engagement-logo-loop__item img:hover { opacity: 1; }
 [data-theme='dark'] .engagement-logo-loop__item img { filter: grayscale(1) brightness(0) invert(1) drop-shadow(0 2px 3px rgb(0 0 0 / 45%)); opacity: .78; }
+.engagement-logo-loop__item img[src$='12_cari.svg'] { filter: none; mix-blend-mode: multiply; opacity: .9; }
+[data-theme='dark'] .engagement-logo-loop__item img[src$='12_cari.svg'] { filter: invert(1); mix-blend-mode: screen; opacity: .82; }
 .engagement-logo-loop__item[data-preserve-detail='true'] img {
   filter: grayscale(1) contrast(1.35) brightness(.7) drop-shadow(0 2px 2px rgb(17 19 24 / 18%));
 }
@@ -829,6 +831,14 @@ button { color: inherit; }
 .strategic-showcase__image[src$='greece-nova-5g-fwa.png'] { object-fit: contain; background: #fff; transform: none; }
 .strategic-showcase__image[src$='south-east-europe-wireless-strategy.png'] { object-fit: contain; background: #fff; transform: none; }
 .strategic-showcase__image--enter { z-index: 2; }
+.strategic-showcase__image-note {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-style: italic;
+  line-height: 1.4;
+  text-align: right;
+}
 [data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='greece-nova-5g-fwa.png']) .strategic-showcase__media-frame::after {
   content: '';
   position: absolute;
@@ -874,9 +884,21 @@ button { color: inherit; }
 .strategic-showcase[data-entered='true'][data-direction='previous'] .strategic-showcase__copy--enter { animation: showcase-copy-enter-previous 700ms cubic-bezier(.22, 1, .36, 1) 700ms both; }
 .strategic-showcase[data-direction='previous'] .strategic-showcase__copy--exit { animation: showcase-copy-exit-previous 520ms cubic-bezier(.22, 1, .36, 1) both; }
 
-.strategic-showcase__progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; width: min(420px, 45%); margin: 22px 0 0 auto; }
-.strategic-showcase__progress button { height: 2px; padding: 0; border: 0; background: var(--border); cursor: pointer; }
-.strategic-showcase__progress button[aria-current='true'] { background: var(--accent); }
+.strategic-showcase__progress { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; width: min(420px, 100%); margin: 12px auto 0; }
+.strategic-showcase__progress button { position: relative; z-index: 1; height: 2px; padding: 0; border: 0; background: var(--border); cursor: pointer; }
+.strategic-showcase__progress button:focus-visible { outline: none; box-shadow: 0 0 0 3px rgb(59 100 244 / 18%); }
+.strategic-showcase__progress-indicator {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: calc((100% - 21px) / 4);
+  height: 2px;
+  background: linear-gradient(90deg, #3b64f4 0%, #ff8a34 100%);
+  transform: translateX(calc(var(--active-index) * (100% + 7px)));
+  transition: transform 480ms cubic-bezier(.22, 1, .36, 1);
+  pointer-events: none;
+}
 
 @keyframes showcase-copy-enter-next { from { opacity: 0; clip-path: inset(0 0 0 100%); transform: translateX(28px); } to { opacity: 1; clip-path: inset(0); transform: translateX(0); } }
 @keyframes showcase-copy-panel-settle {
@@ -957,7 +979,7 @@ button { color: inherit; }
   .strategic-showcase__image,
   .strategic-showcase__image[src$='greece-nova-5g-fwa.png'],
   .strategic-showcase__image[src$='south-east-europe-wireless-strategy.png'] { transform: none; }
-  .strategic-showcase__progress { width: 100%; margin-top: 16px; }
+  .strategic-showcase__progress { margin-top: 12px; }
 }
 
 @media (max-width: 1050px) {
@@ -1065,7 +1087,8 @@ button { color: inherit; }
   .strategic-showcase__copy-shell,
   .strategic-showcase__copy-stage,
   .strategic-showcase__media,
-  .strategic-showcase__media-frame { animation: none !important; transition: none !important; }
+  .strategic-showcase__media-frame,
+  .strategic-showcase__progress-indicator { animation: none !important; transition: none !important; }
   .strategic-showcase::before { opacity: 1; transition: none !important; }
   .net-background canvas { display: none; }
   .lab-project-card:hover { transform: none; }

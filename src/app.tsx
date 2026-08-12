@@ -14,7 +14,7 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import huaweiLogo from './assets/logos/huawei.png';
 import rexelLogo from './assets/logos/rexel.svg';
 import unswDarkLogo from './assets/logos/unsw-dark.png';
@@ -59,6 +59,7 @@ const engagementLogos: LogoLoopItem[] = [
   { name: 'EETT', src: '/logos/engagement/09_eett.svg', width: 64, height: 64, slotWidth: 65 },
   { name: 'University of Toronto', src: '/logos/engagement/10_university-of-toronto.svg', width: 44, height: 68, slotWidth: 51 },
   { name: 'University of Waterloo', src: '/logos/engagement/11_university-of-waterloo.svg', width: 58, height: 68, slotWidth: 61, preserveDetail: true },
+  { name: 'CARI', src: '/logos/engagement/12_cari.svg', width: 146, height: 44, slotWidth: 108, offsetY: 1 },
 ];
 function initialTheme(): Theme {
   try {
@@ -730,14 +731,20 @@ function StrategicProjectShowcase({ label, title, intro, cases }: { label: strin
             <ProjectShowcaseCopy key={active.title} project={active} index={activeIndex} state="enter" />
           </div>
         </div>
-        <div key={`media-${active.title}`} className="strategic-showcase__media" aria-hidden="true">
+        <div key={`media-${active.title}`} className="strategic-showcase__media">
           <div className="strategic-showcase__media-frame">
             {previous ? <img className="strategic-showcase__image strategic-showcase__image--exit" src={previous.image} alt="" /> : null}
             <img key={active.title} className="strategic-showcase__image strategic-showcase__image--enter" src={active.image} alt="" />
           </div>
         </div>
       </div>
-      <div className="strategic-showcase__progress" aria-label="Select a strategic project">
+      <p className="strategic-showcase__image-note">* Image shown for illustrative purposes only.</p>
+      <div
+        className="strategic-showcase__progress"
+        aria-label="Select a strategic project"
+        style={{ '--active-index': activeIndex } as CSSProperties}
+      >
+        <span className="strategic-showcase__progress-indicator" aria-hidden="true" />
         {cases.map((project, index) => <button key={project.title} type="button" aria-label={`Show project ${index + 1}: ${project.title}`} aria-current={index === activeIndex ? 'true' : undefined} onClick={() => selectProject(index, index > activeIndex ? 1 : -1)} />)}
       </div>
     </div>
