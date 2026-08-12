@@ -746,7 +746,7 @@ button { color: inherit; }
 .strategic-projects__controls button + button { border-left: 0; }
 .strategic-projects__controls svg { width: 16px; }
 
-.strategic-showcase { position: relative; height: clamp(440px, 37vw, 560px); }
+.strategic-showcase { position: relative; height: clamp(500px, 37vw, 600px); }
 .strategic-showcase::before {
   content: '';
   position: absolute;
@@ -793,6 +793,7 @@ button { color: inherit; }
 .strategic-showcase__copy[data-project-index='0'] .strategic-showcase__statement h3 { font-size: clamp(28px, 2.3vw, 36px); }
 .strategic-showcase__copy[data-project-index='2'] .strategic-showcase__statement h3 { font-size: clamp(28px, 2.3vw, 36px); }
 .strategic-showcase__copy[data-project-index='3'] .strategic-showcase__statement h3 { font-size: clamp(24px, 2.1vw, 32px); }
+.strategic-showcase__copy[data-project-index='3'] .strategic-showcase__statement h3 span { display: block; white-space: nowrap; }
 .strategic-showcase__statement p { margin: 17px 0 0; color: var(--text-soft); font-size: 13px; line-height: 1.65; }
 .strategic-showcase__footer { display: block; }
 .strategic-showcase__copy:has(.strategic-showcase__outcomes) .strategic-showcase__footer { margin-top: clamp(24px, 3.5vh, 36px); }
@@ -936,6 +937,29 @@ button { color: inherit; }
   .thinking-lab__overview .section-copy { max-width: 760px; }
 }
 
+@media (max-width: 1100px) {
+  .strategic-projects { min-height: auto; padding-block: 96px 72px; }
+  .strategic-projects__header { grid-template-columns: 1fr; margin-bottom: 28px; }
+  .strategic-projects__controls { justify-self: end; }
+  .strategic-showcase { display: flex; flex-direction: column-reverse; gap: 16px; height: auto; min-height: 0; }
+  .strategic-showcase::before { display: none; }
+  .strategic-showcase__copy-shell,
+  .strategic-showcase__media { position: relative; inset: auto; width: 100%; clip-path: none; animation: none !important; transform: none; }
+  .strategic-showcase__media { height: clamp(260px, 48vw, 420px); box-shadow: var(--showcase-shadow); }
+  .strategic-showcase__copy-shell { height: auto; box-shadow: var(--showcase-shadow); }
+  .strategic-showcase__copy-stage { position: relative; clip-path: none; animation: none !important; }
+  .strategic-showcase__copy { position: relative; inset: auto; width: 100%; padding: clamp(30px, 4vw, 44px); }
+  .strategic-showcase__copy--exit { display: none; }
+  .strategic-showcase__media-frame { inset: 0; clip-path: none; animation: none !important; }
+  [data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='greece-nova-5g-fwa.png']) .strategic-showcase__media-frame::after { display: none; }
+  [data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='south-east-europe-wireless-strategy.png']) .strategic-showcase__media-frame::before,
+  [data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='south-east-europe-wireless-strategy.png']) .strategic-showcase__media-frame::after { display: none; }
+  .strategic-showcase__image,
+  .strategic-showcase__image[src$='greece-nova-5g-fwa.png'],
+  .strategic-showcase__image[src$='south-east-europe-wireless-strategy.png'] { transform: none; }
+  .strategic-showcase__progress { width: 100%; margin-top: 16px; }
+}
+
 @media (max-width: 1050px) {
   .experience-layout { grid-template-columns: minmax(250px, .7fr) minmax(460px, 1.3fr); gap: 48px; }
   .desktop-nav { gap: 22px; }
@@ -1019,27 +1043,9 @@ button { color: inherit; }
   .photo-gallery__arrow--previous { left: 8px; }
   .photo-gallery__arrow--next { right: 8px; }
   .photo-gallery__counter { bottom: 12px; }
-  .strategic-projects { min-height: auto; padding-block: 96px 72px; }
-  .strategic-projects__header { grid-template-columns: 1fr; margin-bottom: 28px; }
-  .strategic-projects__controls { justify-self: end; }
-  .strategic-showcase { display: flex; flex-direction: column-reverse; gap: 16px; height: auto; min-height: 0; }
-  .strategic-showcase::before { display: none; }
-  .strategic-showcase__copy-shell,
-  .strategic-showcase__media { position: relative; inset: auto; width: 100%; clip-path: none; animation: none !important; }
-  .strategic-showcase__media { height: 230px; box-shadow: var(--showcase-shadow); }
-  .strategic-showcase__copy-shell { height: 380px; box-shadow: var(--showcase-shadow); }
-  .strategic-showcase__copy-shell:has(.strategic-showcase__copy[data-project-index='3']) { height: 460px; }
-  .strategic-showcase__copy-stage { clip-path: none; animation: none !important; }
-  .strategic-showcase__copy { width: 100%; padding: 28px 24px; }
-  .strategic-showcase__media-frame { inset: 0; clip-path: none; animation: none !important; }
-  [data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='greece-nova-5g-fwa.png']) .strategic-showcase__media-frame::after { display: none; }
-  [data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='south-east-europe-wireless-strategy.png']) .strategic-showcase__media-frame::before,
-  [data-theme='light'] .strategic-showcase:has(.strategic-showcase__image--enter[src$='south-east-europe-wireless-strategy.png']) .strategic-showcase__media-frame::after { display: none; }
-  .strategic-showcase__image,
-  .strategic-showcase__image[src$='greece-nova-5g-fwa.png'],
-  .strategic-showcase__image[src$='south-east-europe-wireless-strategy.png'] { transform: none; }
+  .strategic-showcase__media { height: 230px; }
+  .strategic-showcase__copy { padding: 28px 24px; }
   .strategic-showcase__statement h3 { font-size: 28px; }
-  .strategic-showcase__progress { width: 100%; margin-top: 16px; }
   .contact-band { min-height: auto; }
   .contact-layout { gap: 28px; padding-block: 64px 34px; }
   .contact-links { display: grid; grid-template-columns: repeat(3, 1fr); }

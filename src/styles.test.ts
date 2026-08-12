@@ -68,7 +68,7 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.section-copy h2\s*\{[^}]*text-wrap:\s*pretty/s);
     expect(styles).toMatch(/\.project-screen--showcase\s*\{[^}]*background:\s*var\(--page\)/s);
     expect(styles).not.toContain(".site-header[data-section='gtm']");
-    expect(styles).toMatch(/\.strategic-showcase\s*\{[^}]*height:\s*clamp\(440px, 37vw, 560px\)/s);
+    expect(styles).toMatch(/\.strategic-showcase\s*\{[^}]*height:\s*clamp\(500px, 37vw, 600px\)/s);
     expect(styles).toMatch(/\.strategic-showcase__copy-shell\s*\{[^}]*width:\s*79%;/s);
     expect(styles).toMatch(/\.strategic-showcase__media\s*\{[^}]*width:\s*71%;/s);
     expect(styles).toMatch(
@@ -102,6 +102,7 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\[data-theme='light'\] \.strategic-showcase:has\(\.strategic-showcase__image--enter\[src\$='south-east-europe-wireless-strategy\.png'\]\) \.strategic-showcase__media-frame::before\s*\{[^}]*left:\s*8px;[^}]*width:\s*1px;[^}]*background:\s*rgb\(17 19 24 \/ 14%\);[^}]*box-shadow:\s*5px 0 12px rgb\(17 19 24 \/ 9%\);[^}]*transform:\s*rotate\(-5\.36deg\)/s);
     expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='0'\] \.strategic-showcase__statement h3\s*\{[^}]*font-size:\s*clamp\(28px, 2\.3vw, 36px\)/s);
     expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='3'\] \.strategic-showcase__statement h3\s*\{[^}]*font-size:\s*clamp\(24px, 2\.1vw, 32px\)/s);
+    expect(styles).toMatch(/\.strategic-showcase__copy\[data-project-index='3'\] \.strategic-showcase__statement h3 span\s*\{[^}]*display:\s*block;[^}]*white-space:\s*nowrap/s);
     expect(styles).toMatch(/\.strategic-showcase__image\[src\$='south-east-europe-wireless-strategy\.png'\]\s*\{[^}]*object-fit:\s*contain;[^}]*background:\s*#fff;[^}]*transform:\s*none/s);
     expect(styles).toMatch(/\.strategic-showcase__outcomes\s*\{[^}]*display:\s*grid;[^}]*list-style:\s*none/s);
     expect(styles).toMatch(/\.strategic-showcase__outcomes li\s*\{[^}]*font-size:\s*13px/s);
@@ -109,9 +110,11 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.strategic-showcase__outcomes li\.strategic-showcase__outcome--icon\s*\{[^}]*grid-template-columns:\s*24px 1fr/s);
     expect(styles).toMatch(/\.strategic-showcase__footer \.strategic-showcase__outcome-icon\s*\{[^}]*border:\s*1px solid var\(--border\);[^}]*color:\s*var\(--accent-text\)/s);
     expect(styles).toMatch(/\.strategic-showcase__footer \.strategic-showcase__outcome-copy\s*\{[^}]*font-size:\s*13px;[^}]*line-height:\s*1\.65/s);
-    expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase\s*\{[^}]*gap:\s*16px/s);
-    expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase__copy-shell\s*\{[^}]*box-shadow:\s*var\(--showcase-shadow\)/s);
-    expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.strategic-showcase__copy-shell:has\(\.strategic-showcase__copy\[data-project-index='3'\]\)\s*\{[^}]*height:\s*460px/s);
+    expect(styles).toMatch(/@media \(max-width: 1100px\)[\s\S]*?\.strategic-showcase\s*\{[^}]*gap:\s*16px;[^}]*height:\s*auto/s);
+    expect(styles).toMatch(/@media \(max-width: 1100px\)[\s\S]*?\.strategic-showcase__copy-shell\s*\{[^}]*height:\s*auto;[^}]*box-shadow:\s*var\(--showcase-shadow\)/s);
+    expect(styles).toMatch(/@media \(max-width: 1100px\)[\s\S]*?\.strategic-showcase__copy\s*\{[^}]*position:\s*relative;[^}]*width:\s*100%;[^}]*padding:\s*clamp\(30px, 4vw, 44px\)/s);
+    expect(styles).toMatch(/@media \(max-width: 1100px\)[\s\S]*?\.strategic-showcase__copy--exit\s*\{[^}]*display:\s*none/s);
+    expect(styles).not.toContain(".strategic-showcase__copy-shell:has(.strategic-showcase__copy[data-project-index='3'])");
   });
 
   test('builds Thinking Lab as a full Net canvas with six floating image cards', () => {

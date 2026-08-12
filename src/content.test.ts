@@ -90,7 +90,7 @@ describe('portfolio content', () => {
       'GR Nova 5G FWA Commercial Launch',
       'Greece Vodafone Spring 6 Strategic Partnership',
       'Green Antenna Modernization',
-      'South East Europe Wireless Business Strategy and Execution',
+      'SEE Wireless Business Strategy & Execution',
     ]);
     expect(content.gtm.cases[0].outcomes).toEqual([
       { highlight: '15K', detail: 'subscribers in 4 months' },

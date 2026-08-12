@@ -192,7 +192,7 @@ export const content = {
         image: '/images/green-antenna-modernization.png',
       },
       {
-        title: 'South East Europe Wireless Business Strategy and Execution',
+        title: 'SEE Wireless Business Strategy & Execution',
         summary:
           "Owned South East Europe wireless strategy and annual BP for Greece's three national operators, aligning spectrum, product roadmaps, solutions, and commercial execution.",
         result: '10%+ YoY growth',

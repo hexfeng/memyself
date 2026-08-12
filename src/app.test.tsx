@@ -414,9 +414,11 @@ describe('App', () => {
 
     fireEvent.click(within(showcase).getByRole('button', { name: 'Next project' }));
     expect(
-      within(showcase).getByRole('heading', { name: 'South East Europe Wireless Business Strategy and Execution' }),
+      within(showcase).getByRole('heading', { name: 'SEE Wireless Business Strategy & Execution' }),
     ).toBeInTheDocument();
     const strategyCopy = showcase.querySelector('.strategic-showcase__copy--enter') as HTMLElement;
+    expect(within(strategyCopy).getByText('SEE Wireless Business')).toBeInTheDocument();
+    expect(within(strategyCopy).getByText('Strategy & Execution')).toBeInTheDocument();
     expect(within(strategyCopy).getByText('10%+', { selector: 'strong' })).toBeInTheDocument();
     expect(within(strategyCopy).getByText('2 consecutive years', { selector: 'strong' })).toBeInTheDocument();
     expect(within(strategyCopy).getByText('50+', { selector: 'strong' })).toBeInTheDocument();
@@ -432,7 +434,7 @@ describe('App', () => {
       vi.advanceTimersByTime(30_000);
     });
     expect(
-      within(showcase).getByRole('heading', { name: 'South East Europe Wireless Business Strategy and Execution' }),
+      within(showcase).getByRole('heading', { name: 'SEE Wireless Business Strategy & Execution' }),
     ).toBeInTheDocument();
   });
 
