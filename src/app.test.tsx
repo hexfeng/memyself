@@ -169,6 +169,7 @@ describe('App', () => {
     expect(within(lab).getByText(/3 contributions/)).toBeInTheDocument();
     expect(lab.querySelectorAll('.lab-project-card')).toHaveLength(6);
     expect(lab.querySelectorAll('.lab-project-card__media')).toHaveLength(6);
+    expect(within(lab).getByText('More projects ongoing')).toHaveClass('thinking-lab__continuation-label');
     const finSightLink = within(lab).getByRole('link', { name: /View FinSight on GitHub/ });
     expect(finSightLink.querySelectorAll('.lab-project-card__image')).toHaveLength(2);
     expect(finSightLink.querySelector('.lab-project-card__image--primary')).toHaveAttribute(
@@ -237,6 +238,17 @@ describe('App', () => {
     fireEvent.mouseLeave(blinkLink);
     expect(pause).toHaveBeenCalledOnce();
     expect(blinkVideo).toHaveProperty('currentTime', 0);
+    const easyCaptureLink = within(lab).getByRole('link', { name: /View EasyCapture on GitHub/ });
+    expect(easyCaptureLink).toHaveClass('lab-project-card--preview');
+    expect(easyCaptureLink).toHaveAttribute('href', 'https://github.com/hexfeng/EasyCapture');
+    expect(easyCaptureLink.querySelector('.lab-project-card__image--primary')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/easycapture-editor-concept.png',
+    );
+    expect(easyCaptureLink.querySelector('.lab-project-card__image--hover')).toHaveAttribute(
+      'src',
+      '/images/thinking-lab/easycapture-surfaces-concept.png',
+    );
     expect(lab).not.toHaveTextContent('01');
     expect(lab).not.toHaveTextContent('02');
   });

@@ -130,6 +130,8 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/\.thinking-lab__overview\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1\.08fr\) minmax\(660px, \.92fr\)/s);
     expect(styles).toMatch(/@media \(max-width: 1280px\)[\s\S]*?\.thinking-lab__overview\s*\{[^}]*grid-template-columns:\s*1fr/s);
     expect(styles).toMatch(/\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*repeat\(3,/s);
+    expect(styles).toMatch(/\.thinking-lab__continuation\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*minmax\(24px, 1fr\) auto minmax\(24px, 1fr\)/s);
+    expect(styles).toMatch(/\.thinking-lab__continuation-label\s*\{[^}]*font-family:\s*'Manrope', sans-serif;[^}]*font-size:\s*17px;[^}]*font-weight:\s*700;[^}]*color:\s*var\(--accent-text\)/s);
     expect(styles).toMatch(/\.lab-project-card\s*\{[^}]*grid-template-columns:\s*48%[^}]*border-radius:\s*16px;[^}]*box-shadow:/s);
     expect(styles).toMatch(/\.lab-project-card--preview\s*\{[^}]*grid-template-columns:\s*52%/s);
     expect(styles).toMatch(/@media \(min-width:\s*1051px\)[\s\S]*?\.lab-project-card--preview\s*\{[^}]*min-height:\s*226px/s);
@@ -149,6 +151,7 @@ describe('light-first theme styles', () => {
     expect(styles).toMatch(/@media \(hover:\s*hover\)[\s\S]*?\[data-theme='dark'\] \.lab-project-card--swap-dark:hover \.lab-project-card__image--primary\s*\{[^}]*opacity:\s*1/s);
     expect(styles).toMatch(/@media \(hover:\s*hover\)[\s\S]*?\[data-theme='dark'\] \.lab-project-card--swap-dark:hover \.lab-project-card__image--hover\s*\{[^}]*opacity:\s*0/s);
     expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.thinking-lab__projects\s*\{[^}]*grid-template-columns:\s*1fr/s);
+    expect(styles).toMatch(/@media \(max-width: 767px\)[\s\S]*?\.thinking-lab__continuation-label\s*\{[^}]*font-size:\s*16px/s);
   });
 
   test('styles native Experience disclosure rows and reduced motion', () => {

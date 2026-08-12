@@ -483,6 +483,13 @@ button { color: inherit; }
 .github-calendar__legend { display: flex; align-items: center; gap: 5px; }
 .github-calendar__legend i { width: 9px; height: 9px; }
 .thinking-lab__projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 36px; }
+.thinking-lab__continuation { display: grid; grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr); gap: 18px; align-items: center; margin-top: 30px; }
+.thinking-lab__continuation::before,
+.thinking-lab__continuation::after { content: ''; height: 1px; background: linear-gradient(90deg, transparent, var(--border)); }
+.thinking-lab__continuation::after { transform: scaleX(-1); }
+.thinking-lab__continuation-label { display: inline-flex; align-items: center; gap: 9px; font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 700; color: var(--accent-text); letter-spacing: .035em; white-space: nowrap; }
+.thinking-lab__continuation-label::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgb(85 118 252 / 12%); }
+[data-theme='dark'] .thinking-lab__continuation-label::before { box-shadow: 0 0 0 4px rgb(141 164 255 / 14%); }
 .lab-project-card {
   display: grid;
   grid-template-columns: 48% minmax(0, 1fr);
@@ -1044,6 +1051,8 @@ button { color: inherit; }
   .github-calendar__chart { overflow-x: auto; }
   .github-calendar__footer { align-items: flex-start; flex-direction: column; gap: 10px; }
   .thinking-lab__projects { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
+  .thinking-lab__continuation { gap: 12px; margin-top: 24px; }
+  .thinking-lab__continuation-label { font-size: 16px; }
   .lab-project-card { grid-template-columns: 45% minmax(0, 1fr); min-height: 156px; }
   .lab-project-card--preview { grid-template-columns: 52% minmax(0, 1fr); }
   .lab-project-card__media { min-height: 156px; }

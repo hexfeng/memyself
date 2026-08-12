@@ -240,6 +240,7 @@ export const content = {
     title: 'Side Projects — ideas become useful when they are made tangible.',
     intro:
       'A working collection of small products, AI experiments, and tools for thinking more clearly.',
+    continuation: 'More projects ongoing',
     experiments: [
       {
         title: 'FinSight',
@@ -278,10 +279,11 @@ export const content = {
         href: 'https://github.com/hexfeng/Blink',
       },
       {
-        title: 'Event Intelligence Extractor',
-        summary: 'Turning event pages into structured, reviewable winner data.',
-        image: '/images/thinking-lab/event-intelligence-extractor.webp',
-        href: 'https://github.com/hexfeng/Accumulate',
+        title: 'EasyCapture',
+        summary: 'A local-first Chrome extension for seamless full-page screenshots, with built-in tools for annotation, editing, and privacy-ready redaction.',
+        image: '/images/thinking-lab/easycapture-editor-concept.png',
+        hoverImage: '/images/thinking-lab/easycapture-surfaces-concept.png',
+        href: 'https://github.com/hexfeng/EasyCapture',
       },
     ] satisfies LabProject[],
   },

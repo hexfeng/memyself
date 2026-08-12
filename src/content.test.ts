@@ -39,6 +39,18 @@ describe('portfolio content', () => {
     });
   });
 
+  test('keeps Thinking Lab open-ended after the featured projects', () => {
+    expect(content.lab.experiments).toHaveLength(6);
+    expect(content.lab.continuation).toBe('More projects ongoing');
+    expect(content.lab.experiments[5]).toEqual({
+      title: 'EasyCapture',
+      summary: 'A local-first Chrome extension for seamless full-page screenshots, with built-in tools for annotation, editing, and privacy-ready redaction.',
+      image: '/images/thinking-lab/easycapture-editor-concept.png',
+      hoverImage: '/images/thinking-lab/easycapture-surfaces-concept.png',
+      href: 'https://github.com/hexfeng/EasyCapture',
+    });
+  });
+
   test('keeps the exact rotating role order and spelling', () => {
     expect(content.hero.roles).toEqual([
       'Strategist',
@@ -137,7 +149,7 @@ describe('portfolio content', () => {
       'Codex Usage Dashboard',
       'GoSpeak',
       'Blink',
-      'Event Intelligence Extractor',
+      'EasyCapture',
     ]);
     expect(content.lab.experiments[0]).toMatchObject({
       title: 'FinSight',

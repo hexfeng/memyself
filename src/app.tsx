@@ -440,6 +440,9 @@ function ThinkingLab({ theme }: { theme: Theme }) {
         <div className="thinking-lab__projects">
           {content.lab.experiments.map((project) => <LabProjectCard key={project.title} project={project} />)}
         </div>
+        <div className="thinking-lab__continuation">
+          <span className="thinking-lab__continuation-label">{content.lab.continuation}</span>
+        </div>
       </div>
     </section>
   );
