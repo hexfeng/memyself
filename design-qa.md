@@ -1,41 +1,44 @@
-# Design QA — Engagement Wall and Logo Loop
+# Design QA — South East Europe Wireless Strategy Project
 
-- Source wall issue: `C:\Users\PC\AppData\Local\Temp\codex-clipboard-86645423-8b85-420f-a4eb-59cd32661eec.png`
-- Source logo composition issue: `C:\Users\PC\AppData\Local\Temp\codex-clipboard-7ddd1783-fc21-449d-a2b9-1c4f6caafcbe.png`
-- Source Waterloo/COSMOTE issues: `C:\Users\PC\AppData\Local\Temp\codex-clipboard-cb9d1b4b-46e3-4c8f-864f-ac22b052d1fe.png`, `C:\Users\PC\AppData\Local\Temp\codex-clipboard-b205d35c-945a-45f4-af4e-8f20894230b5.png`
-- Source alignment/cropping issue: `C:\Users\PC\AppData\Local\Temp\codex-clipboard-e6a7e7d5-d188-4109-b58e-a24760219b79.png`
-- Final light desktop: `C:\Users\PC\AppData\Local\Temp\engagement-logo-final-light.png`
-- Final dark desktop: `C:\Users\PC\AppData\Local\Temp\engagement-logo-final-dark.png`
-- Focused before/after comparison: `C:\Users\PC\AppData\Local\Temp\engagement-logo-qa-comparison.png`
-- Current browser CSS viewport: 1254 × 770 at devicePixelRatio 1.25; saved implementation capture: 1238 × 761 pixels.
-- Focused comparison normalization: the supplied 637 × 155 issue crop and the matching implementation band crop were placed in one 637 × 309 comparison image. The implementation crop was aspect-fit, without stretching, and the continuously moving sequence was captured with the same logo order visible.
-- State: `#transformation`, light and dark themes, running Drift Wall and Logo Loop.
+- Source project image: `D:\文档\照片素材\本地文件\exec-64eb9017-5617-43a6-a5f8-25494e9d8108.png` (1536 × 1024 px)
+- Source issue capture: `C:\Users\PC\AppData\Local\Temp\codex-clipboard-ffe1c72a-bea6-44cb-a355-0bba1aa5f813.png` (731 × 1122 px)
+- Source FWA transition reference: `C:\Users\PC\AppData\Local\Temp\codex-clipboard-158218a5-a3fb-48c2-bd01-8eda463ab3f9.png` (873 × 951 px)
+- Source seam issue: `C:\Users\PC\AppData\Local\Temp\codex-clipboard-9928713d-ed2d-4bab-9c77-589b65c32f00.png` (231 × 921 px)
+- Final desktop implementation: `D:\Projects\Personal_Website\docs\design-audits\strategic-projects-2026-08-11\07-desktop-transition-final.png`
+- Final mobile implementation: `D:\Projects\Personal_Website\docs\design-audits\strategic-projects-2026-08-11\05-mobile-final.png`
+- State: light theme, fourth Strategic Business & GTM project selected.
+
+## Viewport and normalization
+
+- Desktop browser CSS viewport: 1440 × 900; saved capture: 1425 × 891 px.
+- Mobile browser CSS viewport: 390 × 844; saved capture: 375 × 811 px.
+- The supplied screenshots are focused crops rather than same-viewport full designs. Comparison therefore normalized on the shared project-card seam, copy density, image crop, and metric layout instead of asserting pixel-for-pixel full-page fidelity.
 
 ## Full-view comparison evidence
 
-The final desktop view keeps the confirmed two-column composition and open Drift Wall. The logo loop spans the full page shell without the former label column. Its band is now 81.6px high, uses a subtle translucent theme-aware background, and keeps the tighter logo rhythm without horizontal overflow.
+The final desktop capture preserves the established Strategic Projects card geometry and uses the supplied South East Europe map directly. The fourth project now has a complete title, one concise ownership statement, and three metric rows. The full 1536 × 1024 image renders with `object-fit: contain`; the browser confirmed the natural dimensions and complete load. No horizontal overflow or card content overflow remains.
 
 ## Focused-region comparison evidence
 
-The combined comparison shows the supplied alignment/cropping example above the revised loop. The revised SVGs have sufficient top and bottom clearance, visible shapes are optically centered, and the same sequence is more compact. COSMOTE contains only its wordmark. Waterloo retains internal shield detail instead of collapsing into a solid silhouette. The shadow remains faint and follows each logo's actual alpha contour.
+The source seam capture showed a visible pale vertical boundary after the original gray overlay. The final implementation separates the two jobs: a 1px diagonal edge follows the actual slanted card boundary with a soft inward shadow, while a separate 190px white-to-transparent blend merges the image background. Side-by-side inspection shows a clear card boundary without the former vertical band. The FWA card's existing gradient remains unchanged.
 
 ## Fidelity surfaces
 
-- Fonts and typography: section and content typography remain unchanged; no new visible label competes with the section hierarchy.
-- Spacing and layout rhythm: desktop logo items are 60px high with 22px inter-item spacing; mobile items are 54px high with 16px spacing. Base logo dimensions are rendered at exactly two-thirds in layout rather than transformed after layout, preventing edge clipping and baseline drift.
-- Colors and visual tokens: logos remain monochrome—black in light mode and white in dark mode. The band uses `rgba(255, 255, 255, 0.42)` in light and `rgba(18, 20, 25, 0.48)` in dark, with the existing fine rules.
-- Image quality and asset fidelity: all supplied photograph WebPs and 11 supplied SVGs are used directly. COSMOTE's unwanted Telekom mark was removed from the supplied SVG copy; no replacement artwork was drawn. Waterloo uses a detail-preserving grayscale treatment.
-- Copy and content: title, introduction, three engagement stories, metrics, and supporting copy remain unchanged.
-- Accessibility and motion: the loop keeps one accessible named sequence while duplicated tracks remain hidden from assistive technology. Reduced-motion fallback remains static. Normal motion continues while the pointer is over the logo band.
+- Fonts and typography: the existing Manrope hierarchy is preserved. The long title uses the existing project-specific responsive sizing and remains fully visible at desktop and mobile widths.
+- Spacing and layout rhythm: desktop content fits the 533px card exactly. The fourth project's mobile copy shell is 460px so all text and metrics fit without clipping; other projects retain the existing 380px shell.
+- Colors and visual tokens: the final transition uses a 14% neutral 1px diagonal edge with a 9% soft shadow, followed by an independent 88% to 0% white fade. This keeps the card boundary legible without reintroducing a vertical band, while retaining the existing light theme, radius, and shadow tokens.
+- Image quality and asset fidelity: the supplied 1536 × 1024 PNG is used unchanged, contained rather than cropped or stretched, with no recreated logos or illustration elements.
+- Copy and content: the mock title and copy are removed. The replacement emphasizes South East Europe strategy, Greece operator ownership, annual BP, spectrum/product roadmaps, and commercial execution. `10%+`, `2 consecutive years`, `3`, `50+`, and both `10+` metrics are visually emphasized.
+- Accessibility and responsiveness: project selection remains button-based with existing accessible labels. Desktop and 390px mobile checks show no horizontal overflow; reduced-motion and existing navigation behavior are unchanged.
 
 ## Interaction and runtime evidence
 
-- Pointer hover was placed directly over the logo row; the track advanced from `translate3d(-277.845px, 0, 0)` to `translate3d(-328.578px, 0, 0)` during the 900ms hover interval.
-- All 11 first-sequence logo boxes were measured. Non-offset logos had a 0px center delta; the optically corrected COSMOTE and NOVA offsets were 1px and 4px. Minimum top/bottom clearance was 7.3px for the two crest assets, so no logo box was clipped.
-- Light mode applied a restrained 18% alpha drop shadow; dark mode applied a 45% black alpha shadow for separation without introducing glow.
-- Dark-mode browser checks confirmed the detail-preserving Waterloo filter, white COSMOTE wordmark, translucent band, and zero horizontal overflow.
-- Browser logs contained only Vite connection/HMR debug entries and the React DevTools development notice; there were no application errors or warnings.
-- Automated verification passed: `npm test` (34/34), `npm run lint`, `npm run build`, and `git diff --check`. The build retains the pre-existing Vite large-chunk warning for Three.js.
+- Selected project 4 through the project progress control after page load and reload.
+- Verified the updated card at 1440 × 900 and 390 × 844.
+- Desktop card: `clientHeight = 533`, `scrollHeight = 533`.
+- Mobile card: `clientHeight = 460`, `scrollHeight = 460`.
+- Browser console: no warnings or errors.
+- Automated verification: `npm test` passed 34/34 tests; `npm run lint`, `npm run build`, and `git diff --check` passed. The build retains the pre-existing Three.js large-chunk warning.
 
 ## Findings
 
@@ -43,15 +46,22 @@ No actionable P0, P1, or P2 findings remain.
 
 ## Comparison history
 
-- Pass 1 — P1: the animated wall exposed large empty areas. Fixed with continuous copies and eager animated image loading.
-- Pass 1 — P2: the wall read as one large card. Removed its border, radius, fill, and shadow, then added top/bottom background fades.
-- Pass 2 — P2: the logo label reduced loop width and several assets had incorrect scale/color handling. Removed the visible label and normalized per-logo dimensions.
-- Pass 3 — P2: the requested monochrome treatment collapsed Waterloo into a solid shield and retained COSMOTE's unwanted right-hand graphic. Preserved Waterloo luminance detail and removed only the Telekom group from the supplied COSMOTE SVG.
-- Pass 4 — P2: hover still paused, the band was too tall, and spacing was loose. Removed hover pause state, reduced band padding, added theme-aware translucency, narrowed logo slots, and reduced gaps.
-- Pass 5 — P2: transformed 68px crest boxes could align unsafely inside a 60px row, causing visible vertical drift and clipping risk. Converted the two-thirds scale into actual rendered dimensions, preserved optical offsets, expanded the safe row height, and added alpha-following shadows. The focused post-fix comparison shows complete centered marks with no remaining P0/P1/P2 issue.
+- Pass 1 — P2: the two-sentence description and metric layout overflowed the desktop card by 27px and the mobile card by 92px. Shortened the ownership statement and metric wording, then added a project-specific 460px mobile copy shell.
+- Pass 2 — P2: the FWA-style gray overlay softened the diagonal seam but produced a visible pale vertical boundary at the end of the gradient. Replaced it only for the new project with a wider white-to-transparent blend.
+- Pass 3 — P2: the all-white blend removed the vertical band but made the two overlapping cards read as one surface. Added a short, low-opacity neutral shadow at the diagonal edge before the longer white fade.
+- Pass 4 — P2: the neutral-to-white gradient improved separation, but its horizontal color stops still could not follow the slanted boundary consistently from top to bottom.
+- Pass 5 — passed: added a dedicated edge rotated to the card's 5.36-degree slant and kept the wide fade independent. The diagonal boundary is now consistently visible without a hard vertical line; desktop and mobile cards have no content or horizontal overflow; the source image remains complete and sharp.
+
+## Adversarial review
+
+- Long-title clipping: checked at desktop and 390px mobile; the complete title is visible.
+- Copy/metric overflow: measured `scrollHeight` against `clientHeight` in both viewports; values are equal.
+- Image cropping or distortion: browser reported the original 1536 × 1024 natural size and `object-fit: contain`.
+- Transition regression: the new selector is scoped to the South East Europe image, leaving the FWA transition untouched.
+- Unintended project changes: the four-project order and all project navigation tests pass.
 
 ## Follow-up polish
 
-- No follow-up visual issues are currently identified.
+No follow-up visual issues are currently identified.
 
 final result: passed

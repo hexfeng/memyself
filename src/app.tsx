@@ -5,12 +5,14 @@ import {
   ChevronDown,
   Github,
   Leaf,
+  Lightbulb,
   Linkedin,
   Mail,
   Map,
   Moon,
   Sun,
   TrendingUp,
+  Users,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import huaweiLogo from './assets/logos/huawei.png';
@@ -28,7 +30,7 @@ import './styles.css';
 type Theme = 'light' | 'dark';
 
 const THEME_KEY = 'portfolio-theme';
-const outcomeIcons = { growth: TrendingUp, energy: Leaf, roadmap: Map };
+const outcomeIcons = { growth: TrendingUp, energy: Leaf, roadmap: Map, customers: Users, innovation: Lightbulb };
 const experienceThreadColors: Record<Theme, [number, number, number]> = { light: [0, 0, 0], dark: [1, 1, 1] };
 const photographyCoverImages = [
   '/images/photography/_dsc0488.webp',

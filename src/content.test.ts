@@ -90,7 +90,7 @@ describe('portfolio content', () => {
       'GR Nova 5G FWA Commercial Launch',
       'Greece Vodafone Spring 6 Strategic Partnership',
       'Green Antenna Modernization',
-      'Strategic Business & Product Leadership',
+      'South East Europe Wireless Business Strategy and Execution',
     ]);
     expect(content.gtm.cases[0].outcomes).toEqual([
       { highlight: '15K', detail: 'subscribers in 4 months' },
@@ -109,6 +109,16 @@ describe('portfolio content', () => {
         { highlight: '70%', detail: 'green antenna adoption with', secondaryHighlight: '15%', suffix: 'energy savings', icon: 'energy' },
         { highlight: '30+', detail: 'product roadmap developed, with', secondaryHighlight: '5+', suffix: 'models swapped and upgraded in the Greek market', icon: 'roadmap' },
       ],
+    });
+    expect(content.gtm.cases[3]).toMatchObject({
+      summary:
+        "Owned South East Europe wireless strategy and annual BP for Greece's three national operators, aligning spectrum, product roadmaps, solutions, and commercial execution.",
+      outcomes: [
+        { highlight: '10%+', detail: 'YoY sales order growth for', secondaryHighlight: '2 consecutive years', icon: 'growth' },
+        { highlight: '3', detail: 'national operators under single-threaded ownership;', secondaryHighlight: '50+', suffix: 'executive summits & workshops', icon: 'customers' },
+        { highlight: '10+', detail: 'product & solution breakthroughs;', secondaryHighlight: '10+', suffix: 'joint innovation projects / POCs', icon: 'innovation' },
+      ],
+      image: '/images/south-east-europe-wireless-strategy.png',
     });
   });
 

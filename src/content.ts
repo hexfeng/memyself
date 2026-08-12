@@ -27,7 +27,7 @@ export type CaseStudy = {
     detail: string;
     secondaryHighlight?: string;
     suffix?: string;
-    icon?: 'growth' | 'energy' | 'roadmap';
+    icon?: 'growth' | 'energy' | 'roadmap' | 'customers' | 'innovation';
   }>;
   image?: string;
 };
@@ -192,12 +192,17 @@ export const content = {
         image: '/images/green-antenna-modernization.png',
       },
       {
-        title: 'Strategic Business & Product Leadership',
+        title: 'South East Europe Wireless Business Strategy and Execution',
         summary:
-          'A mock portfolio case connecting market strategy, product roadmaps, commercial planning, and cross-functional execution.',
-        result: 'Business & product leadership',
-        secondary: 'Mock copy - detailed outcomes to be added',
-        image: '/images/mountain-background-web.jpg',
+          "Owned South East Europe wireless strategy and annual BP for Greece's three national operators, aligning spectrum, product roadmaps, solutions, and commercial execution.",
+        result: '10%+ YoY growth',
+        secondary: 'Sustained for two consecutive years',
+        outcomes: [
+          { highlight: '10%+', detail: 'YoY sales order growth for', secondaryHighlight: '2 consecutive years', icon: 'growth' },
+          { highlight: '3', detail: 'national operators under single-threaded ownership;', secondaryHighlight: '50+', suffix: 'executive summits & workshops', icon: 'customers' },
+          { highlight: '10+', detail: 'product & solution breakthroughs;', secondaryHighlight: '10+', suffix: 'joint innovation projects / POCs', icon: 'innovation' },
+        ],
+        image: '/images/south-east-europe-wireless-strategy.png',
       },
     ] satisfies CaseStudy[],
   },

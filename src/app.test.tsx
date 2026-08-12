@@ -412,6 +412,16 @@ describe('App', () => {
     expect(within(greenCopy).getByText('5+', { selector: 'strong' })).toBeInTheDocument();
     expect(greenCopy.querySelectorAll('.strategic-showcase__outcome-icon')).toHaveLength(3);
 
+    fireEvent.click(within(showcase).getByRole('button', { name: 'Next project' }));
+    expect(
+      within(showcase).getByRole('heading', { name: 'South East Europe Wireless Business Strategy and Execution' }),
+    ).toBeInTheDocument();
+    const strategyCopy = showcase.querySelector('.strategic-showcase__copy--enter') as HTMLElement;
+    expect(within(strategyCopy).getByText('10%+', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(strategyCopy).getByText('2 consecutive years', { selector: 'strong' })).toBeInTheDocument();
+    expect(within(strategyCopy).getByText('50+', { selector: 'strong' })).toBeInTheDocument();
+    expect(strategyCopy.querySelectorAll('.strategic-showcase__outcome-icon')).toHaveLength(3);
+
     act(() => {
       callbacks.get(showcase)?.(
         [{ isIntersecting: false, target: showcase } as unknown as IntersectionObserverEntry],
@@ -422,7 +432,7 @@ describe('App', () => {
       vi.advanceTimersByTime(30_000);
     });
     expect(
-      within(showcase).getByRole('heading', { name: 'Green Antenna Modernization' }),
+      within(showcase).getByRole('heading', { name: 'South East Europe Wireless Business Strategy and Execution' }),
     ).toBeInTheDocument();
   });
 
