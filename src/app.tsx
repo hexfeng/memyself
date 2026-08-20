@@ -449,7 +449,6 @@ function ThinkingLab({ theme }: { theme: Theme }) {
 }
 
 function BesideWork() {
-  const [openFolder, setOpenFolder] = useState<number | null>(null);
   const [galleryOpening, setGalleryOpening] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const galleryTimer = useRef<number | null>(null);
@@ -478,12 +477,11 @@ function BesideWork() {
       <div className="page-shell screen-content beside-work__layout">
         <SectionCopy {...content.beside} titleId="beside-title" />
         <ol className="beside-work__items">
-          {content.beside.items.map((item, index) => {
+          {content.beside.items.map((item) => {
             const isPhotography = item.title === 'Photography';
             return (
               <li
                 className="beside-work__item"
-                data-open={openFolder === index}
                 data-gallery-opening={isPhotography && galleryOpening}
                 key={item.title}
               >
@@ -497,29 +495,22 @@ function BesideWork() {
                   <img src={item.image} alt="" loading="lazy" decoding="async" />
                 )}
                 <div className="beside-work__item-content">
-                  <span aria-hidden="true">0{index + 1} / Beside work</span>
                   <h3>{item.title}</h3>
-                  <p>
-                    {item.text}
-                    {'callToAction' in item && (
-                      <span className="beside-work__gallery-prompt">{item.callToAction}</span>
-                    )}
-                  </p>
+                  <p>{item.text}</p>
+                  {'callToAction' in item && (
+                    <button
+                      ref={photographyTrigger}
+                      type="button"
+                      className="beside-work__gallery-prompt"
+                      aria-label="Open Photography gallery"
+                      aria-haspopup="dialog"
+                      disabled={galleryOpening}
+                      onClick={openPhotographyGallery}
+                    >
+                      {item.callToAction}
+                    </button>
+                  )}
                 </div>
-                <button
-                  ref={isPhotography ? photographyTrigger : undefined}
-                  type="button"
-                  className="beside-work__trigger"
-                  aria-label={isPhotography ? 'Open Photography gallery' : `Toggle ${item.title} folder`}
-                  aria-haspopup={isPhotography ? 'dialog' : undefined}
-                  aria-pressed={isPhotography ? undefined : openFolder === index}
-                  disabled={isPhotography && galleryOpening}
-                  onClick={isPhotography
-                    ? openPhotographyGallery
-                    : () => setOpenFolder(openFolder === index ? null : index)}
-                >
-                  <ArrowRight aria-hidden="true" />
-                </button>
               </li>
             );
           })}

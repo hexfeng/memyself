@@ -117,13 +117,10 @@ describe('App', () => {
     for (const title of ['Travelling', 'Photography', 'Gaming']) {
       expect(within(beside).getByRole('heading', { name: title })).toBeInTheDocument();
     }
-    const galleryPrompt = within(beside).getByText('click to explore the gallery.');
+    const galleryPrompt = within(beside).getByRole('button', { name: 'Open Photography gallery' });
     expect(galleryPrompt).toHaveClass('beside-work__gallery-prompt');
-    const travellingFolder = within(beside).getByRole('button', { name: 'Toggle Travelling folder' });
-    expect(travellingFolder).toHaveAttribute('aria-pressed', 'false');
-    fireEvent.click(travellingFolder);
-    expect(travellingFolder).toHaveAttribute('aria-pressed', 'true');
-    expect(travellingFolder.closest('.beside-work__item')).toHaveAttribute('data-open', 'true');
+    expect(galleryPrompt).toHaveTextContent('click to explore the gallery.');
+    expect(within(beside).queryByRole('button', { name: /Toggle .* folder/ })).not.toBeInTheDocument();
     expect(document.querySelector('.screen--contact')).toHaveClass('contact-band');
   });
 
